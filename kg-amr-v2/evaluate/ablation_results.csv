@@ -1,0 +1,6 @@
+Config,Description,AUROC,F1-macro,Delta_AUROC_vs_full,N_params,Train_time_s
+genomic_only,"k-mer features only, no KG branch",0.9758,0.9559,-0.0014,9051804,121.1
+kg_only,"KG embeddings only, no k-mer branch",0.9461,0.8831,-0.0312,26717,36.4
+avg_pool_no_attention,Average pooling instead of self-attention,0.9790,0.9591,+0.0018,9126044,124.3
+scalar_fusion,Scalar α·g + (1-α)·k instead of cross-attention gate,0.9769,0.9547,-0.0004,9076702,190.1
+full_kg_amr_v2,Full KG-AMR v2 (10 epochs for comparison),0.9773,0.9561,+0.0000,9142493,129.3

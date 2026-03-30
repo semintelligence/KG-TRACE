@@ -1,0 +1,142 @@
+
+============================================================
+Processing: Ecoli_ampicillin
+  Genomes to annotate: 1332
+  Fetching 27 batches (50 genomes each) with 5 workers...
+    [10/27 batches]  144,746 records  (33s)
+    [20/27 batches]  241,559 records  (48s)
+  Total records fetched: 304,383  (0 batch errors)
+  Cached to: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/features/annotations/Ecoli_ampicillin_amr_raw.json
+  Unique resistance genes: 478
+  Genomes with ≥1 gene:    995
+  Genomes with 0 genes:    337
+  Top genes by prevalence:
+    rpoB                            984/1332 genomes (73.9%)
+    parE                            984/1332 genomes (73.9%)
+    parC                            984/1332 genomes (73.9%)
+    murA                            984/1332 genomes (73.9%)
+    gyrB                            984/1332 genomes (73.9%)
+    folP                            984/1332 genomes (73.9%)
+    msbA                            982/1332 genomes (73.7%)
+    mfd                             982/1332 genomes (73.7%)
+    mdtD                            982/1332 genomes (73.7%)
+    mdtB                            982/1332 genomes (73.7%)
+    gyrA                            982/1332 genomes (73.7%)
+    emrD                            982/1332 genomes (73.7%)
+    cysB                            982/1332 genomes (73.7%)
+    baeS                            982/1332 genomes (73.7%)
+    baeR                            982/1332 genomes (73.7%)
+    alaS                            982/1332 genomes (73.7%)
+    tolC                            981/1332 genomes (73.6%)
+    patA                            981/1332 genomes (73.6%)
+    mdtL                            981/1332 genomes (73.6%)
+    mdtC                            981/1332 genomes (73.6%)
+  Matrix: (1332, 478)  nnz=119729
+  Time: 59.0s
+
+============================================================
+Processing: Kpneumoniae_cipro
+  Genomes to annotate: 1642
+  Fetching 33 batches (50 genomes each) with 5 workers...
+    [10/33 batches]  110,291 records  (19s)
+    [20/33 batches]  232,875 records  (37s)
+    [30/33 batches]  339,627 records  (55s)
+  Total records fetched: 359,583  (0 batch errors)
+  Cached to: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/features/annotations/Kpneumoniae_cipro_amr_raw.json
+  Unique resistance genes: 583
+  Genomes with ≥1 gene:    233
+  Genomes with 0 genes:    1409
+  Top genes by prevalence:
+    emrD                            217/1642 genomes (13.2%)
+    rpoB                            206/1642 genomes (12.5%)
+    gyrB                            206/1642 genomes (12.5%)
+    cysB                            205/1642 genomes (12.5%)
+    rho                             201/1642 genomes (12.2%)
+    emrB                            197/1642 genomes (12.0%)
+    cpxA                            197/1642 genomes (12.0%)
+    parE                            193/1642 genomes (11.8%)
+    parC                            193/1642 genomes (11.8%)
+    murA                            193/1642 genomes (11.8%)
+    soxR                            192/1642 genomes (11.7%)
+    mfd                             192/1642 genomes (11.7%)
+    alaS                            192/1642 genomes (11.7%)
+    rpoC                            191/1642 genomes (11.6%)
+    kdpE                            191/1642 genomes (11.6%)
+    mdfA                            188/1642 genomes (11.4%)
+    gyrA                            188/1642 genomes (11.4%)
+    folP                            179/1642 genomes (10.9%)
+    dxr                             179/1642 genomes (10.9%)
+    baeR                            179/1642 genomes (10.9%)
+  Matrix: (1642, 583)  nnz=21893
+  Time: 59.1s
+
+============================================================
+Processing: Kpneumoniae_carbapenem
+  Genomes to annotate: 1556
+  Fetching 32 batches (50 genomes each) with 5 workers...
+    [10/32 batches]  99,114 records  (17s)
+    [20/32 batches]  221,909 records  (35s)
+    [30/32 batches]  317,881 records  (51s)
+  Total records fetched: 340,551  (0 batch errors)
+  Cached to: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/features/annotations/Kpneumoniae_carbapenem_amr_raw.json
+  Unique resistance genes: 594
+  Genomes with ≥1 gene:    242
+  Genomes with 0 genes:    1314
+  Top genes by prevalence:
+    emrD                            226/1556 genomes (14.5%)
+    rpoB                            215/1556 genomes (13.8%)
+    gyrB                            215/1556 genomes (13.8%)
+    cysB                            214/1556 genomes (13.8%)
+    rho                             210/1556 genomes (13.5%)
+    cpxA                            206/1556 genomes (13.2%)
+    parE                            201/1556 genomes (12.9%)
+    parC                            201/1556 genomes (12.9%)
+    murA                            201/1556 genomes (12.9%)
+    soxR                            200/1556 genomes (12.9%)
+    mfd                             200/1556 genomes (12.9%)
+    alaS                            200/1556 genomes (12.9%)
+    rpoC                            199/1556 genomes (12.8%)
+    kdpE                            199/1556 genomes (12.8%)
+    mdfA                            196/1556 genomes (12.6%)
+    gyrA                            196/1556 genomes (12.6%)
+    emrB                            193/1556 genomes (12.4%)
+    dxr                             188/1556 genomes (12.1%)
+    baeR                            187/1556 genomes (12.0%)
+    patA                            184/1556 genomes (11.8%)
+  Matrix: (1556, 594)  nnz=23034
+  Time: 53.9s
+
+============================================================
+Processing: Abaumannii_carbapenem
+  Genomes to annotate: 365
+  Fetching 8 batches (50 genomes each) with 5 workers...
+  Total records fetched: 46,217  (0 batch errors)
+  Cached to: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/features/annotations/Abaumannii_carbapenem_amr_raw.json
+  Unique resistance genes: 256
+  Genomes with ≥1 gene:    256
+  Genomes with 0 genes:    109
+  Top genes by prevalence:
+    rpoB                            249/365 genomes (68.2%)
+    rho                             249/365 genomes (68.2%)
+    gyrB                            249/365 genomes (68.2%)
+    folP                            231/365 genomes (63.3%)
+    rpoC                            229/365 genomes (62.7%)
+    gyrA                            227/365 genomes (62.2%)
+    dxr                             226/365 genomes (61.9%)
+    gidB                            225/365 genomes (61.6%)
+    adeK                            213/365 genomes (58.4%)
+    adeJ                            213/365 genomes (58.4%)
+    adeI                            213/365 genomes (58.4%)
+    adeB                            211/365 genomes (57.8%)
+    adeA                            208/365 genomes (57.0%)
+    adeR                            207/365 genomes (56.7%)
+    abeM                            206/365 genomes (56.4%)
+    mexT                            205/365 genomes (56.2%)
+    adeN                            205/365 genomes (56.2%)
+    adeH                            205/365 genomes (56.2%)
+    adeG                            205/365 genomes (56.2%)
+    adeF                            205/365 genomes (56.2%)
+  Matrix: (365, 256)  nnz=14674
+  Time: 17.0s
+
+Stage M3 complete.

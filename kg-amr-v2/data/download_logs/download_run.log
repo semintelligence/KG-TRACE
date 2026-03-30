@@ -1,0 +1,96 @@
+All available genome ID files:
+  Data_Acinetobacter_baumannii_amikacin.txt — 852 genomes
+  Data_Acinetobacter_baumannii_ampicillin_sulbactam.txt — 678 genomes
+  Data_Acinetobacter_baumannii_imipenem.txt — 1053 genomes
+  Data_Acinetobacter_baumannii_levofloxacin.txt — 720 genomes
+  Data_Acinetobacter_baumannii_meropenem.txt — 445 genomes
+  Data_Acinetobacter_baumannii_tobramycin.txt — 808 genomes
+  Data_Acinetobacter_baumannii_trimethoprim_sulfamethoxazole.txt — 753 genomes
+  Data_Campylobacter_jejuni_tetracycline.txt — 395 genomes
+  Data_Enterococcus_faecium_vancomycin.txt — 277 genomes
+  Data_Escherichia_coli_amoxicillin.txt — 1118 genomes
+  Data_Escherichia_coli_amoxicillin_clavulanic_acid.txt — 2213 genomes
+  Data_Escherichia_coli_ampicillin.txt — 1484 genomes
+  Data_Escherichia_coli_aztreonam.txt — 548 genomes
+  Data_Escherichia_coli_cefotaxime.txt — 1390 genomes
+  Data_Escherichia_coli_ceftazidime.txt — 1686 genomes
+  Data_Escherichia_coli_ceftriaxone.txt — 389 genomes
+  Data_Escherichia_coli_cefuroxime.txt — 1363 genomes
+  Data_Escherichia_coli_ciprofloxacin.txt — 1763 genomes
+  Data_Escherichia_coli_gentamicin.txt — 1751 genomes
+  Data_Escherichia_coli_piperacillin_tazobactam.txt — 1484 genomes
+  Data_Escherichia_coli_tetracycline.txt — 285 genomes
+  Data_Escherichia_coli_trimethoprim.txt — 468 genomes
+  Data_Klebsiella_pneumoniae_amikacin.txt — 1511 genomes
+  Data_Klebsiella_pneumoniae_aztreonam.txt — 1419 genomes
+  Data_Klebsiella_pneumoniae_cefepime.txt — 1303 genomes
+  Data_Klebsiella_pneumoniae_cefoxitin.txt — 1401 genomes
+  Data_Klebsiella_pneumoniae_ciprofloxacin.txt — 1697 genomes
+  Data_Klebsiella_pneumoniae_gentamicin.txt — 1686 genomes
+  Data_Klebsiella_pneumoniae_imipenem.txt — 1469 genomes
+  Data_Klebsiella_pneumoniae_levofloxacin.txt — 1416 genomes
+  Data_Klebsiella_pneumoniae_meropenem.txt — 1609 genomes
+  Data_Klebsiella_pneumoniae_piperacillin_tazobactam.txt — 1346 genomes
+  Data_Klebsiella_pneumoniae_tetracycline.txt — 1254 genomes
+  Data_Klebsiella_pneumoniae_tobramycin.txt — 1314 genomes
+  Data_Klebsiella_pneumoniae_trimethoprim_sulfamethoxazole.txt — 1682 genomes
+  Data_Mycobacterium_tuberculosis_amikacin.txt — 1535 genomes
+  Data_Mycobacterium_tuberculosis_capreomycin.txt — 1535 genomes
+  Data_Mycobacterium_tuberculosis_ethambutol.txt — 11765 genomes
+  Data_Mycobacterium_tuberculosis_ethiomide.txt — 341 genomes
+  Data_Mycobacterium_tuberculosis_ethionamide.txt — 437 genomes
+  Data_Mycobacterium_tuberculosis_isoniazid.txt — 13071 genomes
+  Data_Mycobacterium_tuberculosis_kanamycin.txt — 1618 genomes
+  Data_Mycobacterium_tuberculosis_ofloxacin.txt — 1179 genomes
+  Data_Mycobacterium_tuberculosis_pyrazinamide.txt — 7988 genomes
+  Data_Mycobacterium_tuberculosis_rifampicin.txt — 7739 genomes
+  Data_Mycobacterium_tuberculosis_streptomycin.txt — 5163 genomes
+  Data_Neisseria_gonorrhoeae_azithromycin.txt — 444 genomes
+  Data_Neisseria_gonorrhoeae_cefixime.txt — 381 genomes
+  Data_Pseudomonas_aeruginosa_ceftazidime.txt — 657 genomes
+  Data_Pseudomonas_aeruginosa_ciprofloxacin.txt — 545 genomes
+  Data_Pseudomonas_aeruginosa_levofloxacin.txt — 436 genomes
+  Data_Pseudomonas_aeruginosa_meropenem.txt — 710 genomes
+  Data_Pseudomonas_aeruginosa_tobramycin.txt — 582 genomes
+  Data_Salmonella_enterica_amoxicillin_clavulanic_acid.txt — 1382 genomes
+  Data_Salmonella_enterica_ampicillin.txt — 1922 genomes
+  Data_Salmonella_enterica_cefoxitin.txt — 1555 genomes
+  Data_Salmonella_enterica_ceftiofur.txt — 1431 genomes
+  Data_Salmonella_enterica_ceftriaxone.txt — 1494 genomes
+  Data_Salmonella_enterica_chloramphenicol.txt — 1897 genomes
+  Data_Salmonella_enterica_gentamicin.txt — 1751 genomes
+  Data_Salmonella_enterica_nalidixic_acid.txt — 1887 genomes
+  Data_Salmonella_enterica_streptomycin.txt — 1845 genomes
+  Data_Salmonella_enterica_sulfisoxazole.txt — 1359 genomes
+  Data_Salmonella_enterica_tetracycline.txt — 1885 genomes
+  Data_Staphylococcus_aureus_cefoxitin.txt — 1059 genomes
+  Data_Staphylococcus_aureus_ciprofloxacin.txt — 1864 genomes
+  Data_Staphylococcus_aureus_clindamycin.txt — 880 genomes
+  Data_Staphylococcus_aureus_erythromycin.txt — 2199 genomes
+  Data_Staphylococcus_aureus_fusidic_acid.txt — 2022 genomes
+  Data_Staphylococcus_aureus_gentamicin.txt — 2224 genomes
+  Data_Staphylococcus_aureus_methicillin.txt — 1956 genomes
+  Data_Staphylococcus_aureus_penicillin.txt — 1220 genomes
+  Data_Staphylococcus_aureus_tetracycline.txt — 1916 genomes
+  Data_Streptococcus_pneumoniae_beta-lactam.txt — 2402 genomes
+  Data_Streptococcus_pneumoniae_chloramphenicol.txt — 1903 genomes
+  Data_Streptococcus_pneumoniae_cotrimoxazole.txt — 1979 genomes
+  Data_Streptococcus_pneumoniae_erythromycin.txt — 2377 genomes
+  Data_Streptococcus_pneumoniae_penicillin.txt — 2248 genomes
+  Data_Streptococcus_pneumoniae_tetracycline.txt — 1905 genomes
+  Data_Streptococcus_pneumoniae_trimethoprim_sulfamethoxazole.txt — 2441 genomes
+
+Download targets identified (4):
+  Ecoli_ampicillin  ←  Data_Escherichia_coli_ampicillin.txt
+  Kpneumoniae_cipro  ←  Data_Klebsiella_pneumoniae_ciprofloxacin.txt
+  Kpneumoniae_carbapenem  ←  Data_Klebsiella_pneumoniae_meropenem.txt
+  Abaumannii_carbapenem  ←  Data_Acinetobacter_baumannii_meropenem.txt
+
+============================================================
+Species: Ecoli_ampicillin
+Source:  /Users/namangarg/Desktop/AMR NamanXSarika/Mendeley Data/genome_id/Data_Escherichia_coli_ampicillin.txt
+Genome IDs in label file: 1484
+Already cached (valid):   1
+Remaining to download:    1483
+  [50/1483] ok=44 fail=6 total_on_disk=45/1484 (3.0%)
+  [100/1483] ok=92 fail=8 total_on_disk=93/1484 (6.3%)

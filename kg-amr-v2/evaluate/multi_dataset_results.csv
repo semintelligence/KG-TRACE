@@ -1,0 +1,9 @@
+Dataset,Species,Drug,Model,AUROC,F1_macro,N_samples,N_test,Note
+MTB_INH,M. tuberculosis,INH (Isoniazid),KG-AMR v2 (100 epochs),0.9739575352814157,0.9580267598753505,5665,5665,Baseline model
+MTB_RIF,M. tuberculosis,RIF,KG-AMR v2 (10 epochs),0.9849610792432573,0.9646762370235182,37831,5675,Extension
+MTB_EMB,M. tuberculosis,EMB,KG-AMR v2 (10 epochs),0.9560692488152811,0.8610302564564483,35487,5324,Extension
+MTB_LEV,M. tuberculosis,LEV,KG-AMR v2 (10 epochs),0.9473117404435039,0.8938159092125689,15113,2267,Extension
+Klebsiella_pneumoniae_ciprofloxacin,Klebsiella pneumoniae,ciprofloxacin,N/A,N/A,N/A,1697,N/A,Labels only — no genome features available locally
+Klebsiella_pneumoniae_meropenem,Klebsiella pneumoniae,meropenem,N/A,N/A,N/A,1609,N/A,Labels only — no genome features available locally
+Acinetobacter_baumannii_meropenem,Acinetobacter baumannii,meropenem,N/A,N/A,N/A,445,N/A,Labels only — no genome features available locally
+Escherichia_coli_ampicillin,Escherichia coli,ampicillin,N/A,N/A,N/A,1484,N/A,Labels only — no genome features available locally

@@ -1,0 +1,14 @@
+{
+  "species": "Ecoli_ampicillin",
+  "n_train": 1064,
+  "n_val": 135,
+  "n_test": 133,
+  "f1_macro": 0.5876,
+  "f1_R": 0.7333,
+  "f1_S": 0.4419,
+  "auc_roc": 0.5485,
+  "accuracy": 0.6391,
+  "kmer_dim": 100000,
+  "num_genes": 478,
+  "elapsed_s": 35.7
+}

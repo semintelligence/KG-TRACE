@@ -1,0 +1,9 @@
+Species:                    Abaumannii_carbapenem
+Total in label file:        445
+Previously cached:          0
+Downloaded this session:    380
+Failed this session:        65
+Total valid FASTAs on disk: 380 / 445
+Elapsed:                    4.2 min
+Average rate:               107 genomes/min
+Failed IDs logged to:       /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/data/download_logs/Abaumannii_carbapenem_failed.txt

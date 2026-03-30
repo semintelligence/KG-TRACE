@@ -1,0 +1,26 @@
+name: kg-amr
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pip:
+    - torch>=2.1.0
+    - pytorch-lightning>=2.1.0
+    - pykeen>=1.10.1
+    - shap>=0.43.0
+    - networkx>=3.2
+    - plotly>=5.18.0
+    - xgboost>=2.0.0
+    - pyarrow>=14.0.0
+    - kaleido>=0.2.1
+    - tqdm
+    - joblib

@@ -1,0 +1,109 @@
+GPU available: True (mps), used: True
+TPU available: False, using: 0 TPU cores
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/trainer/connectors/logger_connector/logger_connector.py:76: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `pytorch_lightning` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:881: Checkpoint directory /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/checkpoints exists and is not empty.
+[1/6] Loading data...
+  Mutation matrix: (41460, 17352)
+  INH labels (dedup): 37761 (13965 R / 23796 S)
+  Overlapping samples: 37761
+  Final dataset: 37761 samples × 17352 features
+  Label distribution: 13965 R / 23796 S (37.0% R)
+
+[2/6] Building per-genome gene embeddings...
+  RotatE embeddings are complex64 — using magnitude (preserves KG_EMBED_DIM=64)
+  Entity embeddings: (25095, 64), dtype=float32
+  Catalogue genes: 26
+  Gene embedding matrix: (26, 64)
+  Genomes with ≥1 mutated gene: 37761
+  Genomes with 0 mutated genes: 0 (will use zero vectors)
+  Gene embeddings tensor: (37761, 26, 64)
+
+[3/6] Stratified 70:15:15 split...
+  Train: 26432 (37.0% R)
+  Val:   5664 (37.0% R)
+  Test:  5665 (37.0% R)
+  Saved split IDs to /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/split_ids.json
+
+[4/6] Building datasets & loaders...
+  Train batches: 826
+  Val batches: 89
+  Test batches: 89
+
+[5/6] Training KG-AMR v2...
+  kmer_dim=17352, num_genes=26
+  Total parameters: 9,142,493
+┏━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┓
+┃   ┃ Name            ┃ Type       ┃ Params ┃ Mode  ┃ FLOPs ┃
+┡━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━┩
+│ 0 │ genomic_encoder │ Sequential │  9.0 M │ train │     0 │
+│ 1 │ gene_attn       │ Linear     │     65 │ train │     0 │
+│ 2 │ gene_attn_q     │ Linear     │ 16.4 K │ train │     0 │
+│ 3 │ proj_g          │ Linear     │ 32.9 K │ train │     0 │
+│ 4 │ proj_k          │ Linear     │  8.3 K │ train │     0 │
+│ 5 │ gate_mlp        │ Sequential │ 49.4 K │ train │     0 │
+│ 6 │ classifier      │ Sequential │  8.4 K │ train │     0 │
+│ 7 │ gene_head       │ Sequential │  9.9 K │ train │     0 │
+└───┴─────────────────┴────────────┴────────┴───────┴───────┘
+Trainable params: 9.1 M                                                         
+Non-trainable params: 0                                                         
+Total params: 9.1 M                                                             
+Total estimated model params size (MB): 36                                      
+Modules in train mode: 24                                                       
+Modules in eval mode: 0                                                         
+Total FLOPs: 0                                                                  
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:434: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+Metric val_f1_macro improved. New best score: 0.958
+Epoch 0, global step 826: 'val_f1_macro' reached 0.95805 (best 0.95805), saving model to '/Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/checkpoints/best_model-v1.ckpt' as top 1
+Metric val_f1_macro improved by 0.000 >= min_delta = 0.0. New best score: 0.958
+Epoch 1, global step 1652: 'val_f1_macro' reached 0.95833 (best 0.95833), saving model to '/Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/checkpoints/best_model-v1.ckpt' as top 1
+Epoch 2, global step 2478: 'val_f1_macro' was not in top 1
+Metric val_f1_macro improved by 0.002 >= min_delta = 0.0. New best score: 0.960
+Epoch 3, global step 3304: 'val_f1_macro' reached 0.96011 (best 0.96011), saving model to '/Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/checkpoints/best_model-v1.ckpt' as top 1
+Epoch 4, global step 4130: 'val_f1_macro' was not in top 1
+Epoch 5, global step 4956: 'val_f1_macro' was not in top 1
+Epoch 6, global step 5782: 'val_f1_macro' was not in top 1
+Epoch 7, global step 6608: 'val_f1_macro' was not in top 1
+Epoch 8, global step 7434: 'val_f1_macro' was not in top 1
+Epoch 9, global step 8260: 'val_f1_macro' was not in top 1
+Epoch 10, global step 9086: 'val_f1_macro' was not in top 1
+Epoch 11, global step 9912: 'val_f1_macro' was not in top 1
+Epoch 12, global step 10738: 'val_f1_macro' was not in top 1
+Monitored metric val_f1_macro did not improve in the last 10 records. Best score: 0.960. Signaling Trainer to stop.
+Epoch 13, global step 11564: 'val_f1_macro' was not in top 1
+  Epoch   0 | train_loss=0.1887 | val_f1=0.9581
+  Epoch   5 | train_loss=0.0424 | val_f1=0.9557
+  Epoch  10 | train_loss=0.0881 | val_f1=0.9544
+Epoch 13/99 ━━━━━━━━━━━━━━━━━━━ 826/826 0:00:12 • 0:00:00 68.52it/s v_num: 1.000
+
+  Best model: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/checkpoints/best_model-v1.ckpt
+  Best val_f1_macro: 0.9601
+  Training log: /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/model/training_log.csv
+
+[6/6] Evaluating on test set...
+
+  === KG-AMR v2 Test Results (INH) ===
+  AUROC:     0.9757
+  F1-macro:  0.9594
+  Precision: 0.9647
+  Recall:    0.9549
+  Confusion Matrix:
+    [[3514   56]
+ [ 156 1939]]
+
+              precision    recall  f1-score   support
+
+           S       0.96      0.98      0.97      3570
+           R       0.97      0.93      0.95      2095
+
+    accuracy                           0.96      5665
+   macro avg       0.96      0.95      0.96      5665
+weighted avg       0.96      0.96      0.96      5665
+
+  Saved test outputs to model/test_outputs.npz
+
+  Total elapsed: 246.9s
+DONE

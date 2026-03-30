@@ -1,0 +1,9 @@
+Species:                    Kpneumoniae_carbapenem
+Total in label file:        1609
+Previously cached:          0
+Downloaded this session:    1556
+Failed this session:        53
+Total valid FASTAs on disk: 1556 / 1609
+Elapsed:                    19.3 min
+Average rate:               83 genomes/min
+Failed IDs logged to:       /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/data/download_logs/Kpneumoniae_carbapenem_failed.txt

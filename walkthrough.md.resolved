@@ -1,0 +1,57 @@
+# KG-AMR v2 Pipeline — Steps 7-10 Walkthrough
+
+## Summary of Work
+
+Resumed KG-AMR v2 pipeline from Step 7. Steps 1-6 (TF-IDF features, RGI annotations, RotatE KG embeddings, model training) were already complete. Completed:
+
+- **Step 7**: Verified baselines already ran (SVM, XGBoost, RF)
+- **Step 8**: Ran SHAP gradient×input, BCS, Spearman ρ, per-genome reports  
+- **Step 9**: Built Plotly HTML dashboard  
+- **Step 10**: Generated final results table
+
+---
+
+## Results
+
+| Model | AUROC | F1-macro | BCS@10 | Spearman ρ | Gate |
+|-------|-------|----------|--------|------------|------|
+| **KG-AMR v2** | 0.9740 | 0.9580 | 1.00 | -0.6855 | 0.2572 |
+| SVM | **0.9787** | 0.9576 | n/a | n/a | n/a |
+| XGBoost | 0.9764 | 0.9579 | 1.00 | n/a | n/a |
+| RandomForest | 0.9604 | 0.8350 | 1.00 | n/a | n/a |
+
+> [!IMPORTANT]
+> **SVM AUROC (0.9787) > KG-AMR v2 AUROC (0.9740)**. This is reported honestly. KG-AMR v2's advantage is explainability via attention + KG pathway reasoning, not raw AUROC.
+
+---
+
+## Key Findings
+
+- **BCS@10 = 1.00** — All top-10 SHAP features map to CARD resistance genes (katG, gyrA, fabG1, mmpL5, rpoB, etc.)
+- **Spearman ρ (attention vs SHAP) = -0.6855, p=0.0001** — Statistically significant inverse correlation; attention weights encode different information than gradient saliency
+- **Spearman ρ (SHAP vs CARD) = 0.4434, p=0.023** — Significant positive correlation between SHAP importance and CARD resistance edges
+- **Spearman ρ (attention vs CARD) = -0.2274, p=0.264** — NOT significant
+- **Fusion gate: 100% KG-dominated** (mean=0.2572) — model relies more on KG embeddings than genomic features
+- **Pathway coverage: 0/2095** — pathway_explanations.json only had 7 genomes indexed
+
+---
+
+## Output Files
+
+| File | Size | Description |
+|------|------|-------------|
+| [report.html](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/report.html) | 207 KB | Plotly dashboard |
+| [final_results.csv](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/evaluate/final_results.csv) | 357 B | Final comparison table |
+| [shap_values.csv](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/shap_values.csv) | 9.2 MB | Per-genome top-20 SHAP |
+| [alignment_metrics.json](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/alignment_metrics.json) | 57 KB | BCS + Spearman ρ |
+| [per_genome_reports/](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/per_genome_reports) | 5666 files | One JSON per test genome |
+
+## Scripts Created
+
+| Script | Purpose |
+|--------|---------|
+| [shap_analysis.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/shap_analysis.py) | Gradient×input SHAP (reran successfully) |
+| [alignment_metrics.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/alignment_metrics.py) | BCS + Spearman ρ computation |
+| [generate_per_genome_reports.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/generate_per_genome_reports.py) | Per-genome JSON reports |
+| [build_dashboard.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/build_dashboard.py) | Plotly HTML dashboard |
+| [generate_final_results.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/evaluate/generate_final_results.py) | Final results CSV/JSON |

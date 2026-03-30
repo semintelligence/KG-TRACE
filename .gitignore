@@ -1,0 +1,46 @@
+# ── Raw data directories (too large for GitHub) ────────────────────────────
+Mendeley Data/fasta/
+Zenodo/
+
+# ── Model checkpoints (50–200 MB each) ─────────────────────────────────────
+*.ckpt
+*.pt
+*.pth
+
+# ── Large intermediate arrays ───────────────────────────────────────────────
+kg-amr-v2/explain/shap_raw_values.npz
+kg-amr-v2/baselines/baseline_shap_values.npz
+kg-amr-v2/kg/embeddings/entity_embeddings.npy
+kg-amr-v2/kg/embeddings/rotate_model.pt
+
+# k-mer matrices (sparse binary, regenerable from FASTAs)
+kg-amr-v2/features/matrices/*.npz
+kg-amr-v2/features/matrices/*.npy
+
+# Large annotation raw JSON files
+kg-amr-v2/features/annotations/*_amr_raw.json
+
+# Parquet label files (regenerable from Zenodo)
+kg-amr-v2/features/labels/*.parquet
+
+# mutation matrix (regenerable from step1)
+kg-amr-v2/features/mutation_matrix.npz
+kg-amr-v2/features/mutation_samples.json
+kg-amr-v2/features/mutation_features.json
+
+# Per-genome reports (5665 files, regenerable)
+kg-amr-v2/explain/per_genome_reports/
+
+# PyTorch Lightning logs (training artifacts)
+kg-amr-v2/lightning_logs/
+kg-amr-v2/model/species/*/version_*/
+kg-amr-v2/model/species/*/lightning_logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Jupyter checkpoints
+.ipynb_checkpoints/

@@ -1,0 +1,14 @@
+{
+  "species": "Abaumannii_carbapenem",
+  "n_train": 298,
+  "n_val": 33,
+  "n_test": 34,
+  "f1_macro": 0.4848,
+  "f1_R": 0.6364,
+  "f1_S": 0.3333,
+  "auc_roc": 0.4917,
+  "accuracy": 0.5294,
+  "kmer_dim": 100000,
+  "num_genes": 256,
+  "elapsed_s": 7.1
+}
