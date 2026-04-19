@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import networkx as nx

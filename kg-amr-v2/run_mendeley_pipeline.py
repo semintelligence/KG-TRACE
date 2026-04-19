@@ -83,7 +83,7 @@ def main():
         start_idx = keys.index(args.from_stage)
 
     print("=" * 70)
-    print("  KG-AMR v2 — Mendeley Multi-Species Pipeline")
+    print("  KG-AMR — Mendeley Multi-Species Pipeline")
     print("=" * 70)
     print(f"  Working dir: {PROJECT_DIR}")
     print(f"  Python:      {sys.executable}")

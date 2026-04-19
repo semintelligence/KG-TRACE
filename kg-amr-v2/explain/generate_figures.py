@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import plotly.graph_objects as go
@@ -222,7 +222,7 @@ except Exception:
 print("  Saved shap_top30_bar")
 
 # Figure D: Confusion matrices
-all_models_cm = [("KG-AMR v2", kg_results["confusion_matrix"])]
+all_models_cm = [("KG-AMR", kg_results["confusion_matrix"])]
 for br in baseline_results:
     all_models_cm.append((br["model"], br["confusion_matrix"]))
 

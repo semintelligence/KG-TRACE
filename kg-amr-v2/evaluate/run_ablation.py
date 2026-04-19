@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import KG_EMBED_DIM, GENOMIC_HIDDEN, FUSED_DIM, PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import torch
@@ -280,15 +280,15 @@ class ScalarFusion(pl.LightningModule):
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
 
-# Full KG-AMR v2 (re-import)
-from model.kg_amr_v2 import KGAMRv2
+# Full KG-AMR (re-import)
+from model.kg_amr import KGAMR
 
 ABLATION_CONFIGS = [
     ("genomic_only", "k-mer features only, no KG branch", GenomicOnly),
     ("kg_only", "KG embeddings only, no k-mer branch", KGOnly),
     ("avg_pool_no_attention", "Average pooling instead of self-attention", AvgPoolFusion),
     ("scalar_fusion", "Scalar α·g + (1-α)·k instead of cross-attention gate", ScalarFusion),
-    ("full_kg_amr_v2", "Full KG-AMR v2 (10 epochs for comparison)", KGAMRv2),
+    ("full_kg_amr", "Full KG-AMR (10 epochs for comparison)", KGAMR),
 ]
 
 # ── 3. Train all configurations ─────────────────────────────────────────────
@@ -396,7 +396,7 @@ print(f"\n[4/4] Saving ablation results...")
 # Get full model AUROC for delta computation
 full_auroc = None
 for r in ablation_results:
-    if r["config"] == "full_kg_amr_v2":
+    if r["config"] == "full_kg_amr":
         full_auroc = r["auroc"]
         break
 

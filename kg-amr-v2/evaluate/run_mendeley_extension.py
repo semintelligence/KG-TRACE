@@ -114,6 +114,6 @@ with open(report_path, "w") as f:
 print(f"\n  Saved to: {report_path}")
 print("\n  CONCLUSION: Mendeley extension requires genome sequences for")
 print("  k-mer feature computation. These are not available locally.")
-print("  The KG-AMR v2 multi-dataset evaluation uses MTB CRyPTIC data")
+print("  The KG-AMR multi-dataset evaluation uses MTB CRyPTIC data")
 print("  across multiple drugs instead.")
 print("DONE — run_mendeley_extension.py")

@@ -6,11 +6,12 @@ import os
 BASE_DIR     = os.path.expanduser("~/Desktop/AMR NamanXSarika")
 MENDELEY_DIR = os.path.join(BASE_DIR, "Mendeley Data")
 ZENODO_DIR   = os.path.join(BASE_DIR, "Zenodo")
-PROJECT_DIR  = os.path.join(BASE_DIR, "kg-amr-v2")
+PROJECT_DIR  = os.path.join(BASE_DIR, "KG-AMR")
 
 for path in [MENDELEY_DIR, ZENODO_DIR]:
     assert os.path.exists(path), f"ABORT: Path not found: {path}"
-
+k
+L'//';;.''
 os.makedirs(PROJECT_DIR, exist_ok=True)
 print(f"Mendeley: {MENDELEY_DIR}")
 print(f"Zenodo:   {ZENODO_DIR}")

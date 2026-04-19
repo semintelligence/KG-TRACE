@@ -1,6 +1,6 @@
 """
 Task 4 Extension 2 — Multi-drug MTB extension.
-Trains KG-AMR v2 on additional CRyPTIC drugs using the SAME mutation matrix
+Trains KG-AMR on additional CRyPTIC drugs using the SAME mutation matrix
 and RotatE embeddings. Each drug gets a freshly initialized model for 10 epochs.
 """
 import sys, os, time, json, csv, gc
@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import KG_EMBED_DIM, FUSED_DIM, PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import pandas as pd
@@ -87,9 +87,9 @@ class AMRDataset(Dataset):
         return self.X[idx], self.gene_embeds[idx], self.y_amr[idx], self.gene_presence[idx]
 
 # ── 3. Train each drug ──────────────────────────────────────────────────────
-print(f"\n[2/4] Training KG-AMR v2 on {len(TARGET_DRUGS)} drugs ({MAX_EPOCHS} epochs each)...")
+print(f"\n[2/4] Training KG-AMR on {len(TARGET_DRUGS)} drugs ({MAX_EPOCHS} epochs each)...")
 
-from model.kg_amr_v2 import KGAMRv2
+from model.kg_amr import KGAMR
 
 all_results = []
 
@@ -159,7 +159,7 @@ for drug in TARGET_DRUGS:
     KMER_DIM = X.shape[1]
     
     # Train
-    model = KGAMRv2(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
+    model = KGAMR(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
     
     ckpt_path = os.path.join(CKPT_DIR, f"MTB_{drug}")
     os.makedirs(ckpt_path, exist_ok=True)
@@ -186,7 +186,7 @@ for drug in TARGET_DRUGS:
     # Load best checkpoint
     best_ckpt = checkpoint_cb.best_model_path
     if best_ckpt:
-        model = KGAMRv2.load_from_checkpoint(best_ckpt, kmer_dim=KMER_DIM, num_genes=NUM_GENES)
+        model = KGAMR.load_from_checkpoint(best_ckpt, kmer_dim=KMER_DIM, num_genes=NUM_GENES)
     model.eval()
     model = model.to("cpu")
     

@@ -1,7 +1,7 @@
-# KG-AMR v2 — Session Notes
+# KG-AMR — Session Notes
 
 ## Project Summary
-KG-AMR v2 is a hybrid deep-learning model for antimicrobial resistance (AMR) prediction that fuses binary mutation features with knowledge graph (KG) embeddings via cross-attention gating.
+KG-AMR is a hybrid deep-learning model for antimicrobial resistance (AMR) prediction that fuses binary mutation features with knowledge graph (KG) embeddings via cross-attention gating.
 
 ## Architecture
 - **Genomic encoder**: Linear(17352→512)→BN→ReLU→Drop(0.3)→Linear(512→256)
@@ -15,7 +15,7 @@ KG-AMR v2 is a hybrid deep-learning model for antimicrobial resistance (AMR) pre
 ### INH Baseline (100 epochs, n_test=5,665)
 | Model | AUROC | F1-macro |
 |-------|-------|----------|
-| KG-AMR v2 | 0.9740 | 0.9580 |
+| KG-AMR | 0.9740 | 0.9580 |
 | SVM | 0.9787 | 0.9576 |
 | XGBoost | 0.9764 | 0.9579 |
 | Random Forest | 0.9604 | 0.8350 |
@@ -35,10 +35,10 @@ KG-AMR v2 is a hybrid deep-learning model for antimicrobial resistance (AMR) pre
 | kg_only | 0.9473 | −0.0249 |
 | avg_pool_no_attention | 0.9748 | +0.0026 |
 | scalar_fusion | 0.9773 | +0.0051 |
-| full_kg_amr_v2 | 0.9722 | baseline |
+| full_kg_amr | 0.9722 | baseline |
 
 ## Honest Observations
-1. **SVM baseline outperforms KG-AMR v2** on AUROC (0.9787 vs 0.9740). KG-AMR v2's value is interpretability, not raw classification.
+1. **SVM baseline outperforms KG-AMR** on AUROC (0.9787 vs 0.9740). KG-AMR's value is interpretability, not raw classification.
 2. **Genomic-only ablation (0.9780) > full model (0.9722)** at 10 epochs — KG adds interpretability more than discriminative power.
 3. **Mendeley non-MTB datasets**: Only labels available locally — no genome sequences for feature extraction. KG is MTB-specific.
 4. All metrics computed from actual model outputs, zero hardcoded values.

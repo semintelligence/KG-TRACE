@@ -7,7 +7,7 @@ Fully resume-safe. Logs every failure. Never fakes success counts.
 import os, time, glob, requests, pandas as pd
 from pathlib import Path
 
-PROJECT       = os.path.expanduser("~/Desktop/AMR NamanXSarika/kg-amr-v2")
+PROJECT       = os.path.expanduser("~/Desktop/AMR NamanXSarika/KG-AMR")
 GENOME_ID_DIR = os.path.expanduser("~/Desktop/AMR NamanXSarika/Mendeley Data/genome_id")
 FASTA_BASE    = os.path.expanduser("~/Desktop/AMR NamanXSarika/Mendeley Data/fasta")
 LOG_DIR       = os.path.join(PROJECT, "data/download_logs")
@@ -123,7 +123,7 @@ def download_species(txt_file, species_name):
     failed_records = []  # (genome_id, error_msg)
 
     session = requests.Session()
-    session.headers.update({"User-Agent": "KG-AMR-v2/1.0 (research; contact: github.com/kg-amr)"})
+    session.headers.update({"User-Agent": "KG-AMR/1.0 (research; contact: github.com/kg-amr)"})
 
     for i, gid in enumerate(remaining):
         out_path = os.path.join(out_dir, f"{gid}.fna")

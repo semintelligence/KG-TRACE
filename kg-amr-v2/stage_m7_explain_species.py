@@ -136,7 +136,7 @@ def load_species_data(species):
     }
 
 
-from model.kg_amr_v2 import KGAMRv2
+from model.kg_amr import KGAMR
 
 for species in SPECIES_LIST:
     print(f"\n{'='*60}")
@@ -163,7 +163,7 @@ for species in SPECIES_LIST:
     genes_ordered= data["genes_ordered"]
     idx_to_kmer  = data["idx_to_kmer"]
 
-    model = KGAMRv2.load_from_checkpoint(best_ckpt)
+    model = KGAMR.load_from_checkpoint(best_ckpt)
     # Use CPU for gradient-based analysis (MPS doesn't support grad on inputs reliably)
     eval_device = torch.device("cpu")
     model = model.to(eval_device)

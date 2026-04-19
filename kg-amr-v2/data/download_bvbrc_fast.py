@@ -8,7 +8,7 @@ import os, glob, time, threading, requests, pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-PROJECT       = os.path.expanduser("~/Desktop/AMR NamanXSarika/kg-amr-v2")
+PROJECT       = os.path.expanduser("~/Desktop/AMR NamanXSarika/KG-AMR")
 GENOME_ID_DIR = os.path.expanduser("~/Desktop/AMR NamanXSarika/Mendeley Data/genome_id")
 FASTA_BASE    = os.path.expanduser("~/Desktop/AMR NamanXSarika/Mendeley Data/fasta")
 LOG_DIR       = os.path.join(PROJECT, "data/download_logs")
@@ -102,7 +102,7 @@ def download_species(txt_file, species_name):
     def get_session():
         if not hasattr(thread_local, "session"):
             s = requests.Session()
-            s.headers.update({"User-Agent": "KG-AMR-v2/1.0 (research)"})
+            s.headers.update({"User-Agent": "KG-AMR/1.0 (research)"})
             thread_local.session = s
         return thread_local.session
 

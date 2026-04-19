@@ -72,8 +72,8 @@
     "train_time_s": 190.1
   },
   {
-    "config": "full_kg_amr_v2",
-    "description": "Full KG-AMR v2 (10 epochs for comparison)",
+    "config": "full_kg_amr",
+    "description": "Full KG-AMR (10 epochs for comparison)",
     "auroc": 0.9772730189928001,
     "f1_macro": 0.9560912301634432,
     "confusion_matrix": [

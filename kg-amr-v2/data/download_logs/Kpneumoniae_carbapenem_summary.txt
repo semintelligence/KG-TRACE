@@ -6,4 +6,4 @@ Failed this session:        53
 Total valid FASTAs on disk: 1556 / 1609
 Elapsed:                    19.3 min
 Average rate:               83 genomes/min
-Failed IDs logged to:       /Users/namangarg/Desktop/AMR NamanXSarika/kg-amr-v2/data/download_logs/Kpneumoniae_carbapenem_failed.txt
+Failed IDs logged to:       /Users/namangarg/Desktop/AMR NamanXSarika/KG-AMR/data/download_logs/Kpneumoniae_carbapenem_failed.txt

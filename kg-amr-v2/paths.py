@@ -1,5 +1,5 @@
 """
-paths.py — Single source of truth for all paths in the KG-AMR v2 pipeline.
+paths.py — Single source of truth for all paths in the KG-AMR pipeline.
 Every script imports from here. No path is hardcoded anywhere else.
 """
 import os
@@ -7,7 +7,7 @@ import os
 BASE_DIR     = os.path.expanduser("~/Desktop/AMR NamanXSarika")
 MENDELEY_DIR = os.path.join(BASE_DIR, "Mendeley Data")
 ZENODO_DIR   = os.path.join(BASE_DIR, "Zenodo")
-PROJECT_DIR  = os.path.join(BASE_DIR, "kg-amr-v2")
+PROJECT_DIR  = os.path.join(BASE_DIR, "KG-AMR")
 
 # ── Model hyper-parameters (single source of truth) ────────────────────────
 KG_EMBED_DIM   = 64   # RotatE entity/relation embedding dimension

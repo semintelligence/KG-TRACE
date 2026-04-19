@@ -55,7 +55,7 @@ for species in SPECIES_LIST:
         "auc_roc":        r.get("auc_roc", ""),
         "accuracy":       r.get("accuracy", ""),
         "kmer_dim":       r.get("kmer_dim", ""),
-        "model":          "KG-AMR-v2",
+        "model":          "KG-AMR",
     })
     print(f"  Loaded: {species}  F1={r.get('f1_macro', 'N/A'):.4f}"
           if isinstance(r.get('f1_macro'), float) else f"  Loaded: {species}")
@@ -163,12 +163,12 @@ else:
     # Create a fresh minimal report
     fresh_html = f"""<!DOCTYPE html>
 <html><head><meta charset="utf-8">
-<title>KG-AMR v2 — Results Dashboard</title>
+<title>KG-AMR — Results Dashboard</title>
 <style>body{{font-family:Arial,sans-serif;max-width:1200px;margin:40px auto;padding:20px}}
 h1{{color:#2c5282}} h2{{color:#2d3748;border-bottom:2px solid #e2e8f0;padding-bottom:6px}}
 </style></head>
 <body>
-<h1>KG-AMR v2 — Multi-Species Results Dashboard</h1>
+<h1>KG-AMR — Multi-Species Results Dashboard</h1>
 {species_section_html}
 </body></html>"""
     with open(report_path, "w") as f:

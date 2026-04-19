@@ -1,6 +1,6 @@
 """
-Stage M6: Train KG-AMR v2 Per Species
-Trains a separate KGAMRv2 model for each species using the phylogenetic CV folds.
+Stage M6: Train KG-AMR Per Species
+Trains a separate KGAMR model for each species using the phylogenetic CV folds.
 
 CV fold assignment (10-fold phylogenetic):
   - Fold 9 (last)   → test
@@ -67,7 +67,7 @@ class AMRDataset(Dataset):
 
 
 # ── Model (inline so no path issues) ────────────────────────────────────────
-from model.kg_amr_v2 import KGAMRv2
+from model.kg_amr import KGAMR
 
 
 # ── Training helper ──────────────────────────────────────────────────────────
@@ -249,7 +249,7 @@ def train_species(species, cv_species_folder, cv_drug):
     test_loader  = make_loader(idx_test,  shuffle=False)
 
     # ── Model ─────────────────────────────────────────────────────────────
-    model = KGAMRv2(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
+    model = KGAMR(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
 
     sp_model_dir = os.path.join(MODEL_BASE, species)
     ckpt_dir     = os.path.join(sp_model_dir, "checkpoints")
@@ -280,7 +280,7 @@ def train_species(species, cv_species_folder, cv_drug):
     # ── Test evaluation ────────────────────────────────────────────────────
     best_ckpt = os.path.join(ckpt_dir, "best.ckpt")
     if os.path.exists(best_ckpt):
-        model = KGAMRv2.load_from_checkpoint(best_ckpt)
+        model = KGAMR.load_from_checkpoint(best_ckpt)
     eval_device = torch.device(DEVICE)
     model = model.to(eval_device)
     model.eval()

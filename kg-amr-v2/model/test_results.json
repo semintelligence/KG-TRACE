@@ -1,6 +1,6 @@
 {
   "drug": "INH",
-  "model": "KG-AMR_v2",
+  "model": "KG-AMR",
   "auroc": 0.975707266200036,
   "f1_macro": 0.9594422456064515,
   "precision_macro": 0.9647115062861513,

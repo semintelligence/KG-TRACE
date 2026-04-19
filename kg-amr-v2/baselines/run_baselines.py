@@ -1,6 +1,6 @@
 """
 Step 7: Run Baselines — SVM, XGBoost, Random Forest
-Uses IDENTICAL train/test splits as KG-AMR v2.
+Uses IDENTICAL train/test splits as KG-AMR.
 All metrics computed from real predictions, never hardcoded.
 """
 import sys, os, time, json, csv
@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import pandas as pd
@@ -30,8 +30,8 @@ os.makedirs(BASELINES_DIR, exist_ok=True)
 
 DRUG = "INH"
 
-# ── 1. Load same data and splits as KG-AMR v2 ───────────────────────────────
-print("[1/4] Loading data with IDENTICAL splits as KG-AMR v2...")
+# ── 1. Load same data and splits as KG-AMR ───────────────────────────────
+print("[1/4] Loading data with IDENTICAL splits as KG-AMR...")
 t0 = time.time()
 
 # Load mutation matrix

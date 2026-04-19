@@ -1,6 +1,6 @@
 [
   {
-    "Model": "KG-AMR v2",
+    "Model": "KG-AMR",
     "AUROC": "0.9757",
     "F1-macro": "0.9594",
     "Precision": "0.9647",

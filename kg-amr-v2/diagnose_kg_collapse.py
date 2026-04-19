@@ -1,7 +1,7 @@
 """
 diagnose_kg_collapse.py
 =======================
-Run from your kg-amr-v2/ directory:
+Run from your KG-AMR/ directory:
     python3 diagnose_kg_collapse.py
 
 Checks:
@@ -284,7 +284,7 @@ print(f"""
 
   The attention degeneracy is a ARCHITECTURAL BUG, not a data problem:
 
-      In model/kg_amr_v2.py line ~54:
+      In model/kg_amr.py line ~54:
           attn_scores = self.gene_attn(gene_embeds)   # [batch, n_genes, 1]
 
       gene_embeds is the SAME 26×64 matrix for every sample in the dataset.
@@ -300,7 +300,7 @@ print(f"""
   FIX A — Cross-attention (query from genomic encoder) [RECOMMENDED]:
   -------------------------------------------------------------------
   The correct fix is to make the attention query genome-specific.
-  In model/kg_amr_v2.py, replace:
+  In model/kg_amr.py, replace:
 
       # CURRENT (wrong — sample-agnostic):
       self.gene_attn = nn.Linear(KG_EMBED_DIM, 1)
@@ -352,4 +352,4 @@ print(f"""
   with only 1–3 triples. This is expected and not a problem.
 """)
 
-print(f"{BOLD}Done. The fix is in model/kg_amr_v2.py — make gene_attn query-conditioned on genomic features.{RST}\n")
+print(f"{BOLD}Done. The fix is in model/kg_amr.py — make gene_attn query-conditioned on genomic features.{RST}\n")

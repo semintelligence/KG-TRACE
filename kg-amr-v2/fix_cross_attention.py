@@ -1,10 +1,10 @@
 """
 fix_cross_attention.py
 ======================
-Patches kg_amr_v2.py to fix the sample-agnostic attention bug,
+Patches kg_amr.py to fix the sample-agnostic attention bug,
 then validates the fix before you retrain.
 
-Run from kg-amr-v2/:
+Run from KG-AMR/:
     python3 fix_cross_attention.py
 
 What it does:
@@ -29,11 +29,11 @@ def header(t): print(f"\n{BOLD}{'='*60}\n  {t}\n{'='*60}{RST}")
 # ── Step 1: Backup ─────────────────────────────────────────────────────────────
 header("1. Backing Up Original Model")
 
-MODEL_PATH  = Path("model/kg_amr_v2.py")
-BACKUP_PATH = Path("model/kg_amr_v2.py.bak_original")
+MODEL_PATH  = Path("model/kg_amr.py")
+BACKUP_PATH = Path("model/kg_amr.py.bak_original")
 
 if not MODEL_PATH.exists():
-    bad(f"Cannot find {MODEL_PATH} — run from your kg-amr-v2/ directory")
+    bad(f"Cannot find {MODEL_PATH} — run from your KG-AMR/ directory")
 
 if BACKUP_PATH.exists():
     warn(f"Backup already exists at {BACKUP_PATH} — skipping overwrite")
@@ -95,7 +95,7 @@ MARKER_B = "attn_scores = self.gene_attn(gene_embeds)          # [batch, n_genes
 if MARKER_B not in src:
     bad(
         f"Could not find the exact MARKER_B string in forward().\n"
-        "  Check model/kg_amr_v2.py for the exact whitespace/comment and update MARKER_B."
+        "  Check model/kg_amr.py for the exact whitespace/comment and update MARKER_B."
     )
 
 for line in src.splitlines():
@@ -145,10 +145,10 @@ try:
     import importlib
     # Remove cached module so reload picks up the patched file
     for mod_name in list(sys.modules.keys()):
-        if "kg_amr_v2" in mod_name:
+        if "kg_amr" in mod_name:
             del sys.modules[mod_name]
-    import model.kg_amr_v2 as kg_mod
-    KGAMRv2 = kg_mod.KGAMRv2
+    import model.kg_amr as kg_mod
+    KGAMR = kg_mod.KGAMR
     ok("Patched model imported successfully")
 except Exception as e:
     bad(f"Import failed after patching: {e}")
@@ -163,7 +163,7 @@ for kwargs in [
     dict(genomic_dim=17352, kg_embed_dim=KG_DIM, n_genes=N_GENES),
 ]:
     try:
-        model = KGAMRv2(**kwargs)
+        model = KGAMR(**kwargs)
         ok(f"Model instantiated with kwargs: {list(kwargs.keys())}")
         break
     except TypeError:
@@ -171,7 +171,7 @@ for kwargs in [
 
 if model is None:
     bad(
-        "Could not auto-instantiate KGAMRv2. Check the constructor signature.\n"
+        "Could not auto-instantiate KGAMR. Check the constructor signature.\n"
         "  Then instantiate it manually here and re-run from the validation block."
     )
 
@@ -234,7 +234,7 @@ try:
 except Exception as e:
     warn(f"Attention check raised an exception: {e}")
     import traceback; traceback.print_exc()
-    warn("Inspect model/kg_amr_v2.py forward() manually to confirm.")
+    warn("Inspect model/kg_amr.py forward() manually to confirm.")
 
 
 # ── Step 4: Show the patched forward() for visual confirmation ─────────────────
@@ -285,7 +285,7 @@ print(f"""
 
   ROLLBACK
   --------
-  cp model/kg_amr_v2.py.bak_original model/kg_amr_v2.py
+  cp model/kg_amr.py.bak_original model/kg_amr.py
 """)
 
 print(f"{BOLD}Patch complete. Verify forward() above, then retrain.{RST}\n")

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate all 10 publication figures for KG-AMR v2.
+Generate all 15 publication figures for KG-AMR.
 Reads only from real result files — no hardcoded metrics.
 Saves each figure as .html + .png + .pdf in explain/figures/.
 """
@@ -12,7 +12,9 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from sklearn.metrics import roc_curve, auc, confusion_matrix
 
-PROJECT = os.path.expanduser("~/Desktop/AMR NamanXSarika/kg-amr-v2")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from paths import PROJECT_DIR
+PROJECT = PROJECT_DIR
 os.chdir(PROJECT)
 FIG_DIR = os.path.join(PROJECT, "explain", "figures")
 os.makedirs(FIG_DIR, exist_ok=True)
@@ -45,7 +47,7 @@ def fig1_architecture():
     ax.set_xlim(0, 14)
     ax.set_ylim(0, 10)
     ax.axis("off")
-    ax.set_title("KG-AMR v2 Architecture", fontsize=16, fontweight="bold", pad=20)
+    ax.set_title("KG-AMR Architecture", fontsize=16, fontweight="bold", pad=20)
 
     def box(x, y, w, h, text, color="#4A90D9", fontsize=9):
         rect = mpatches.FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.15",
@@ -118,13 +120,13 @@ def fig1_architecture():
 # Figure 2: Confusion Matrices (2×2 grid)
 # ============================================================
 def fig2_confusion_matrices():
-    """2×2 grid: KG-AMR v2, SVM, XGBoost, RF confusion matrices."""
+    """2×2 grid: KG-AMR, SVM, XGBoost, RF confusion matrices."""
     # Load KG-AMR outputs
     to = np.load("model/test_outputs.npz", allow_pickle=True)
     bp = np.load("baselines/baseline_predictions.npz", allow_pickle=True)
 
     models = {
-        "KG-AMR v2": (to["preds"], to["labels"]),
+        "KG-AMR": (to["preds"], to["labels"]),
         "SVM": (bp["svm_preds"], bp["y_test"]),
         "XGBoost": (bp["xgb_preds"], bp["y_test"]),
         "Random Forest": (bp["rf_preds"], bp["y_test"]),
@@ -177,7 +179,7 @@ def fig3_multi_dataset_auroc():
         customdata=df_valid["N_test"].astype(int),
     ))
     fig.update_layout(
-        title="KG-AMR v2 AUROC Across Drug Datasets",
+        title="KG-AMR AUROC Across Drug Datasets",
         xaxis_title="Dataset",
         yaxis_title="AUROC",
         yaxis=dict(range=[0.9, 1.0]),
@@ -387,23 +389,22 @@ def fig8_fusion_gate():
 # Figure 9: ROC Curves Overlay
 # ============================================================
 def fig9_roc_curves():
-    """ROC curves for KG-AMR v2 and all baselines on same test set."""
+    """ROC curves for KG-AMR and all baselines on same test set."""
     to = np.load("model/test_outputs.npz", allow_pickle=True)
     bp = np.load("baselines/baseline_predictions.npz", allow_pickle=True)
 
-    labels = to["labels"]
-
+    # Use matched labels for each source to avoid sample-ordering mismatch
     curves = {
-        "KG-AMR v2": to["probs"],
-        "SVM": bp["svm_probs"],
-        "XGBoost": bp["xgb_probs"],
-        "Random Forest": bp["rf_probs"],
+        "KG-AMR": (to["probs"], to["labels"]),
+        "SVM": (bp["svm_probs"], bp["y_test"]),
+        "XGBoost": (bp["xgb_probs"], bp["y_test"]),
+        "Random Forest": (bp["rf_probs"], bp["y_test"]),
     }
-    colors = {"KG-AMR v2": "#E74C3C", "SVM": "#2980B9",
+    colors = {"KG-AMR": "#E74C3C", "SVM": "#2980B9",
               "XGBoost": "#27AE60", "Random Forest": "#8E44AD"}
 
     fig = go.Figure()
-    for name, probs in curves.items():
+    for name, (probs, labels) in curves.items():
         fpr, tpr, _ = roc_curve(labels, probs)
         roc_auc = auc(fpr, tpr)
         fig.add_trace(go.Scatter(
@@ -476,39 +477,447 @@ def fig10_pathway_coverage():
 
 
 # ============================================================
+# Figure 11: KG Structure Diagram
+# ============================================================
+def fig11_kg_structure():
+    """Knowledge Graph schema diagram showing node types and edge types."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+    from matplotlib.patches import FancyArrowPatch
+
+    fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+
+    # ---- Panel A: Main KG (M. tuberculosis) ----
+    ax = axes[0]
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+    ax.axis("off")
+    ax.set_title("A) M. tuberculosis KG\n60,017 triples · 25,095 entities",
+                 fontsize=13, fontweight="bold", pad=15)
+
+    node_colors = {"gene": "#2980B9", "mutation": "#E74C3C",
+                   "drug": "#27AE60", "mechanism": "#8E44AD"}
+
+    def draw_node(ax, x, y, w, h, label, sublabel, color):
+        rect = mpatches.FancyBboxPatch(
+            (x, y), w, h, boxstyle="round,pad=0.15",
+            facecolor=color, edgecolor="black", linewidth=1.5, alpha=0.9)
+        ax.add_patch(rect)
+        ax.text(x + w/2, y + h*0.62, label, ha="center", va="center",
+                fontsize=11, fontweight="bold", color="white")
+        ax.text(x + w/2, y + h*0.28, sublabel, ha="center", va="center",
+                fontsize=7.5, color="white", style="italic")
+
+    def draw_edge(ax, x1, y1, x2, y2, label, color="black", fontsize=7):
+        ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                    arrowprops=dict(arrowstyle="-|>", color=color, lw=1.8))
+        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+        ax.text(mx, my + 0.2, label, ha="center", va="center",
+                fontsize=fontsize, color=color,
+                bbox=dict(boxstyle="round,pad=0.15", facecolor="white",
+                          edgecolor=color, alpha=0.9))
+
+    # Nodes for panel A
+    draw_node(ax, 0.5, 7.5, 3, 1.2, "Gene", "n=26  (e.g. katG)", node_colors["gene"])
+    draw_node(ax, 6.5, 7.5, 3, 1.2, "Mutation", "n=25,045  (e.g. S315T)", node_colors["mutation"])
+    draw_node(ax, 0.5, 3.5, 3, 1.2, "Mechanism", "n=9  (e.g. cell_wall)", node_colors["mechanism"])
+    draw_node(ax, 6.5, 3.5, 3, 1.2, "Drug", "n=15  (e.g. INH)", node_colors["drug"])
+
+    # Edges for panel A
+    draw_edge(ax, 3.5, 8.1, 6.5, 8.1, "has_mutation\n(25,045)", "#E74C3C")
+    draw_edge(ax, 8.0, 7.5, 8.0, 4.7, "confers_resistance_to\n(4,972)", "#E74C3C")
+    draw_edge(ax, 7.5, 7.5, 7.5, 4.7, "confers_suscept._to\n(18,268)", "#27AE60", fontsize=6)
+    draw_edge(ax, 2.0, 7.5, 2.0, 4.7, "belongs_to\n(26)", "#8E44AD")
+    draw_edge(ax, 6.5, 4.1, 3.5, 4.1, "targets\n(20)", "#2980B9")
+
+    # Example subgraph
+    ax.text(5.0, 1.8, "Example path:", fontsize=9, fontweight="bold", ha="center")
+    ax.text(5.0, 1.1, "katG →[has_mutation]→ katG:S315T →[confers_resistance_to]→ INH",
+            fontsize=8, ha="center", family="monospace",
+            bbox=dict(boxstyle="round", facecolor="#f0f0f0", edgecolor="gray"))
+    ax.text(5.0, 0.4, "katG →[belongs_to]→ cell_wall_synthesis ←[targets]← INH",
+            fontsize=8, ha="center", family="monospace",
+            bbox=dict(boxstyle="round", facecolor="#f0f0f0", edgecolor="gray"))
+
+    # ---- Panel B: Gram-Negative KGs ----
+    ax = axes[1]
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+    ax.axis("off")
+    ax.set_title("B) Gram-Negative Species KGs\n4 species · 3 relation types",
+                 fontsize=13, fontweight="bold", pad=15)
+
+    draw_node(ax, 3.5, 7.5, 3, 1.2, "Gene", "e.g. NDM-1, OXA-23", "#2980B9")
+    draw_node(ax, 0.2, 3.5, 3.2, 1.2, "Mechanism\nClass", "e.g. carbapenemase", "#8E44AD")
+    draw_node(ax, 6.6, 3.5, 3.2, 1.2, "Drug", "e.g. carbapenem", "#27AE60")
+
+    draw_edge(ax, 4.0, 7.5, 2.0, 4.7, "belongs_to_class", "#8E44AD")
+    draw_edge(ax, 6.0, 7.5, 8.0, 4.7, "confers_resistance_to", "#E74C3C")
+    draw_edge(ax, 3.4, 4.1, 6.6, 4.1, "involves_drug", "#27AE60")
+
+    # Species stats table
+    species_data = [
+        ("E. coli / Ampicillin", "494", "971"),
+        ("K. pneu. / Cipro", "599", "1,181"),
+        ("K. pneu. / Carbapenem", "610", "1,203"),
+        ("A. baum. / Carbapenem", "270", "525"),
+    ]
+    ax.text(5.0, 2.5, "Species KG Statistics", fontsize=10, fontweight="bold",
+            ha="center")
+    header = f"{'Species / Drug':<28} {'Entities':>8}  {'Triples':>7}"
+    ax.text(5.0, 2.1, header, fontsize=7.5, ha="center", family="monospace",
+            fontweight="bold")
+    for i, (sp, ent, tri) in enumerate(species_data):
+        line = f"{sp:<28} {ent:>8}  {tri:>7}"
+        ax.text(5.0, 1.7 - i * 0.35, line, fontsize=7.5, ha="center",
+                family="monospace")
+
+    plt.tight_layout(pad=2)
+    png_path = os.path.join(FIG_DIR, "fig11_kg_structure.png")
+    pdf_path = os.path.join(FIG_DIR, "fig11_kg_structure.pdf")
+    fig.savefig(png_path, dpi=300, bbox_inches="tight")
+    fig.savefig(pdf_path, bbox_inches="tight")
+    plt.close(fig)
+    print("  Saved: fig11_kg_structure.png / .pdf")
+
+
+# ============================================================
+# Figure 12: Pipeline Flowchart
+# ============================================================
+def fig12_pipeline():
+    """Pipeline flowchart showing all stages for TB and multi-species."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+
+    fig, axes = plt.subplots(1, 2, figsize=(22, 14))
+
+    def draw_step(ax, x, y, w, h, title, detail, color, fontsize_t=9, fontsize_d=7):
+        rect = mpatches.FancyBboxPatch(
+            (x, y), w, h, boxstyle="round,pad=0.15",
+            facecolor=color, edgecolor="black", linewidth=1.2, alpha=0.9)
+        ax.add_patch(rect)
+        ax.text(x + w/2, y + h*0.65, title, ha="center", va="center",
+                fontsize=fontsize_t, fontweight="bold", color="white")
+        ax.text(x + w/2, y + h*0.25, detail, ha="center", va="center",
+                fontsize=fontsize_d, color="white", style="italic")
+
+    def arrow_down(ax, x, y1, y2, color="black"):
+        ax.annotate("", xy=(x, y2), xytext=(x, y1),
+                    arrowprops=dict(arrowstyle="-|>", color=color, lw=1.5))
+
+    def arrow_right(ax, x1, x2, y, color="black"):
+        ax.annotate("", xy=(x2, y), xytext=(x1, y),
+                    arrowprops=dict(arrowstyle="-|>", color=color, lw=1.5))
+
+    # ---- Panel A: TB / CRyPTIC Pipeline ----
+    ax = axes[0]
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 14)
+    ax.axis("off")
+    ax.set_title("A) TB (CRyPTIC) Pipeline", fontsize=14, fontweight="bold", pad=15)
+
+    # Data sources
+    draw_step(ax, 1, 12.5, 3.5, 1, "CRyPTIC / Zenodo", "EFFECTS, MUTATIONS,\nDST parquet files", "#7F8C8D")
+    arrow_down(ax, 2.75, 12.5, 11.8)
+
+    # Step 1
+    draw_step(ax, 0.5, 10.5, 4.5, 1.2, "Step 1: Feature Extraction",
+              "Binary mutation matrix\n→ mutation_matrix.npz", "#2C3E50")
+    arrow_down(ax, 2.75, 10.5, 9.8)
+
+    # Step 2
+    draw_step(ax, 0.5, 8.5, 4.5, 1.2, "Step 2: Build KG",
+              "60,017 triples · 4 node types\n→ amr_triples.tsv", "#8E44AD")
+    arrow_down(ax, 2.75, 8.5, 7.8)
+
+    # Step 3
+    draw_step(ax, 0.5, 6.5, 4.5, 1.2, "Step 3: Train RotatE",
+              "PyKEEN · dim=64 · 300 epochs\n→ entity_embeddings.npy", "#2980B9")
+    arrow_down(ax, 2.75, 6.5, 5.8)
+
+    # Train
+    draw_step(ax, 0.5, 4.5, 4.5, 1.2, "Train KG-AMR",
+              "Cross-attention fusion\nAdam lr=1e-3 · 100 epochs", "#E74C3C")
+    arrow_down(ax, 2.75, 4.5, 3.8)
+
+    # Evaluate
+    draw_step(ax, 0.5, 2.5, 4.5, 1.2, "Evaluate + Explain",
+              "AUROC=0.976 · SHAP\nPathway tracing · Gate analysis", "#27AE60")
+
+    # Outputs
+    draw_step(ax, 6, 4.5, 3.5, 1.2, "Outputs", "Baselines: SVM, XGB, RF\nAblation: 5 configs", "#E67E22")
+    arrow_right(ax, 5.0, 6.0, 5.1)
+
+    draw_step(ax, 6, 2.5, 3.5, 1.2, "Extension", "Multi-drug:\nINH, RIF, EMB, LEV", "#16A085")
+    arrow_right(ax, 5.0, 6.0, 3.1)
+
+    # ---- Panel B: Multi-Species Pipeline ----
+    ax = axes[1]
+    ax.set_xlim(0, 14)
+    ax.set_ylim(0, 14)
+    ax.axis("off")
+    ax.set_title("B) Multi-Species (Mendeley) Pipeline", fontsize=14,
+                 fontweight="bold", pad=15)
+
+    # M1
+    draw_step(ax, 4.5, 12.5, 5, 1, "M1: FASTA QC",
+              "Validate genome files\n→ valid_fastas.txt", "#7F8C8D")
+
+    # M2, M3, M4 in parallel
+    arrow_down(ax, 5.5, 12.5, 11.8)
+    arrow_down(ax, 7.0, 12.5, 11.8)
+    arrow_down(ax, 8.5, 12.5, 11.8)
+
+    draw_step(ax, 0.5, 10.5, 4, 1.2, "M2: K-mer Features",
+              "k=21 TF-IDF · 100K vocab\n→ {sp}_kmer.npz", "#2C3E50")
+    draw_step(ax, 5, 10.5, 4, 1.2, "M3: Gene Annotations",
+              "BV-BRC API fetch\n→ {sp}_gene_presence.npz", "#2980B9")
+    draw_step(ax, 9.5, 10.5, 4, 1.2, "M4: Labels",
+              "Phenotype alignment\n→ {sp}_labels.csv", "#E67E22")
+
+    # M5 from M3
+    arrow_down(ax, 7.0, 10.5, 9.8)
+    draw_step(ax, 5, 8.5, 4, 1.2, "M5: Species KG",
+              "3 relation types · RotatE\n→ entity_embeddings.npy", "#8E44AD")
+
+    # All converge to M6
+    ax.annotate("", xy=(7.0, 7.8), xytext=(2.5, 10.5),
+                arrowprops=dict(arrowstyle="-|>", color="gray", lw=1.2))
+    arrow_down(ax, 7.0, 8.5, 7.8)
+    ax.annotate("", xy=(7.0, 7.8), xytext=(11.5, 10.5),
+                arrowprops=dict(arrowstyle="-|>", color="gray", lw=1.2))
+
+    draw_step(ax, 4.5, 6.5, 5, 1.2, "M6: Train KG-AMR",
+              "10-fold phylogenetic CV\nEarly stopping on val F1", "#E74C3C")
+
+    arrow_down(ax, 7.0, 6.5, 5.8)
+    draw_step(ax, 4.5, 4.5, 5, 1.2, "M7: Explainability",
+              "Gradient importance\nAttention + Gate analysis", "#27AE60")
+
+    arrow_down(ax, 7.0, 4.5, 3.8)
+    draw_step(ax, 4.5, 2.5, 5, 1.2, "M8: Results Dashboard",
+              "Consolidate metrics\n→ mendeley_results.csv", "#16A085")
+
+    # Species labels
+    species_labels = ["E. coli / Ampicillin", "K. pneumoniae / Cipro",
+                      "K. pneumoniae / Carbapenem", "A. baumannii / Carbapenem"]
+    for i, sp in enumerate(species_labels):
+        ax.text(7.0, 1.6 - i*0.4, f"• {sp}", fontsize=8, ha="center",
+                family="monospace")
+
+    plt.tight_layout(pad=2)
+    png_path = os.path.join(FIG_DIR, "fig12_pipeline.png")
+    pdf_path = os.path.join(FIG_DIR, "fig12_pipeline.pdf")
+    fig.savefig(png_path, dpi=300, bbox_inches="tight")
+    fig.savefig(pdf_path, bbox_inches="tight")
+    plt.close(fig)
+    print("  Saved: fig12_pipeline.png / .pdf")
+
+
+# ============================================================
+# Figure 13: Multi-Drug Confusion Matrices (INH + RIF + EMB + LEV)
+# ============================================================
+def fig13_multidrug_confusion():
+    """2×2 grid of confusion matrices for the 4 MTB drugs."""
+    # Load confusion matrices from result files
+    with open("model/test_results.json") as f:
+        inh = json.load(f)
+    with open("evaluate/mtb_extension_results.json") as f:
+        ext = json.load(f)
+
+    drugs = [
+        ("INH (n=5,665)", inh["confusion_matrix"]),
+        ("RIF (n=5,675)", ext[0]["confusion_matrix"]),
+        ("EMB (n=5,324)", ext[1]["confusion_matrix"]),
+        ("LEV (n=2,267)", ext[2]["confusion_matrix"]),
+    ]
+
+    fig = make_subplots(rows=2, cols=2, subplot_titles=[d[0] for d in drugs],
+                        horizontal_spacing=0.12, vertical_spacing=0.12)
+    labels_text = ["Susceptible", "Resistant"]
+
+    for idx, (name, cm_raw) in enumerate(drugs):
+        row, col = divmod(idx, 2)
+        cm = np.array(cm_raw)
+        cm_pct = cm / cm.sum() * 100
+        text_vals = [[f"{cm[i][j]}<br>({cm_pct[i][j]:.1f}%)"
+                      for j in range(2)] for i in range(2)]
+        heatmap = go.Heatmap(
+            z=cm, x=labels_text, y=labels_text,
+            text=text_vals, texttemplate="%{text}",
+            colorscale="Blues", showscale=False,
+            hovertemplate="True: %{y}<br>Pred: %{x}<br>Count: %{z}<extra></extra>"
+        )
+        fig.add_trace(heatmap, row=row+1, col=col+1)
+        fig.update_xaxes(title_text="Predicted", row=row+1, col=col+1)
+        fig.update_yaxes(title_text="True", row=row+1, col=col+1)
+
+    fig.update_layout(
+        title="KG-AMR Confusion Matrices — Multi-Drug (M. tuberculosis)",
+        height=700, width=800, template="plotly_white"
+    )
+    save_fig(fig, "fig13_multidrug_confusion")
+
+
+# ============================================================
+# Figure 14: Multi-Species ROC Curves
+# ============================================================
+def fig14_species_roc():
+    """ROC curves for each species/drug combo from saved test_outputs.npz."""
+    species_info = [
+        ("Ecoli_ampicillin", "E. coli / Ampicillin", "#2980B9"),
+        ("Kpneumoniae_cipro", "K. pneumoniae / Cipro", "#27AE60"),
+        ("Kpneumoniae_carbapenem", "K. pneumoniae / Carbapenem", "#E67E22"),
+        ("Abaumannii_carbapenem", "A. baumannii / Carbapenem", "#E74C3C"),
+    ]
+
+    fig = go.Figure()
+    for sp_key, sp_label, color in species_info:
+        npz_path = os.path.join("model", "species", sp_key, "test_outputs.npz")
+        if not os.path.exists(npz_path):
+            print(f"  SKIP {sp_key}: {npz_path} not found")
+            continue
+        data = np.load(npz_path, allow_pickle=True)
+        probs = data["probs"]
+        targets = data["targets"]
+        fpr, tpr, _ = roc_curve(targets, probs)
+        roc_auc = auc(fpr, tpr)
+        n = len(targets)
+        fig.add_trace(go.Scatter(
+            x=fpr, y=tpr, mode="lines",
+            name=f"{sp_label} (AUC={roc_auc:.3f}, n={n})",
+            line=dict(color=color, width=2),
+        ))
+
+    fig.add_trace(go.Scatter(
+        x=[0, 1], y=[0, 1], mode="lines",
+        line=dict(dash="dash", color="gray"), showlegend=False,
+    ))
+    fig.update_layout(
+        title="ROC Curves — Multi-Species Extension",
+        xaxis_title="False Positive Rate",
+        yaxis_title="True Positive Rate",
+        template="plotly_white",
+        height=600, width=750,
+        legend=dict(x=0.35, y=0.05),
+    )
+    save_fig(fig, "fig14_species_roc")
+
+
+# ============================================================
+# Figure 15: Multi-Species Performance Comparison
+# ============================================================
+def fig15_species_comparison():
+    """Grouped bar chart comparing F1-macro and AUC-ROC across species + MTB."""
+    species_info = [
+        ("Ecoli_ampicillin", "E. coli\nAmpicillin"),
+        ("Kpneumoniae_cipro", "K. pneumoniae\nCipro"),
+        ("Kpneumoniae_carbapenem", "K. pneumoniae\nCarbapenem"),
+        ("Abaumannii_carbapenem", "A. baumannii\nCarbapenem"),
+    ]
+
+    names, f1s, aucs, ns = [], [], [], []
+
+    # Add MTB INH as reference
+    with open("model/test_results.json") as f:
+        mtb = json.load(f)
+    names.append("M. tuberculosis\nINH")
+    f1s.append(mtb["f1_macro"])
+    aucs.append(mtb["auroc"])
+    ns.append(mtb["n_test"])
+
+    for sp_key, sp_label in species_info:
+        res_path = os.path.join("model", "species", sp_key, "test_results.json")
+        if not os.path.exists(res_path):
+            continue
+        with open(res_path) as f:
+            res = json.load(f)
+        names.append(sp_label)
+        f1s.append(res["f1_macro"])
+        aucs.append(res["auc_roc"])
+        ns.append(res["n_test"])
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="AUC-ROC", x=names, y=aucs,
+        marker_color="#2980B9",
+        text=[f"{v:.3f}" for v in aucs], textposition="outside",
+    ))
+    fig.add_trace(go.Bar(
+        name="F1-macro", x=names, y=f1s,
+        marker_color="#E67E22",
+        text=[f"{v:.3f}" for v in f1s], textposition="outside",
+    ))
+
+    # Add sample size annotations at bottom
+    for i, n in enumerate(ns):
+        fig.add_annotation(x=names[i], y=-0.05, text=f"n={n}",
+                           showarrow=False, font=dict(size=9, color="gray"),
+                           yref="paper")
+
+    fig.update_layout(
+        title="KG-AMR Performance Across Species",
+        barmode="group",
+        yaxis=dict(range=[0, 1.1], title="Score"),
+        template="plotly_white",
+        height=550, width=900,
+    )
+    save_fig(fig, "fig15_species_comparison")
+
+
+# ============================================================
 # Main
 # ============================================================
 if __name__ == "__main__":
     print("Generating publication figures...")
 
-    print("\n[1/10] Architecture diagram")
+    print("\n[1/15] Architecture diagram")
     fig1_architecture()
 
-    print("\n[2/10] Confusion matrices")
+    print("\n[2/15] Confusion matrices")
     fig2_confusion_matrices()
 
-    print("\n[3/10] Multi-dataset AUROC")
+    print("\n[3/15] Multi-dataset AUROC")
     fig3_multi_dataset_auroc()
 
-    print("\n[4/10] Ablation study")
+    print("\n[4/15] Ablation study")
     fig4_ablation()
 
-    print("\n[5/10] SHAP beeswarm")
+    print("\n[5/15] SHAP beeswarm")
     fig5_shap_beeswarm()
 
-    print("\n[6/10] Gene attention heatmap")
+    print("\n[6/15] Gene attention heatmap")
     fig6_attention_heatmap()
 
-    print("\n[7/10] Attention vs SHAP scatter")
+    print("\n[7/15] Attention vs SHAP scatter")
     fig7_attn_vs_shap()
 
-    print("\n[8/10] Fusion gate distribution")
+    print("\n[8/15] Fusion gate distribution")
     fig8_fusion_gate()
 
-    print("\n[9/10] ROC curves")
+    print("\n[9/15] ROC curves")
     fig9_roc_curves()
 
-    print("\n[10/10] Pathway coverage")
+    print("\n[10/15] Pathway coverage")
     fig10_pathway_coverage()
 
-    print("\n✅ All figures generated in explain/figures/")
+    print("\n[11/15] KG structure diagram")
+    fig11_kg_structure()
+
+    print("\n[12/15] Pipeline flowchart")
+    fig12_pipeline()
+
+    print("\n[13/15] Multi-drug confusion matrices")
+    fig13_multidrug_confusion()
+
+    print("\n[14/15] Multi-species ROC curves")
+    fig14_species_roc()
+
+    print("\n[15/15] Multi-species performance comparison")
+    fig15_species_comparison()
+
+    print("\nAll 15 figures generated in explain/figures/")

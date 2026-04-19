@@ -36,7 +36,7 @@ rows.append({
     "Dataset": "MTB_INH",
     "Species": "M. tuberculosis",
     "Drug": "INH (Isoniazid)",
-    "Model": "KG-AMR v2 (100 epochs)",
+    "Model": "KG-AMR (100 epochs)",
     "AUROC": inh_results["auroc"],
     "F1_macro": inh_results["f1_macro"],
     "N_samples": inh_results["n_test_R"] + inh_results["n_test_S"],
@@ -50,7 +50,7 @@ for r in mtb_results:
         "Dataset": r["dataset"],
         "Species": r["species"],
         "Drug": r["drug"],
-        "Model": "KG-AMR v2 (10 epochs)",
+        "Model": "KG-AMR (10 epochs)",
         "AUROC": r["auroc"],
         "F1_macro": r["f1_macro"],
         "N_samples": r["n_samples"],
@@ -112,7 +112,7 @@ print(f"{'Config':<25s} {'AUROC':>8s} {'F1':>8s} {'Delta':>8s}")
 print("-" * 60)
 full_auroc = None
 for r in ablation_results:
-    if r["config"] == "full_kg_amr_v2":
+    if r["config"] == "full_kg_amr":
         full_auroc = r["auroc"]
 for r in ablation_results:
     delta = r["auroc"] - full_auroc if full_auroc else 0

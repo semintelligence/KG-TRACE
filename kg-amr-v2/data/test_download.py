@@ -3,7 +3,7 @@
 import requests, time
 
 session = requests.Session()
-session.headers.update({"User-Agent": "KG-AMR-v2/1.0"})
+session.headers.update({"User-Agent": "KG-AMR/1.0"})
 
 test_id = "1328432.3"  # first E. coli genome in label file
 urls = [

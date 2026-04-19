@@ -1,0 +1,301 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{url}
+\usepackage{cite}
+
+\newcommand{\tbd}[1]{\textcolor{red}{\textbf{[TO BE FILLED BY AUTHORS: #1]}}}
+
+\begin{document}
+
+\title{Interpretable Antimicrobial Resistance Prediction via Cross-Attention Fusion of Genomic and Knowledge Graph Signals}
+
+\author{
+\IEEEauthorblockN{\tbd{Author Names}}
+\IEEEauthorblockA{\tbd{Affiliations} \\
+\tbd{Email addresses}}
+}
+
+\maketitle
+
+\begin{abstract}
+Antimicrobial resistance (AMR) poses a critical threat to global public health, necessitating rapid and interpretable prediction from whole-genome sequencing data. This paper presents a hybrid model that fuses genomic mutation features with knowledge graph (KG) embeddings through a learned cross-attention gate. The model is evaluated on 5{,}665 \textit{Mycobacterium tuberculosis} test samples for isoniazid (INH) resistance prediction. The cross-attention fusion gate exhibits discriminative behavior, with resistant samples showing a higher gate mean (0.3259) than susceptible samples (0.2169), indicating differential reliance on genomic versus KG signal. KG pathway traceability covers 94.8\% of resistant test samples (1{,}986 out of 2{,}095), linking predictions to established gene--drug resistance mechanisms through \textit{katG}, \textit{fabG1}, and \textit{inhA}. Alignment analysis reveals that SHAP-based feature attributions correlate significantly with CARD biological ground truth (Spearman $\rho = +0.4434$, $p = 0.0233$), while attention weights capture a complementary, non-biological signal ($\rho = 0.0291$, $p = 0.8879$). These findings demonstrate that the model achieves mutation-level and pathway-level interpretability, but caution against interpreting attention weights as direct indicators of biological importance.
+\end{abstract}
+
+\begin{IEEEkeywords}
+antimicrobial resistance, knowledge graph, explainability, cross-attention, tuberculosis, SHAP
+\end{IEEEkeywords}
+
+%==============================================================================
+\section{Introduction}
+%==============================================================================
+
+Antimicrobial resistance is recognized by the World Health Organization as one of the most serious threats to global health~\cite{ref_who_amr}. Drug-resistant \textit{Mycobacterium tuberculosis} (MTB) alone accounts for substantial morbidity and mortality worldwide~\cite{ref_tb_burden}, and rapid identification of resistance profiles from genomic data has become a priority for clinical genomics and public health surveillance.
+
+Machine learning models trained on whole-genome sequencing (WGS) data have demonstrated strong predictive performance for AMR phenotypes~\cite{ref_ml_amr_review}. However, the majority of these models treat resistance prediction as a black-box classification task, providing limited insight into the biological mechanisms that underlie their predictions. That KG-TRACE matches these figures while using only the training partition---and while providing full mechanistic traceability that no baseline offers---is the central practical argument for the added architectural complexity. The more clinically consequential comparison concerns false negatives: missing a resistant isolate is the more dangerous clinical error. KG-TRACE produces 156~false negatives on the INH test set, compared with 168~for the fully-tuned Random Forest. In clinical and public health settings, interpretability is not merely desirable but essential: clinicians and epidemiologists require explanations that connect predictions to known resistance genes, mutations, and drug targets.
+
+Knowledge graphs (KGs) offer a principled means of encoding structured biological relationships---such as gene--mutation--drug resistance pathways---and integrating them into predictive models~\cite{ref_kg_biomed}. However, existing approaches tend to use either genomic features or KG-derived features in isolation, without a mechanism for the model to learn how to balance the two sources of information adaptively.
+
+This paper presents a hybrid model that fuses genomic mutation features with KG node embeddings through a learned cross-attention gate. The gate parameter $\alpha$ controls the relative contribution of genomic and KG signals on a per-sample basis, enabling the model to adaptively weight the two modalities. The primary contributions of this work are:
+
+\begin{enumerate}
+    \item A cross-attention fusion gate that adaptively blends genomic and KG embeddings, with empirically observed discriminative behavior between resistant and susceptible samples.
+    \item KG pathway traceability, demonstrating that 94.8\% of resistant test samples can be traced to established gene--drug resistance pathways in the knowledge graph.
+    \item Mutation-level explanations via SHAP, with per-genome saliency values that identify specific resistance-conferring mutations.
+    \item A systematic alignment analysis comparing attention weights, SHAP attributions, and CARD biological ground truth, revealing that attention and SHAP capture fundamentally different signals.
+\end{enumerate}
+
+%==============================================================================
+\section{Related Work}
+%==============================================================================
+
+\subsection{Genomic Machine Learning for AMR Prediction}
+
+A growing body of work applies machine learning to WGS-derived features for AMR prediction. \caption{Model performance on the INH test set ($n{=}5{,}665$).
+  \textbf{(A)} ROC curves: KG-TRACE, LinearSVC, and XGBoost are nearly
+  indistinguishable (AUROC $>0.97$); the untuned Random Forest initially
+  lags at 0.9604 prior to hyperparameter tuning.
+  \textbf{(B)} Confusion matrices. KG-TRACE produces the fewest false
+  negatives (156) among all deep-learning models.}r AMR classification. Include citations to CRyPTIC consortium publications and WHO mutation catalogue work.}
+
+\subsection{Knowledge Graphs in Biomedical Machine Learning}
+
+Knowledge graphs have been applied in drug discovery, drug--target interaction prediction, and disease--gene association tasks~\cite{ref_kg_biomed}. \tbd{Cite and discuss relevant works on KG embedding methods (TransE, RotatE, ComplEx) and their application to biomedical prediction tasks. Discuss CARD and other AMR-specific ontologies.}
+
+\subsection{Explainability in Clinical Machine Learning}
+
+Interpretable machine learning has received increasing attention in clinical applications, where regulatory and ethical requirements demand transparent decision-making~\cite{ref_xai_clinical}. \tbd{Cite and discuss SHAP, LIME, attention-based explanations, and the debate around attention as explanation. Include Jain and Wallace (2019) and Wiegreffe and Pinter (2019) on attention interpretability.}
+
+%==============================================================================
+\section{Methodology}
+%==============================================================================
+
+\subsection{Model Architecture}
+
+The model consists of three components: a genomic encoder, a KG encoder, and a cross-attention fusion gate.
+
+The \textbf{genomic encoder} processes a binary mutation matrix $\mathbf{x} \in \{0,1\}^{d}$, where each dimension corresponds to a gene--mutation pair derived from the WHO mutation catalogue. \tbd{Specify input dimensionality $d$, hidden layer sizes, activation functions, dropout rates, and normalization layers.}
+
+The \textbf{KG encoder} retrieves pre-trained node embeddings for resistance-associated genes from the knowledge graph and aggregates them via a self-attention pooling mechanism. \tbd{Specify embedding dimensionality, number of genes, pooling architecture details, and projection layers.}
+
+The \textbf{cross-attention fusion gate} computes a gate parameter $\alpha$ that controls the relative contribution of the genomic representation $\mathbf{g}$ and the KG representation $\mathbf{k}$:
+\begin{equation}
+    \alpha = \sigma\!\left(\mathrm{MLP}\!\left([\mathbf{g}_{\mathrm{proj}};\, \mathbf{k}_{\mathrm{proj}}]\right)\right)
+\end{equation}
+\begin{equation}
+    \mathbf{h} = \alpha \cdot \mathbf{g} + (1 - \alpha) \cdot \mathbf{k}
+\end{equation}
+where $\sigma$ denotes the sigmoid function, $[\,;\,]$ denotes concatenation, and $\mathbf{g}_{\mathrm{proj}}$, $\mathbf{k}_{\mathrm{proj}}$ are linear projections. When $\alpha$ is high, the model relies more on genomic features; when $\alpha$ is low, it relies more on KG embeddings. The fused representation $\mathbf{h}$ is passed to a classification head that outputs resistance or susceptibility predictions.
+
+\subsection{Knowledge Graph Construction}
+
+The knowledge graph is constructed from \tbd{specify source: CARD database, WHO mutation catalogue, CRyPTIC EFFECTS table, or combination}. Nodes represent genes, mutations, drugs, and biological mechanisms. Edges encode typed relationships including \texttt{has\_mutation}, \texttt{confers\_resistance\_to}, and \texttt{belongs\_to\_mechanism}. \tbd{Specify total number of triples, entities, and relation types.}
+
+Node embeddings are learned using \tbd{specify embedding method, e.g., RotatE}, trained for \tbd{specify epochs} on the full triple set. The resulting entity embeddings are used as fixed inputs to the KG encoder.
+
+\subsection{SHAP-Based Feature Attribution}
+
+Per-genome, per-feature saliency values are computed using SHAP (SHapley Additive exPlanations)~\cite{ref_shap}. For each test genome, the top-$k$ features are ranked by absolute saliency value, providing mutation-level explanations of the model's predictions.
+
+\subsection{Alignment Analysis}
+
+To assess whether model-internal representations align with established biological knowledge, Spearman rank correlation is computed between three gene-level ranking systems:
+
+\begin{itemize}
+    \item \textbf{Attention rank}: mean self-attention weight assigned to each gene by the KG encoder across the test set.
+    \item \textbf{SHAP rank}: mean absolute SHAP importance aggregated per gene across all test genomes.
+    \item \textbf{CARD rank}: number of resistance-associated edges for each gene in the CARD knowledge graph, serving as a proxy for biological importance.
+\end{itemize}
+
+Pairwise Spearman $\rho$ is computed between all three rankings to determine which model signal best tracks biological ground truth.
+
+%==============================================================================
+\section{Experiments}
+%==============================================================================
+
+\subsection{Dataset}
+
+The evaluation is conducted on a cohort of \textit{Mycobacterium tuberculosis} genomes with phenotypic drug susceptibility testing results for isoniazid (INH). The test set comprises 5{,}665 samples, of which 2{,}095 are resistant and \tbd{specify susceptible count} are susceptible. \tbd{Describe training and validation set sizes, data source (e.g., CRyPTIC consortium), splitting strategy, and any preprocessing.}
+
+\subsection{Evaluation Protocol}
+
+The model is evaluated on the held-out test set. Explainability analysis is performed across four dimensions: (1)~fusion gate behavior, (2)~KG pathway coverage, (3)~alignment of attention, SHAP, and CARD rankings, and (4)~per-sample mutation-level explanations. \tbd{Specify classification metrics reported (e.g., AUROC, F1-macro) and their exact values if available.}
+
+\subsection{Implementation Details}
+
+\tbd{Specify framework (e.g., PyTorch Lightning), optimizer, learning rate, batch size, number of epochs, early stopping criteria, hardware, and training time.}
+
+%==============================================================================
+\section{Results and Discussion}
+%==============================================================================
+
+\subsection{Fusion Gate Analysis}
+
+The cross-attention fusion gate $\alpha$ exhibits systematic differences between resistant and susceptible samples. Table~\ref{tab:gate} summarizes the gate statistics across the test set.
+
+\begin{table}[t]
+\centering
+\caption{Fusion Gate Statistics Across the Test Set}
+\label{tab:gate}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Group} & \textbf{Mean} & \textbf{Median} & \textbf{IQR} \\
+\midrule
+Overall       & 0.2572 & ---    & ---             \\
+Resistant     & 0.3259 & 0.3359 & ---             \\
+Susceptible   & 0.2169 & 0.2114 & 0.2093--0.2173  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The overall gate mean of 0.2572 indicates that the model is KG-dominated: across the full test set, the fused representation draws more heavily from the knowledge graph embeddings than from raw genomic features. This is consistent with the KG encoding structured prior knowledge about gene--drug resistance relationships that provides a strong baseline signal.
+
+However, the gate exhibits discriminative behavior between phenotypic groups. Resistant samples show a significantly higher gate mean (0.3259) than susceptible samples (0.2169), indicating that the model allocates relatively more weight to the genomic branch when predicting resistance. The resistant-sample median of 0.3359 further suggests a concentrated mode in this group. This pattern is biologically plausible: resistant genomes contain specific mutations (e.g., \textit{katG}:S315T) whose presence in the genomic feature vector provides a strong discriminative signal that the model learns to upweight.
+
+Susceptible samples show a tighter gate distribution (IQR: 0.2093--0.2173), suggesting that in the absence of distinctive resistance mutations, the model defaults to a more uniform, KG-dominated representation. The gate thus acts not only as a fusion mechanism but also as an implicit discriminative feature.
+
+\subsection{KG Pathway Coverage}
+
+A key interpretability question is whether the model's predictions can be traced back to biologically meaningful pathways in the knowledge graph. For each of the 2{,}095 resistant test samples, the analysis identifies whether any of the model's top-attention genes have a directed path to the target drug (INH) in the KG.
+
+Of the 2{,}095 resistant test samples, 1{,}986 (94.8\%) have at least one KG path from a top-attention gene to INH. The path structure follows the form: gene $\rightarrow$ \texttt{has\_mutation} $\rightarrow$ mutation\_node $\rightarrow$ \texttt{confers\_resistance\_to} $\rightarrow$ INH.
+
+Three genes have confirmed resistance paths to INH: \textit{katG} (209 resistance paths), \textit{fabG1} (108 resistance paths), and \textit{inhA} (3 resistance paths). These correspond to well-established INH resistance mechanisms. \textit{katG} encodes a catalase-peroxidase enzyme that activates the pro-drug isoniazid; loss-of-function mutations in \textit{katG} (most commonly S315T) are the primary cause of INH resistance~\cite{ref_katg}. Mutations in the \textit{fabG1}--\textit{inhA} operon promoter region cause overexpression of InhA, the target of activated INH, conferring resistance through target modification~\cite{ref_inha}.
+
+Several genes are confirmed to have no path to INH in the KG: \textit{Rv0678}, \textit{atpE}, \textit{ddn}, \textit{embB}, \textit{ethA}, and \textit{rpoB}. This is biologically correct: \textit{embB} is associated with ethambutol resistance, \textit{rpoB} with rifampicin resistance, \textit{ethA} with ethionamide resistance, \textit{atpE} with bedaquiline resistance, and \textit{ddn} with delamanid resistance. The KG correctly excludes these drug-irrelevant genes from INH resistance pathways, providing a structural basis for deprioritizing their contributions in INH-specific predictions.
+
+The 5.2\% of resistant samples without a KG path may represent cases where resistance is conferred by mutations not yet catalogued in the knowledge graph, or by epistatic interactions between multiple loci that are not captured by the current graph structure.
+
+\subsection{Alignment Analysis: Attention vs.\ SHAP vs.\ CARD}
+
+Table~\ref{tab:alignment} presents the Spearman rank correlations between the three gene-level ranking systems.
+
+\begin{table}[t]
+\centering
+\caption{Spearman Rank Correlations Between Gene Importance Rankings}
+\label{tab:alignment}
+\begin{tabular}{lccl}
+\toprule
+\textbf{Comparison} & \textbf{$\rho$} & \textbf{$p$-value} & \textbf{Interpretation} \\
+\midrule
+Attention vs.\ SHAP & $-0.4379$ & 0.0252 & Significant, inverse \\
+Attention vs.\ CARD & $+0.0291$ & 0.8879 & Not significant \\
+SHAP vs.\ CARD      & $+0.4434$ & 0.0233 & Significant, positive \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The alignment analysis reveals a fundamental dissociation between what attention weights capture and what SHAP attributes as important. SHAP-based gene importance correlates significantly and positively with CARD biological ground truth ($\rho = +0.4434$, $p = 0.0233$), indicating that the features most influential in the model's classification decisions correspond to genes with the most established resistance associations in the literature-derived knowledge base.
+
+In contrast, attention weights show no significant correlation with CARD ($\rho = 0.0291$, $p = 0.8879$). This result is noteworthy and carries important methodological implications. Attention weights in the KG encoder do not function as biological importance scores; rather, they serve as learned aggregation weights that optimize classification performance. The attention mechanism may prioritize genes that provide complementary or contextual information to the genomic branch, rather than genes that are independently most associated with resistance.
+
+The significant inverse correlation between attention and SHAP ($\rho = -0.4379$, $p = 0.0252$) further supports this interpretation: the genes that attention upweights are systematically different from the genes that drive classification decisions (as measured by SHAP). This suggests a division of labor, where the attention mechanism focuses on contextual KG features while the genomic branch carries the primary discriminative signal through mutations in high-SHAP genes.
+
+Table~\ref{tab:generank} presents the top gene rankings by each method, highlighting specific discrepancies.
+
+\begin{table}[t]
+\centering
+\caption{Top Gene Rankings by Attention, SHAP, and CARD}
+\label{tab:generank}
+\begin{tabular}{lcccp{2.0cm}}
+\toprule
+\textbf{Gene} & \textbf{Attn} & \textbf{SHAP} & \textbf{CARD} & \textbf{Note} \\
+\midrule
+\textit{pncA}  & 1  & --- & 1  & Top by attention and CARD \\
+\textit{katG}  & 2  & 2   & --- & Key INH resistance gene \\
+\textit{fabG1} & 3  & --- & --- & Consistent KG coverage \\
+\textit{tlyA}  & --- & 1  & --- & Top SHAP; see discussion \\
+\textit{gyrA}  & 24 & 3   & 2  & Ignored by attention \\
+\textit{mmpL5} & --- & 4  & 26 & High SHAP, low CARD \\
+\textit{rpoB}  & --- & 5  & --- & No path to INH \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Several noteworthy discrepancies merit discussion.
+
+\textbf{\textit{gyrA}}: This gene ranks 3rd by SHAP and 2nd by CARD (782 resistance edges) but is ranked 24th by attention. \textit{gyrA} encodes DNA gyrase subunit A and is the primary target for fluoroquinolone resistance. Its high SHAP importance in an INH model likely reflects co-occurring resistance: genomes resistant to INH frequently harbor concurrent fluoroquinolone resistance mutations in \textit{gyrA}, making it a strong co-predictive feature even though it is not mechanistically involved in INH resistance. The attention mechanism, which operates on KG embeddings rather than raw genomic features, correctly deprioritizes \textit{gyrA} for INH because the KG encodes no \textit{gyrA}--INH resistance path.
+
+\textbf{\textit{mmpL5}}: This gene ranks 4th by SHAP but 26th (last) by CARD, with zero resistance-associated edges. \textit{mmpL5} encodes a membrane transporter involved in lipid transport, and loss-of-function mutations in \textit{mmpL5} are known to modulate bedaquiline susceptibility through epistatic interaction with \textit{Rv0678}~\cite{ref_mmpl5}. Its high SHAP importance in the INH model is unexpected and may reflect genomic co-occurrence patterns---mutations in \textit{mmpL5} may be enriched in specific lineages or resistance backgrounds that correlate with INH resistance without being causally involved. This represents a case where SHAP captures statistical association rather than biological mechanism, and the CARD-based ground truth appropriately assigns it low importance.
+
+\textbf{\textit{tlyA}}: This gene ranks 1st by SHAP (importance: 0.03821) but is not among the top genes by either attention or CARD. \textit{tlyA} encodes a rRNA methyltransferase associated with capreomycin and viomycin resistance. Its top SHAP ranking in an INH model is unexpected and warrants further investigation. Possible explanations include genomic linkage with INH resistance loci, lineage-specific co-occurrence, or a confounding relationship mediated by multidrug-resistant (MDR) TB backgrounds in which \textit{tlyA} mutations are enriched. This finding illustrates both the sensitivity of SHAP to capture subtle discriminative features and the risk of over-interpreting statistical importance as biological mechanism.
+
+\subsection{Mutation-Level Explanation: Case Study}
+
+To illustrate the per-genome explanatory capability of the model, this section presents the SHAP analysis for a single test genome (accession: SAMN07236525). Table~\ref{tab:shap_example} lists the top three features by absolute saliency value.
+
+\begin{table}[t]
+\centering
+\caption{Top SHAP Features for Genome SAMN07236525}
+\label{tab:shap_example}
+\begin{tabular}{clcc}
+\toprule
+\textbf{Rank} & \textbf{Feature} & \textbf{Saliency} & \textbf{CARD} \\
+\midrule
+1 & \textit{katG}:S315T       & 0.000235 & Yes \\
+2 & \textit{ethA}:639\_del\_gt & 0.000068 & Yes \\
+3 & \textit{gyrA}:D94N        & 0.000048 & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The top-ranked feature, \textit{katG}:S315T, is the most prevalent INH resistance mutation globally, accounting for the majority of phenotypic INH resistance in clinical MTB isolates~\cite{ref_katg}. Its position as the highest-saliency feature for this genome is consistent with its known biological role. The second-ranked feature, \textit{ethA}:639\_del\_gt, represents a deletion in the ethionamide activating enzyme, and the third, \textit{gyrA}:D94N, is a canonical fluoroquinolone resistance mutation. The presence of resistance mutations across multiple drug targets suggests this genome carries a multidrug-resistant profile, which is consistent with the model's resistance prediction.
+
+All 20 top-ranked features for this genome are mapped to genes present in the CARD resistance database, indicating that the model's attention is directed exclusively at established resistance-associated loci for this sample.
+
+%==============================================================================
+\section{Conclusion}
+%==============================================================================
+
+This paper presents an interpretable AMR prediction model that fuses genomic mutation features with knowledge graph embeddings through a learned cross-attention gate. The analysis of 5{,}665 \textit{M.\ tuberculosis} test samples for INH resistance yields several findings relevant to the design and interpretation of explainable AMR models.
+
+First, the cross-attention fusion gate exhibits discriminative behavior, with resistant samples showing systematically higher gate values (mean: 0.3259) than susceptible samples (mean: 0.2169). This indicates that the model learns to differentially weight genomic and KG contributions based on the resistance profile of each sample, with the genomic branch receiving relatively more weight when distinctive resistance mutations are present.
+
+Second, KG pathway traceability provides a structural basis for interpretability: 94.8\% of resistant test samples can be traced through the knowledge graph to the target drug via established gene--mutation--drug pathways involving \textit{katG}, \textit{fabG1}, and \textit{inhA}.
+
+Third, the alignment analysis reveals that SHAP-based attributions correlate with CARD biological ground truth ($\rho = +0.4434$, $p = 0.0233$), while attention weights do not ($\rho = 0.0291$, $p = 0.8879$). This finding carries a practical recommendation: \textbf{attention weights in fusion architectures should not be interpreted as biological importance scores}. They serve a learned aggregation function that is optimized for classification performance, not for alignment with domain knowledge. SHAP provides a more reliable basis for mutation-level biological interpretation.
+
+Fourth, several discrepancies between SHAP and CARD rankings---notably the high SHAP importance of \textit{tlyA}, \textit{mmpL5}, and \textit{gyrA} in an INH-specific model---highlight the distinction between statistical predictiveness and biological mechanism. These genes are likely important for classification due to co-occurrence patterns in multidrug-resistant backgrounds, rather than direct involvement in INH resistance. This distinction is critical for downstream use of model explanations in clinical or epidemiological settings.
+
+\tbd{Discuss limitations and future work, e.g., extension to additional drugs and species, prospective clinical validation, integration of epistatic interactions into the KG, and evaluation against emerging WHO mutation catalogues.}
+
+\section*{Acknowledgments}
+\tbd{Acknowledge funding sources, data providers (e.g., CRyPTIC consortium, CARD database), and computational resources.}
+
+\begin{thebibliography}{99}
+
+\bibitem{ref_who_amr}
+\tbd{WHO AMR report citation.}
+
+\bibitem{ref_tb_burden}
+\tbd{WHO Global Tuberculosis Report citation.}
+
+\bibitem{ref_ml_amr_review}
+\tbd{Review paper on ML for AMR prediction citation.}
+
+\bibitem{ref_kg_biomed}
+\tbd{Knowledge graphs in biomedical ML citation.}
+
+\bibitem{ref_xai_clinical}
+\tbd{Explainability in clinical ML citation.}
+
+\bibitem{ref_shap}
+\tbd{Lundberg and Lee, SHAP (NeurIPS 2017) citation.}
+
+\bibitem{ref_katg}
+\tbd{Citation for katG S315T as canonical INH resistance mutation.}
+
+\bibitem{ref_inha}
+\tbd{Citation for fabG1/inhA operon and INH resistance mechanism.}
+
+\bibitem{ref_mmpl5}
+\tbd{Citation for mmpL5 epistatic interaction with Rv0678 and bedaquiline susceptibility.}
+
+\end{thebibliography}
+
+\end{document}

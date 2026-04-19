@@ -1,8 +1,8 @@
 """
-Step 6: Dataset + Training Pipeline for KG-AMR v2
+Step 6: Dataset + Training Pipeline for KG-AMR
 - Loads binary mutation matrix (41460 × 17352)
 - Maps per-genome mutated genes → RotatE embeddings (26 genes × 64 dims)
-- Trains KG-AMR v2 with early stopping on val F1-macro
+- Trains KG-AMR with early stopping on val F1-macro
 - Drug: INH (isoniazid) — largest, best-balanced dataset (39.8% R)
 """
 import sys, os, time, csv, json
@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import KG_EMBED_DIM, GENOMIC_HIDDEN, FUSED_DIM, PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 import pandas as pd
@@ -190,11 +190,11 @@ print(f"  Val batches: {len(val_loader)}")
 print(f"  Test batches: {len(test_loader)}")
 
 # ── 5. Model + Training ─────────────────────────────────────────────────────
-print("\n[5/6] Training KG-AMR v2...")
-from model.kg_amr_v2 import KGAMRv2
+print("\n[5/6] Training KG-AMR...")
+from model.kg_amr import KGAMR
 
 KMER_DIM = X.shape[1]  # 17352
-model = KGAMRv2(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
+model = KGAMR(kmer_dim=KMER_DIM, num_genes=NUM_GENES)
 print(f"  kmer_dim={KMER_DIM}, num_genes={NUM_GENES}")
 total_params = sum(p.numel() for p in model.parameters())
 print(f"  Total parameters: {total_params:,}")
@@ -250,7 +250,7 @@ print(f"  Training log: {log_path}")
 print("\n[6/6] Evaluating on test set...")
 
 # Load best checkpoint
-best_model = KGAMRv2.load_from_checkpoint(
+best_model = KGAMR.load_from_checkpoint(
     checkpoint.best_model_path,
     kmer_dim=KMER_DIM,
     num_genes=NUM_GENES,
@@ -294,7 +294,7 @@ test_precision = precision_score(all_labels, all_preds, average="macro")
 test_recall = recall_score(all_labels, all_preds, average="macro")
 test_cm = confusion_matrix(all_labels, all_preds)
 
-print(f"\n  === KG-AMR v2 Test Results ({DRUG}) ===")
+print(f"\n  === KG-AMR Test Results ({DRUG}) ===")
 print(f"  AUROC:     {test_auroc:.4f}")
 print(f"  F1-macro:  {test_f1_macro:.4f}")
 print(f"  Precision: {test_precision:.4f}")
@@ -306,7 +306,7 @@ print(f"\n{classification_report(all_labels, all_preds, target_names=['S','R'])}
 # Save test results
 test_results = {
     "drug": DRUG,
-    "model": "KG-AMR_v2",
+    "model": "KG-AMR",
     "auroc": float(test_auroc),
     "f1_macro": float(test_f1_macro),
     "precision_macro": float(test_precision),

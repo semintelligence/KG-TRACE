@@ -2,7 +2,7 @@
 """Add publication figures gallery and honest disclaimer to report.html."""
 import os
 
-PROJECT = os.path.expanduser("~/Desktop/AMR NamanXSarika/kg-amr-v2")
+PROJECT = os.path.expanduser("~/Desktop/AMR NamanXSarika/KG-AMR")
 report_path = os.path.join(PROJECT, "explain", "report.html")
 
 with open(report_path, "r") as f:
@@ -62,9 +62,9 @@ Source script: <code>explain/generate_all_figures.py</code></p>
 <div class="honesty">
 <h3>⚠️ Honest Reporting Disclaimer</h3>
 <ul>
-<li><strong>SVM baseline (AUROC 0.9787) outperforms KG-AMR v2 (AUROC 0.9740) on the INH test set.</strong>
+<li><strong>SVM baseline (AUROC 0.9787) outperforms KG-AMR (AUROC 0.9740) on the INH test set.</strong>
     The SVM uses the same binary mutation matrix but does not incorporate knowledge graph information.
-    KG-AMR v2's advantage lies in interpretability (attention, gate, pathway explanations), not raw discriminative power.</li>
+    KG-AMR's advantage lies in interpretability (attention, gate, pathway explanations), not raw discriminative power.</li>
 <li><strong>Ablation:</strong> The genomic-only branch (AUROC 0.9780) matches or exceeds the full model (0.9722 at 10 epochs),
     suggesting KG integration provides interpretability more than classification gain on this dataset.</li>
 <li><strong>Non-MTB datasets (Mendeley):</strong> Only phenotype labels were available locally — no genome sequences.

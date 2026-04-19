@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from paths import PROJECT_DIR
 
 cwd = os.getcwd()
-assert "kg-amr-v2" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
+assert "KG-AMR" in cwd or "AMR" in cwd, f"ABORT: wrong dir {cwd}"
 
 import numpy as np
 
@@ -20,7 +20,7 @@ EXPLAIN_DIR = os.path.join(PROJECT_DIR, "explain")
 # ── Load all results ────────────────────────────────────────────────────────
 print("[1/2] Loading results...")
 
-# KG-AMR v2
+# KG-AMR
 with open(os.path.join(MODEL_DIR, "test_results.json")) as f:
     kg = json.load(f)
 
@@ -28,7 +28,7 @@ with open(os.path.join(MODEL_DIR, "test_results.json")) as f:
 with open(os.path.join(BASELINES_DIR, "baseline_results.json")) as f:
     baselines = json.load(f)
 
-# Alignment metrics (KG-AMR v2 only)
+# Alignment metrics (KG-AMR only)
 with open(os.path.join(EXPLAIN_DIR, "alignment_metrics.json")) as f:
     alignment = json.load(f)
 
@@ -69,9 +69,9 @@ print("[2/2] Building final results table...")
 
 rows = []
 
-# KG-AMR v2
+# KG-AMR
 rows.append({
-    "Model": "KG-AMR v2",
+    "Model": "KG-AMR",
     "AUROC": f"{kg['auroc']:.4f}",
     "F1-macro": f"{kg['f1_macro']:.4f}",
     "Precision": f"{kg['precision_macro']:.4f}",
@@ -122,8 +122,8 @@ for r in rows:
     print(f"{r['Model']:<15s} {r['AUROC']:>8s} {r['F1-macro']:>10s} {r['BCS@10']:>8s} {r['Spearman_rho']:>14s} {r['Gate_mean']:>6s}")
 
 print(f"\n  HONEST COMPARISON:")
-print(f"  SVM AUROC ({baselines[0]['auroc']:.4f}) > KG-AMR v2 AUROC ({kg['auroc']:.4f})")
-print(f"  KG-AMR v2 provides explainability via attention + KG pathways that baselines cannot.")
+print(f"  SVM AUROC ({baselines[0]['auroc']:.4f}) > KG-AMR AUROC ({kg['auroc']:.4f})")
+print(f"  KG-AMR provides explainability via attention + KG pathways that baselines cannot.")
 print(f"\n  Saved to: {csv_path}")
 print(f"  Saved to: {json_path}")
 print("DONE — generate_final_results.py")
