@@ -1,9 +1,0 @@
-Species:                    Ecoli_ampicillin
-Total in label file:        1484
-Previously cached:          98
-Downloaded this session:    1236
-Failed this session:        150
-Total valid FASTAs on disk: 1334 / 1484
-Elapsed:                    15.6 min
-Average rate:               89 genomes/min
-Failed IDs logged to:       /Users/namangarg/Desktop/AMR NamanXSarika/KG-AMR/data/download_logs/Ecoli_ampicillin_failed.txt
