@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.03.subj.465_14.lab.AZE-108_LIB18155.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 1.0,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04739934951066971,
+      "present": true
+    },
+    {
+      "gene": "inhA",
+      "weight": 0.044097382575273514,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.044097382575273514,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.044097382575273514,
+      "present": false
+    },
+    {
+      "gene": "fbiC",
+      "weight": 0.044097382575273514,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "embB:D354A",
+    "ethA:t-7c",
+    "rrs:c517t",
+    "eis:c-12t",
+    "mmpL5:T794Z",
+    "rpoB:S450L",
+    "gyrA:E21Q",
+    "mmpL5:I948V",
+    "katG:R463L"
+  ],
+  "shap_card_mapped": [
+    "katG",
+    "eis",
+    "gyrA",
+    "ethA",
+    "rpoB",
+    "embB",
+    "mmpL5",
+    "rrs"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

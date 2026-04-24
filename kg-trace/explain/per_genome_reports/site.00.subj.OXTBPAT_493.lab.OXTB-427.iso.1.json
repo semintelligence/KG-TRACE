@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.00.subj.OXTBPAT_493.lab.OXTB-427.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9985,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04929465427994728,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.045860655605793,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.045860655605793,
+      "present": false
+    },
+    {
+      "gene": "rrl",
+      "weight": 0.045860655605793,
+      "present": false
+    },
+    {
+      "gene": "rpsL",
+      "weight": 0.045860655605793,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209304,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "katG:R463L",
+    "gid:V110V",
+    "fbiC:g-41t",
+    "gyrA:V374V",
+    "eis:Q194!",
+    "embB:P1075P",
+    "gyrA:A384V",
+    "gyrA:E21Q",
+    "gyrA:I614I"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "eis",
+    "gid",
+    "embB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

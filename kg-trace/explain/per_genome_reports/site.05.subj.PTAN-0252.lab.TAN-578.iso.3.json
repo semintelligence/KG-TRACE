@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.05.subj.PTAN-0252.lab.TAN-578.iso.3",
+  "true_label": "RESISTANT",
+  "prediction": "SUSCEPTIBLE",
+  "correct": false,
+  "confidence": 0.8935,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.045523542910814285,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04235224798321724,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04235224798321724,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04235224798321724,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04235224798321724,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.22841,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "tlyA:L11L",
+    "ethA:G423R",
+    "rplC:T115A",
+    "mmpL5:I948V",
+    "gid:L16R",
+    "gyrA:E21Q",
+    "gyrA:S95T",
+    "gyrA:G668D",
+    "rrs:c492t"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "rplC",
+    "gyrA",
+    "ethA",
+    "rrs",
+    "mmpL5",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

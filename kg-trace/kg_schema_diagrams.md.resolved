@@ -1,0 +1,53 @@
+# KG-TRACE Knowledge Graph Schemas
+
+Below are the visual representations of the Knowledge Graph schemas used in the KG-TRACE framework.
+
+## 1. M. tuberculosis (MTB) KG Schema
+
+This represents the primary knowledge graph built from the WHO mutation catalogue, containing 60,017 triples.
+
+```mermaid
+graph TD
+    classDef gene fill:#2563eb,stroke:#1e40af,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    classDef mech fill:#7e22ce,stroke:#581c87,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    classDef mut fill:#dc2626,stroke:#991b1b,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    classDef drug fill:#16a34a,stroke:#166534,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    
+    G["Gene (n=26)"]:::gene
+    M["Mechanism (n=9)"]:::mech
+    Mu["Mutation (n=25,045)"]:::mut
+    D["Drug (n=15)"]:::drug
+    
+    G -- "belongs_to" --> M
+    G -- "has_mutation" --> Mu
+    Mu -- "confers_resistance_to" --> D
+    Mu -- "confers_susceptibility_to" --> D
+    M -- "has_uncertain_effect_on" --> D
+    D -- "targets" --> G
+```
+
+> [!TIP]
+> **Example Trace:** `katG` (Gene) $\xrightarrow{\text{has\_mutation}}$ `katG:S315T` (Mutation) $\xrightarrow{\text{confers\_resistance\_to}}$ `Isoniazid` (Drug)
+
+<br/>
+
+## 2. Gram-Negative Per-Species KG Schema
+
+This represents the sparser knowledge graph built dynamically from the BV-BRC CARD annotations for the Gram-negative extension experiments (e.g., *E. coli*, *K. pneumoniae*).
+
+```mermaid
+graph TD
+    classDef gene fill:#2563eb,stroke:#1e40af,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    classDef mech fill:#7e22ce,stroke:#581c87,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    classDef drug fill:#16a34a,stroke:#166534,stroke-width:2px,color:#fff,rx:5px,ry:5px;
+    
+    G["Gene Family"]:::gene
+    M["Mechanism Class"]:::mech
+    D["Drug"]:::drug
+    
+    G -- "belongs_to_mechanism" --> M
+    G -- "confers_resistance_to" --> D
+```
+
+> [!NOTE]
+> The absence of `Mutation` nodes in the Gram-Negative schema reflects the structure of the BV-BRC CARD annotations for these species, which map gene families directly to mechanism classes and drugs without per-mutation granularity.

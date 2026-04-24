@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.ENA.subj.SAMN07765903.lab.1.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "SUSCEPTIBLE",
+  "correct": false,
+  "confidence": 0.9894,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04414205253124237,
+      "present": true
+    },
+    {
+      "gene": "gid",
+      "weight": 0.04106699675321579,
+      "present": false
+    },
+    {
+      "gene": "fgd1",
+      "weight": 0.04106699675321579,
+      "present": false
+    },
+    {
+      "gene": "Rv2983",
+      "weight": 0.04106699675321579,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04106699675321579,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209646,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "rplC:A155A",
+    "gyrA:E21Q",
+    "mmpL5:I948V",
+    "gyrA:S95T",
+    "katG:T180M",
+    "gyrA:G668D",
+    "fbiC:P370R",
+    "fbiC:P367Z",
+    "fbiC:P362Z"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "rplC",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

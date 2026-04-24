@@ -1,0 +1,185 @@
+{
+  "multi_dataset": [
+    {
+      "Dataset": "MTB_INH",
+      "Species": "M. tuberculosis",
+      "Drug": "INH (Isoniazid)",
+      "Model": "KG-Trace (100 epochs)",
+      "AUROC": 0.9739575352814157,
+      "F1_macro": 0.9580267598753505,
+      "N_samples": 5665,
+      "N_test": 5665,
+      "Note": "Baseline model"
+    },
+    {
+      "Dataset": "MTB_RIF",
+      "Species": "M. tuberculosis",
+      "Drug": "RIF",
+      "Model": "KG-Trace (10 epochs)",
+      "AUROC": 0.9849610792432573,
+      "F1_macro": 0.9646762370235182,
+      "N_samples": 37831,
+      "N_test": 5675,
+      "Note": "Extension"
+    },
+    {
+      "Dataset": "MTB_EMB",
+      "Species": "M. tuberculosis",
+      "Drug": "EMB",
+      "Model": "KG-Trace (10 epochs)",
+      "AUROC": 0.9560692488152811,
+      "F1_macro": 0.8610302564564483,
+      "N_samples": 35487,
+      "N_test": 5324,
+      "Note": "Extension"
+    },
+    {
+      "Dataset": "MTB_LEV",
+      "Species": "M. tuberculosis",
+      "Drug": "LEV",
+      "Model": "KG-Trace (10 epochs)",
+      "AUROC": 0.9473117404435039,
+      "F1_macro": 0.8938159092125689,
+      "N_samples": 15113,
+      "N_test": 2267,
+      "Note": "Extension"
+    },
+    {
+      "Dataset": "Klebsiella_pneumoniae_ciprofloxacin",
+      "Species": "Klebsiella pneumoniae",
+      "Drug": "ciprofloxacin",
+      "Model": "N/A",
+      "AUROC": "N/A",
+      "F1_macro": "N/A",
+      "N_samples": 1697,
+      "N_test": "N/A",
+      "Note": "Labels only \u2014 no genome features available locally"
+    },
+    {
+      "Dataset": "Klebsiella_pneumoniae_meropenem",
+      "Species": "Klebsiella pneumoniae",
+      "Drug": "meropenem",
+      "Model": "N/A",
+      "AUROC": "N/A",
+      "F1_macro": "N/A",
+      "N_samples": 1609,
+      "N_test": "N/A",
+      "Note": "Labels only \u2014 no genome features available locally"
+    },
+    {
+      "Dataset": "Acinetobacter_baumannii_meropenem",
+      "Species": "Acinetobacter baumannii",
+      "Drug": "meropenem",
+      "Model": "N/A",
+      "AUROC": "N/A",
+      "F1_macro": "N/A",
+      "N_samples": 445,
+      "N_test": "N/A",
+      "Note": "Labels only \u2014 no genome features available locally"
+    },
+    {
+      "Dataset": "Escherichia_coli_ampicillin",
+      "Species": "Escherichia coli",
+      "Drug": "ampicillin",
+      "Model": "N/A",
+      "AUROC": "N/A",
+      "F1_macro": "N/A",
+      "N_samples": 1484,
+      "N_test": "N/A",
+      "Note": "Labels only \u2014 no genome features available locally"
+    }
+  ],
+  "ablation": [
+    {
+      "config": "genomic_only",
+      "description": "k-mer features only, no KG branch",
+      "auroc": 0.9779680177560285,
+      "f1_macro": 0.9595861003219783,
+      "confusion_matrix": [
+        [
+          3520,
+          50
+        ],
+        [
+          161,
+          1934
+        ]
+      ],
+      "n_params": 9051804,
+      "train_time_s": 130.1
+    },
+    {
+      "config": "kg_only",
+      "description": "KG embeddings only, no k-mer branch",
+      "auroc": 0.9472619214750341,
+      "f1_macro": 0.8868848187030005,
+      "confusion_matrix": [
+        [
+          3335,
+          235
+        ],
+        [
+          355,
+          1740
+        ]
+      ],
+      "n_params": 26717,
+      "train_time_s": 38.6
+    },
+    {
+      "config": "avg_pool_no_attention",
+      "description": "Average pooling instead of self-attention",
+      "auroc": 0.9747865064880368,
+      "f1_macro": 0.9569046093480813,
+      "confusion_matrix": [
+        [
+          3513,
+          57
+        ],
+        [
+          168,
+          1927
+        ]
+      ],
+      "n_params": 9126044,
+      "train_time_s": 140.3
+    },
+    {
+      "config": "scalar_fusion",
+      "description": "Scalar \u03b1\u00b7g + (1-\u03b1)\u00b7k instead of cross-attention gate",
+      "auroc": 0.9772502891371346,
+      "f1_macro": 0.9594680663792508,
+      "confusion_matrix": [
+        [
+          3511,
+          59
+        ],
+        [
+          153,
+          1942
+        ]
+      ],
+      "n_params": 9076702,
+      "train_time_s": 183.1
+    },
+    {
+      "config": "full_kg_trace",
+      "description": "Full KG-Trace (10 epochs for comparison)",
+      "auroc": 0.9721617429788143,
+      "f1_macro": 0.955530405849842,
+      "confusion_matrix": [
+        [
+          3513,
+          57
+        ],
+        [
+          175,
+          1920
+        ]
+      ],
+      "n_params": 9126109,
+      "train_time_s": 134.3
+    }
+  ],
+  "mendeley_limitation": "Genome sequences are not available locally for Mendeley species. Only genome IDs and phenotype labels are present. K-mer TF-IDF features cannot be computed without genome assemblies. The existing KG and RotatE embeddings are M. tuberculosis-specific (26 WHO catalogue genes) and do not apply to non-TB organisms."
+}

@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.ENA.subj.SAMEA1019029.lab.1.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9918,
+  "top_genes_by_attention": [
+    {
+      "gene": "gid",
+      "weight": 0.04245757311582565,
+      "present": false
+    },
+    {
+      "gene": "rrs",
+      "weight": 0.04245757311582565,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04245757311582565,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.04245757311582565,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.04245757311582565,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.211707,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "mmpL5:F765L",
+    "rpoB:G1010Z",
+    "gyrA:E21Q",
+    "ethA:R245R",
+    "mmpL5:I948V",
+    "rrl:c1706z",
+    "gyrA:S95T",
+    "mmpL5:A61A",
+    "Rv2983:A73Z"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "Rv2983",
+    "ethA",
+    "rpoB",
+    "rrl",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.10.subj.TRL0018124.lab.TRL0018124.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.9901,
+  "top_genes_by_attention": [
+    {
+      "gene": "Rv0678",
+      "weight": 0.04200953245162964,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.04200953245162964,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04200953245162964,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04200953245162964,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.04200953245162964,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "fabG1:c-15t",
+    "gid:G28G",
+    "gyrA:E21Q",
+    "gyrB:A504Z",
+    "tlyA:L11L",
+    "gyrA:S95T",
+    "mmpL5:P355P",
+    "gyrA:Q613E",
+    "gyrA:G668D",
+    "mmpL5:I948V"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "gyrB",
+    "fabG1",
+    "gid",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

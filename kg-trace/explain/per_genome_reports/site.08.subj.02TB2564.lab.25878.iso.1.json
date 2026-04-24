@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.08.subj.02TB2564.lab.25878.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9907,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.045838791877031326,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04264553636312485,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04264553636312485,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04264553636312485,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04264553636312485,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.20947,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "embB:L370R",
+    "katG:R463L",
+    "tlyA:L11L",
+    "ethA:S266R",
+    "mmpL5:T794Z",
+    "gid:E92D",
+    "mmpL5:I948V",
+    "gyrA:E21Q",
+    "gyrA:S95T",
+    "gyrA:G668D"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "gyrA",
+    "ethA",
+    "embB",
+    "mmpL5",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

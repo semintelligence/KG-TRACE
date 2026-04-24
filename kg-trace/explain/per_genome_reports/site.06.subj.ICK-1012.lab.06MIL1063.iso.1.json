@@ -1,0 +1,59 @@
+{
+  "genome_id": "site.06.subj.ICK-1012.lab.06MIL1063.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "RESISTANT",
+  "correct": false,
+  "confidence": 0.9998,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04783570021390915,
+      "present": true
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.044503334909677505,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.044503334909677505,
+      "present": false
+    },
+    {
+      "gene": "fbiC",
+      "weight": 0.044503334909677505,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.044503334909677505,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "rpoB:L879L",
+    "embB:R24Z",
+    "katG:R463L",
+    "rpoB:c-61t",
+    "rpoB:H445N",
+    "rpoB:G876G",
+    "gyrA:E21Q",
+    "pncA:S65S",
+    "embB:M306V"
+  ],
+  "shap_card_mapped": [
+    "katG",
+    "rpoB",
+    "pncA",
+    "embB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

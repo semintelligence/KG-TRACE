@@ -1,0 +1,63 @@
+{
+  "genome_id": "site.03.subj.KINI24081955.lab.NOR-84_LIB19793.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 1.0,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04842438921332359,
+      "present": true
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04505101218819618,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04505101218819618,
+      "present": false
+    },
+    {
+      "gene": "fbiC",
+      "weight": 0.04505101218819618,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.04505101218819618,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "rpoB:D435V",
+    "embB:R24Z",
+    "rpsL:K43R",
+    "pncA:L182W",
+    "fbiB:T92T",
+    "katG:R463L",
+    "mmpL5:I948V",
+    "gyrA:E21Q",
+    "ethA:N379D"
+  ],
+  "shap_card_mapped": [
+    "katG",
+    "rpsL",
+    "ethA",
+    "fbiB",
+    "rpoB",
+    "pncA",
+    "embB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

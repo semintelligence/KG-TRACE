@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.24.subj.PT-458.lab.2014-529.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9882,
+  "top_genes_by_attention": [
+    {
+      "gene": "gid",
+      "weight": 0.04274259880185127,
+      "present": false
+    },
+    {
+      "gene": "rrs",
+      "weight": 0.04274259880185127,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04274259880185127,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.04274259880185127,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.04274259880185127,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.210687,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "embB:R24Z",
+    "mmpL5:I948V",
+    "Rv2983:A206Z",
+    "gyrA:E21Q",
+    "gyrB:A593V",
+    "embB:R213Q",
+    "rrl:c344t",
+    "fbiC:P359S",
+    "fbiC:P362P"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "Rv2983",
+    "fbiC",
+    "gyrB",
+    "rrl",
+    "embB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

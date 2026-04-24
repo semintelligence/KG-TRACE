@@ -1,0 +1,63 @@
+{
+  "genome_id": "site.ENA.subj.SAMEA2535046.lab.1.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.9999,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.046722132712602615,
+      "present": true
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.043467339128255844,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.043467339128255844,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.043467339128255844,
+      "present": false
+    },
+    {
+      "gene": "fgd1",
+      "weight": 0.043467339128255844,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "fbiC:2565_del_ggcctag",
+    "gyrB:V301L",
+    "gyrA:E21Q",
+    "gid:L16R",
+    "embB:M306Z",
+    "rpoB:S450L",
+    "rrs:c513t",
+    "gyrA:G668D",
+    "tlyA:L11L"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "gyrB",
+    "gyrA",
+    "rrs",
+    "rpoB",
+    "embB",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.00.subj.PERU_99-R576.lab.99-R576.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 1.0,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.046372558921575546,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04314211755990982,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04314211755990982,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04314211755990982,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04314211755990982,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "pncA:L120P",
+    "katG:A478A",
+    "gyrA:E21Q",
+    "fbiC:K8K",
+    "rpoB:S450L",
+    "gid:L90R",
+    "embB:P965P",
+    "tlyA:L11L",
+    "embB:R1055R"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "gid",
+    "rpoB",
+    "pncA",
+    "embB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

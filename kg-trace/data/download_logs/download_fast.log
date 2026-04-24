@@ -1,0 +1,140 @@
+Download targets (4):
+  Ecoli_ampicillin                1484 genomes  [Data_Escherichia_coli_ampicillin.txt]
+  Kpneumoniae_cipro               1697 genomes  [Data_Klebsiella_pneumoniae_ciprofloxacin.txt]
+  Kpneumoniae_carbapenem          1609 genomes  [Data_Klebsiella_pneumoniae_meropenem.txt]
+  Abaumannii_carbapenem            445 genomes  [Data_Acinetobacter_baumannii_meropenem.txt]
+
+============================================================
+Species: Ecoli_ampicillin
+Total in label file: 1484
+Already cached: 98  |  Remaining: 1386
+Starting 20 concurrent workers...
+  [100/1386] ok=81 fail=19 on_disk=179/1484 rate=89/min  ETA=15min
+  [200/1386] ok=176 fail=24 on_disk=274/1484 rate=89/min  ETA=13min
+  [300/1386] ok=261 fail=39 on_disk=359/1484 rate=94/min  ETA=12min
+  [400/1386] ok=349 fail=51 on_disk=447/1484 rate=97/min  ETA=10min
+  [500/1386] ok=439 fail=61 on_disk=537/1484 rate=97/min  ETA=9min
+  [600/1386] ok=525 fail=75 on_disk=623/1484 rate=99/min  ETA=8min
+  [700/1386] ok=615 fail=85 on_disk=713/1484 rate=97/min  ETA=7min
+  [800/1386] ok=705 fail=95 on_disk=803/1484 rate=93/min  ETA=6min
+  [900/1386] ok=794 fail=106 on_disk=892/1484 rate=93/min  ETA=5min
+  [1000/1386] ok=886 fail=114 on_disk=984/1484 rate=92/min  ETA=4min
+  [1100/1386] ok=979 fail=121 on_disk=1077/1484 rate=91/min  ETA=3min
+  [1200/1386] ok=1069 fail=131 on_disk=1167/1484 rate=88/min  ETA=2min
+  [1300/1386] ok=1157 fail=143 on_disk=1255/1484 rate=89/min  ETA=1min
+
+=== Ecoli_ampicillin SUMMARY ===
+  Species:                    Ecoli_ampicillin
+  Total in label file:        1484
+  Previously cached:          98
+  Downloaded this session:    1236
+  Failed this session:        150
+  Total valid FASTAs on disk: 1334 / 1484
+  Elapsed:                    15.6 min
+  Average rate:               89 genomes/min
+  Failed IDs logged to:       [PROJECT_ROOT]/kg-trace/data/download_logs/Ecoli_ampicillin_failed.txt
+
+Downloaded 1334 / 1484 genomes successfully
+
+============================================================
+Species: Kpneumoniae_cipro
+Total in label file: 1697
+Already cached: 0  |  Remaining: 1697
+Starting 20 concurrent workers...
+  [100/1697] ok=93 fail=7 on_disk=93/1697 rate=64/min  ETA=25min
+  [200/1697] ok=183 fail=17 on_disk=183/1697 rate=79/min  ETA=19min
+  [300/1697] ok=277 fail=23 on_disk=277/1697 rate=82/min  ETA=17min
+  [400/1697] ok=376 fail=24 on_disk=376/1697 rate=85/min  ETA=15min
+  [500/1697] ok=474 fail=26 on_disk=474/1697 rate=84/min  ETA=14min
+  [600/1697] ok=572 fail=28 on_disk=572/1697 rate=85/min  ETA=13min
+  [700/1697] ok=671 fail=29 on_disk=671/1697 rate=84/min  ETA=12min
+  [800/1697] ok=771 fail=29 on_disk=771/1697 rate=85/min  ETA=11min
+  [900/1697] ok=870 fail=30 on_disk=870/1697 rate=85/min  ETA=9min
+  [1000/1697] ok=969 fail=31 on_disk=969/1697 rate=85/min  ETA=8min
+  [1100/1697] ok=1068 fail=32 on_disk=1068/1697 rate=82/min  ETA=7min
+  [1200/1697] ok=1167 fail=33 on_disk=1167/1697 rate=82/min  ETA=6min
+  [1300/1697] ok=1266 fail=34 on_disk=1266/1697 rate=82/min  ETA=5min
+  [1400/1697] ok=1358 fail=42 on_disk=1358/1697 rate=81/min  ETA=4min
+  [1500/1697] ok=1457 fail=43 on_disk=1457/1697 rate=81/min  ETA=2min
+  [1600/1697] ok=1551 fail=49 on_disk=1551/1697 rate=81/min  ETA=1min
+
+=== Kpneumoniae_cipro SUMMARY ===
+  Species:                    Kpneumoniae_cipro
+  Total in label file:        1697
+  Previously cached:          0
+  Downloaded this session:    1642
+  Failed this session:        55
+  Total valid FASTAs on disk: 1642 / 1697
+  Elapsed:                    21.0 min
+  Average rate:               81 genomes/min
+  Failed IDs logged to:       [PROJECT_ROOT]/kg-trace/data/download_logs/Kpneumoniae_cipro_failed.txt
+
+Downloaded 1642 / 1697 genomes successfully
+
+============================================================
+Species: Kpneumoniae_carbapenem
+Total in label file: 1609
+Already cached: 0  |  Remaining: 1609
+Starting 20 concurrent workers...
+  [100/1609] ok=94 fail=6 on_disk=94/1609 rate=62/min  ETA=24min
+  [200/1609] ok=184 fail=16 on_disk=184/1609 rate=78/min  ETA=18min
+  [300/1609] ok=277 fail=23 on_disk=277/1609 rate=84/min  ETA=16min
+  [400/1609] ok=376 fail=24 on_disk=376/1609 rate=86/min  ETA=14min
+  [500/1609] ok=474 fail=26 on_disk=474/1609 rate=88/min  ETA=13min
+  [600/1609] ok=572 fail=28 on_disk=572/1609 rate=89/min  ETA=11min
+  [700/1609] ok=671 fail=29 on_disk=671/1609 rate=89/min  ETA=10min
+  [800/1609] ok=771 fail=29 on_disk=771/1609 rate=90/min  ETA=9min
+  [900/1609] ok=870 fail=30 on_disk=870/1609 rate=89/min  ETA=8min
+  [1000/1609] ok=969 fail=31 on_disk=969/1609 rate=90/min  ETA=7min
+  [1100/1609] ok=1068 fail=32 on_disk=1068/1609 rate=90/min  ETA=6min
+  [1200/1609] ok=1167 fail=33 on_disk=1167/1609 rate=90/min  ETA=5min
+  [1300/1609] ok=1266 fail=34 on_disk=1266/1609 rate=88/min  ETA=4min
+  [1400/1609] ok=1359 fail=41 on_disk=1359/1609 rate=86/min  ETA=2min
+  [1500/1609] ok=1455 fail=45 on_disk=1455/1609 rate=84/min  ETA=1min
+  [1600/1609] ok=1547 fail=53 on_disk=1547/1609 rate=83/min  ETA=0min
+
+=== Kpneumoniae_carbapenem SUMMARY ===
+  Species:                    Kpneumoniae_carbapenem
+  Total in label file:        1609
+  Previously cached:          0
+  Downloaded this session:    1556
+  Failed this session:        53
+  Total valid FASTAs on disk: 1556 / 1609
+  Elapsed:                    19.3 min
+  Average rate:               83 genomes/min
+  Failed IDs logged to:       [PROJECT_ROOT]/kg-trace/data/download_logs/Kpneumoniae_carbapenem_failed.txt
+
+Downloaded 1556 / 1609 genomes successfully
+
+============================================================
+Species: Abaumannii_carbapenem
+Total in label file: 445
+Already cached: 0  |  Remaining: 445
+Starting 20 concurrent workers...
+  [100/445] ok=93 fail=7 on_disk=93/445 rate=95/min  ETA=4min
+  [200/445] ok=191 fail=9 on_disk=191/445 rate=98/min  ETA=2min
+  [300/445] ok=288 fail=12 on_disk=288/445 rate=99/min  ETA=1min
+  [400/445] ok=362 fail=38 on_disk=362/445 rate=104/min  ETA=0min
+
+=== Abaumannii_carbapenem SUMMARY ===
+  Species:                    Abaumannii_carbapenem
+  Total in label file:        445
+  Previously cached:          0
+  Downloaded this session:    380
+  Failed this session:        65
+  Total valid FASTAs on disk: 380 / 445
+  Elapsed:                    4.2 min
+  Average rate:               107 genomes/min
+  Failed IDs logged to:       [PROJECT_ROOT]/kg-trace/data/download_logs/Abaumannii_carbapenem_failed.txt
+
+Downloaded 380 / 445 genomes successfully
+
+============================================================
+=== FINAL SUMMARY ===
+  Ecoli_ampicillin              :  1334 ok,   150 failed
+  Kpneumoniae_cipro             :  1642 ok,    55 failed
+  Kpneumoniae_carbapenem        :  1556 ok,    53 failed
+  Abaumannii_carbapenem         :   380 ok,    65 failed
+
+  GRAND TOTAL: 4912 downloaded, 323 failed
+  Logs: [PROJECT_ROOT]/kg-trace/data/download_logs

@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.ENA.subj.SAMN07766474.lab.1.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9999,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04988400265574455,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04640894755721092,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04640894755721092,
+      "present": false
+    },
+    {
+      "gene": "rpsL",
+      "weight": 0.04640894755721092,
+      "present": false
+    },
+    {
+      "gene": "rplC",
+      "weight": 0.04640894755721092,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209211,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "fbiA:A178T",
+    "katG:R463L",
+    "gid:V110V",
+    "gyrA:E21Q",
+    "gyrA:A384V",
+    "rrl:g982a",
+    "gyrA:L653L",
+    "embB:L355L",
+    "gyrA:I614I"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "embB",
+    "gid",
+    "fbiA",
+    "rrl",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

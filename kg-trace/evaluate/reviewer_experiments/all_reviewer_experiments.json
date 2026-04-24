@@ -1,0 +1,230 @@
+{
+  "experiment_1_aux_head_ablation": {
+    "experiment": "Exp1_NoAuxHead",
+    "description": "Full KG-Trace, loss = loss_amr only (no 0.3*loss_gene)",
+    "auroc": 0.9753792209007708,
+    "f1_macro": 0.9569506325711286,
+    "confusion_matrix": [
+      [
+        3508,
+        62
+      ],
+      [
+        163,
+        1932
+      ]
+    ],
+    "train_time_s": 130.5
+  },
+  "experiment_2_rf200": {
+    "experiment": "Exp2_RF200",
+    "description": "Random Forest with n_estimators=200 (matching paper claim)",
+    "auroc": 0.9647935260022863,
+    "f1_macro": 0.8438055011696035,
+    "confusion_matrix": [
+      [
+        3554,
+        16
+      ],
+      [
+        736,
+        1359
+      ]
+    ],
+    "train_time_s": 29.3
+  },
+  "experiment_3_note": "Documentation only: baselines trained on train+val (32,096 samples). KG-Trace uses train-only (26,432 samples). State this in paper.",
+  "experiment_4_ablations_100ep": [
+    {
+      "config": "genomic_only",
+      "description": "k-mer features only, no KG branch",
+      "auroc": 0.9773338547829633,
+      "f1_macro": 0.9574746524406722,
+      "confusion_matrix": [
+        [
+          3515,
+          55
+        ],
+        [
+          167,
+          1928
+        ]
+      ],
+      "n_params": 9051804,
+      "stopped_epoch": 12,
+      "best_val_f1": 0.9578490257263184,
+      "train_time_s": 185.7
+    },
+    {
+      "config": "kg_only",
+      "description": "KG embeddings only, no k-mer branch",
+      "auroc": 0.9525867244272411,
+      "f1_macro": 0.8914094027441485,
+      "confusion_matrix": [
+        [
+          3315,
+          255
+        ],
+        [
+          315,
+          1780
+        ]
+      ],
+      "n_params": 26717,
+      "stopped_epoch": 53,
+      "best_val_f1": 0.8865269422531128,
+      "train_time_s": 236.3
+    },
+    {
+      "config": "avg_pool_no_attention",
+      "description": "Average pooling instead of self-attention",
+      "auroc": 0.9767337865933963,
+      "f1_macro": 0.955630665429656,
+      "confusion_matrix": [
+        [
+          3523,
+          47
+        ],
+        [
+          184,
+          1911
+        ]
+      ],
+      "n_params": 9126044,
+      "stopped_epoch": 14,
+      "best_val_f1": 0.9578781723976135,
+      "train_time_s": 256.0
+    },
+    {
+      "config": "scalar_fusion",
+      "description": "Scalar \u03b1\u00b7g + (1-\u03b1)\u00b7k instead of cross-attention gate",
+      "auroc": 0.978109143418704,
+      "f1_macro": 0.9579563471983268,
+      "confusion_matrix": [
+        [
+          3505,
+          65
+        ],
+        [
+          155,
+          1940
+        ]
+      ],
+      "n_params": 9076702,
+      "stopped_epoch": 11,
+      "best_val_f1": 0.9568749666213989,
+      "train_time_s": 253.2
+    },
+    {
+      "config": "full_kg_trace",
+      "description": "Full KG-Trace (100 epochs, early stopping)",
+      "auroc": 0.9771072916039923,
+      "f1_macro": 0.9598334061271605,
+      "confusion_matrix": [
+        [
+          3514,
+          56
+        ],
+        [
+          154,
+          1941
+        ]
+      ],
+      "n_params": 9142493,
+      "stopped_epoch": 11,
+      "best_val_f1": 0.9591287970542908,
+      "train_time_s": 196.1
+    }
+  ],
+  "experiment_5_grid_search": [
+    {
+      "model": "SVM (tuned)",
+      "best_C": 1.0,
+      "auroc": 0.979425135209215,
+      "f1_macro": 0.9584989264894506,
+      "confusion_matrix": [
+        [
+          3510,
+          60
+        ],
+        [
+          157,
+          1938
+        ]
+      ],
+      "search_space": {
+        "C": [
+          0.01,
+          0.1,
+          1.0,
+          10.0
+        ]
+      },
+      "train_time_s": 24.6
+    },
+    {
+      "model": "XGBoost (tuned)",
+      "best_params": {
+        "n_estimators": 200,
+        "max_depth": 8
+      },
+      "auroc": 0.9759747431192048,
+      "f1_macro": 0.9595022900302081,
+      "confusion_matrix": [
+        [
+          3507,
+          63
+        ],
+        [
+          149,
+          1946
+        ]
+      ],
+      "search_space": {
+        "n_estimators": [
+          100,
+          200
+        ],
+        "max_depth": [
+          4,
+          6,
+          8
+        ]
+      },
+      "train_time_s": 283.6
+    },
+    {
+      "model": "RandomForest (tuned)",
+      "best_params": {
+        "n_estimators": 200,
+        "max_depth": null
+      },
+      "auroc": 0.9806423189800981,
+      "f1_macro": 0.9547734334871039,
+      "confusion_matrix": [
+        [
+          3510,
+          60
+        ],
+        [
+          176,
+          1919
+        ]
+      ],
+      "search_space": {
+        "n_estimators": [
+          100,
+          200
+        ],
+        "max_depth": [
+          10,
+          20,
+          "None"
+        ]
+      },
+      "train_time_s": 298.9
+    }
+  ],
+  "experiment_6_note": "Covered by experiment 4 (100 epochs with early stopping).",
+  "total_time_s": 2020.4
+}

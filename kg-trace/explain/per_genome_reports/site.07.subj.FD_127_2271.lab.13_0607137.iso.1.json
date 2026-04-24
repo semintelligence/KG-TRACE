@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.07.subj.FD_127_2271.lab.13_0607137.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9765,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.047406043857336044,
+      "present": true
+    },
+    {
+      "gene": "tlyA",
+      "weight": 0.044103607535362244,
+      "present": false
+    },
+    {
+      "gene": "rrs",
+      "weight": 0.044103607535362244,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.044103607535362244,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.044103607535362244,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.211829,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:R463L",
+    "gid:V110V",
+    "gyrA:A384V",
+    "gyrA:E21Q",
+    "rrl:a1075g",
+    "gyrA:L653L",
+    "mmpL5:T794I",
+    "embB:L355L",
+    "gyrA:I614I",
+    "fbiA:V5V"
+  ],
+  "shap_card_mapped": [
+    "katG",
+    "embB",
+    "gid",
+    "fbiA",
+    "rrl",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

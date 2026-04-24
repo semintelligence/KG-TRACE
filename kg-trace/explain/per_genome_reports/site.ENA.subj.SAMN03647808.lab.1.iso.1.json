@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.ENA.subj.SAMN03647808.lab.1.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 1.0,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.049126479774713516,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.0457041934132576,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.0457041934132576,
+      "present": false
+    },
+    {
+      "gene": "rrs",
+      "weight": 0.0457041934132576,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.0457041934132576,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209464,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "katG:A727Z",
+    "katG:R463L",
+    "tlyA:R84G",
+    "fbiC:P750P",
+    "gid:V110V",
+    "gyrA:E21Q",
+    "gyrA:A384V",
+    "embB:L355L",
+    "fgd1:t-32z"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "fgd1",
+    "gid",
+    "embB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.03.subj.5936-97_LIB10233.lab.5936-97_LIB10233.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.7772,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.047061704099178314,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04378325492143631,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04378325492143631,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04378325492143631,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04378325492143631,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.221161,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "rpoB:S450W",
+    "tlyA:L11L",
+    "ethA:-38_del_cgttgacggcctcgacattacgttgatagcgtggatccatgaccgagcacctcgacgttgtcatcgtgggcgctggaatctccggtgtcagcgcggcctggcacctgcaggaccgttgcccgaccaagagctacgccatcctggaaaagcgggaatccatgggcggcacctgggatttgttccgttatcccggaattcgctccgactccgacatgtacacgctaggtttccgattccgtccctggaccggacggcaggcgatcgccgacggcaagcccatcctcgagtacgtcaagagcaccgcggccatgtatggaatcgacaggcatatccggttccaccacaaggtgatcagtgccgattggtcgaccgcggaaaaccgctggaccgttcacatccaaagccacggcacgctcagcgccctcacctgcgaattcctctttctgtgcagcggctactacaactacgacgagggctactcgccgagattcgccggctcggaggatttcgtcgggccgatcatccatccgcagcactggcccgaggacctcgactacgacgctaagaacatcgtcgtgatcggcagtggcgcaacggcggtcacgctcgtgccggcgctggcggactcgggcgccaagcacgtcacgatgctgcagcgctcacccacctacatcgtgtcgcagccagaccgggacggcatcgccgagaagctcaaccgctggctgccggagaccatggcctacaccgcggtacggtggaagaacgtgctgcgccaggcggccgtgtacagcgcctgccagaagtggccacggcgcatgcggaagatgttcctgagcctgatccagcgccagctacccgaggggtacgacgtgcgaaagcacttcggcccgcactacaacccctgggaccagcgattgtgcttggtgcccaacggcgacctgttccgggccattcgtcacgggaaggtcgaggtggtgaccgacaccattgaacggttcaccgcga",
+    "rrs:g1157t",
+    "mmpL5:R486Q",
+    "embB:R947R",
+    "ethA:del_0.64",
+    "embB:M306I",
+    "mmpL5:I948V"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "ethA",
+    "rpoB",
+    "embB",
+    "mmpL5",
+    "rrs"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

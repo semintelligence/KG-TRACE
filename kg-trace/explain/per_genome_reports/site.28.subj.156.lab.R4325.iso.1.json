@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.28.subj.156.lab.R4325.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.9971,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04354007914662361,
+      "present": true
+    },
+    {
+      "gene": "gid",
+      "weight": 0.040506958961486816,
+      "present": false
+    },
+    {
+      "gene": "fgd1",
+      "weight": 0.040506958961486816,
+      "present": false
+    },
+    {
+      "gene": "Rv2983",
+      "weight": 0.040506958961486816,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.040506958961486816,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "rpoB:H445D",
+    "gyrA:E21Q",
+    "tlyA:L11L",
+    "gyrB:E299E",
+    "fbiC:P420S",
+    "fbiC:P420L",
+    "fbiC:P408P",
+    "fbiC:P396P",
+    "fbiC:P370R"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fbiC",
+    "gyrB",
+    "rpoB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

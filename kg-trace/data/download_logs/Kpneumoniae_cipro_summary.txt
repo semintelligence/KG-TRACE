@@ -1,0 +1,9 @@
+Species:                    Kpneumoniae_cipro
+Total in label file:        1697
+Previously cached:          0
+Downloaded this session:    1642
+Failed this session:        55
+Total valid FASTAs on disk: 1642 / 1697
+Elapsed:                    21.0 min
+Average rate:               81 genomes/min
+Failed IDs logged to:       [PROJECT_ROOT]/KG-Trace/data/download_logs/Kpneumoniae_cipro_failed.txt

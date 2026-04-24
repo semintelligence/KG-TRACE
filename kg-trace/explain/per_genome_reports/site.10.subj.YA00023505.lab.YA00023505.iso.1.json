@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.10.subj.YA00023505.lab.YA00023505.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.892,
+  "top_genes_by_attention": [
+    {
+      "gene": "Rv0678",
+      "weight": 0.04134832322597504,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.04134832322597504,
+      "present": false
+    },
+    {
+      "gene": "embB",
+      "weight": 0.04134832322597504,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04134832322597504,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04134832322597504,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.284343,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "rpoB:D435V",
+    "tlyA:L11L",
+    "gyrA:S95T",
+    "gyrA:E21Q",
+    "gid:G37R",
+    "gyrA:Q613E",
+    "gyrA:G668D",
+    "mmpL5:P355P",
+    "mmpL5:I948V",
+    "fbiC:P370R"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "gyrA",
+    "rpoB",
+    "mmpL5",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

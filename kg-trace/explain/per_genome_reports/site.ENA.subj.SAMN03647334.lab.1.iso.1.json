@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.ENA.subj.SAMN03647334.lab.1.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9997,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.047045838087797165,
+      "present": true
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.043768495321273804,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.043768495321273804,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.043768495321273804,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.043768495321273804,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209309,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "katG:R463L",
+    "mmpL5:D128N",
+    "fgd1:V222V",
+    "gid:V110V",
+    "gyrA:A384V",
+    "gyrA:E21Q",
+    "mmpL5:T794I",
+    "fgd1:t-32z",
+    "gyrA:I614I"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "fgd1",
+    "gyrA",
+    "mmpL5",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

@@ -1,0 +1,59 @@
+{
+  "genome_id": "site.03.subj.5483-09_LIB14304.lab.5483-09_LIB14304.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9826,
+  "top_genes_by_attention": [
+    {
+      "gene": "gid",
+      "weight": 0.04098508507013321,
+      "present": false
+    },
+    {
+      "gene": "fgd1",
+      "weight": 0.04098508507013321,
+      "present": false
+    },
+    {
+      "gene": "Rv2983",
+      "weight": 0.04098508507013321,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04098508507013321,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.04098508507013321,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.214134,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "gyrA:L197L",
+    "mmpL5:I948V",
+    "gyrA:E21Q",
+    "gyrA:G668D",
+    "gyrA:S95T",
+    "rrs:c1283t",
+    "fbiC:P335P",
+    "fbiC:P334A",
+    "fbiC:P334S"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "gyrA",
+    "mmpL5",
+    "rrs"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

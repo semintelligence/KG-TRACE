@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.05.subj.PHO-0895.lab.HO-241.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.999,
+  "top_genes_by_attention": [
+    {
+      "gene": "Rv0678",
+      "weight": 0.04248981922864914,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.04248981922864914,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04248981922864914,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04248981922864914,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.04248981922864914,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "inhA:I21T",
+    "gid:L145F",
+    "fabG1:c-15t",
+    "pncA:H51R",
+    "gyrA:G247S",
+    "gyrA:E21Q",
+    "tlyA:L11L",
+    "gid:L16R",
+    "gyrA:G668D",
+    "gyrA:S95T"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "inhA",
+    "fabG1",
+    "gid",
+    "pncA",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

@@ -1,0 +1,59 @@
+{
+  "genome_id": "site.03.subj.69_15.lab.AZE-195_LIB18397.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9901,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04516604542732239,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04201965406537056,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04201965406537056,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04201965406537056,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04201965406537056,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209718,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:R463L",
+    "mmpL5:M655T",
+    "tlyA:L11L",
+    "mmpL5:T794I",
+    "gid:E92D",
+    "gyrA:S95T",
+    "mmpL5:I948V",
+    "gyrA:G668D",
+    "gyrA:E21Q",
+    "mmpL5:D767N"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "gid",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

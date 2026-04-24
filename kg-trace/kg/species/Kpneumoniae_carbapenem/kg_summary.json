@@ -1,0 +1,35 @@
+{
+  "species": "Kpneumoniae_carbapenem",
+  "drug": "carbapenem",
+  "n_genes": 594,
+  "n_entities": 610,
+  "n_relations": 3,
+  "n_triples": 1203,
+  "n_mechanism_classes": 15,
+  "entity_emb_shape": [
+    610,
+    64
+  ],
+  "genes": [
+    "AAC(3)-I",
+    "AAC(3)-II,III,IV,VI,VIII,IX,X",
+    "AAC(3)-IIa",
+    "AAC(3)-IIc",
+    "AAC(3)-IV",
+    "AAC(3)-Ib",
+    "AAC(6')-33",
+    "AAC(6')-Ia (and related AACs)",
+    "AAC(6')-Ib",
+    "AAC(6')-Ib'",
+    "AAC(6')-Ib-cr",
+    "AAC(6')-Ib/AAC(6')-II",
+    "AAC(6')-Ib10",
+    "AAC(6')-Ib4",
+    "AAC(6')-Ib7",
+    "AAC(6')-Ib8",
+    "AAC(6')-Ib9",
+    "AAC(6')-Ic,f,g,h,j,k,l,r-z",
+    "ANT(2'')-Ia",
+    "APH(3'')-I"
+  ]
+}

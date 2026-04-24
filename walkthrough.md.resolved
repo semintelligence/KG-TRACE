@@ -1,8 +1,8 @@
-# KG-AMR v2 Pipeline — Steps 7-10 Walkthrough
+# KG-Trace Pipeline — Steps 7-10 Walkthrough
 
 ## Summary of Work
 
-Resumed KG-AMR v2 pipeline from Step 7. Steps 1-6 (TF-IDF features, RGI annotations, RotatE KG embeddings, model training) were already complete. Completed:
+Resumed KG-Trace pipeline from Step 7. Steps 1-6 (TF-IDF features, RGI annotations, RotatE KG embeddings, model training) were already complete. Completed:
 
 - **Step 7**: Verified baselines already ran (SVM, XGBoost, RF)
 - **Step 8**: Ran SHAP gradient×input, BCS, Spearman ρ, per-genome reports  
@@ -15,13 +15,13 @@ Resumed KG-AMR v2 pipeline from Step 7. Steps 1-6 (TF-IDF features, RGI annotati
 
 | Model | AUROC | F1-macro | BCS@10 | Spearman ρ | Gate |
 |-------|-------|----------|--------|------------|------|
-| **KG-AMR v2** | 0.9740 | 0.9580 | 1.00 | -0.6855 | 0.2572 |
+| **KG-Trace** | 0.9740 | 0.9580 | 1.00 | -0.6855 | 0.2572 |
 | SVM | **0.9787** | 0.9576 | n/a | n/a | n/a |
 | XGBoost | 0.9764 | 0.9579 | 1.00 | n/a | n/a |
 | RandomForest | 0.9604 | 0.8350 | 1.00 | n/a | n/a |
 
 > [!IMPORTANT]
-> **SVM AUROC (0.9787) > KG-AMR v2 AUROC (0.9740)**. This is reported honestly. KG-AMR v2's advantage is explainability via attention + KG pathway reasoning, not raw AUROC.
+> **SVM AUROC (0.9787) > KG-Trace AUROC (0.9740)**. This is reported honestly. KG-Trace's advantage is explainability via attention + KG pathway reasoning, not raw AUROC.
 
 ---
 
@@ -40,18 +40,18 @@ Resumed KG-AMR v2 pipeline from Step 7. Steps 1-6 (TF-IDF features, RGI annotati
 
 | File | Size | Description |
 |------|------|-------------|
-| [report.html](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/report.html) | 207 KB | Plotly dashboard |
-| [final_results.csv](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/evaluate/final_results.csv) | 357 B | Final comparison table |
-| [shap_values.csv](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/shap_values.csv) | 9.2 MB | Per-genome top-20 SHAP |
-| [alignment_metrics.json](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/alignment_metrics.json) | 57 KB | BCS + Spearman ρ |
-| [per_genome_reports/](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/per_genome_reports) | 5666 files | One JSON per test genome |
+| [report.html]([PROJECT_ROOT]/explain/report.html) | 207 KB | Plotly dashboard |
+| [final_results.csv]([PROJECT_ROOT]/evaluate/final_results.csv) | 357 B | Final comparison table |
+| [shap_values.csv]([PROJECT_ROOT]/explain/shap_values.csv) | 9.2 MB | Per-genome top-20 SHAP |
+| [alignment_metrics.json]([PROJECT_ROOT]/explain/alignment_metrics.json) | 57 KB | BCS + Spearman ρ |
+| [per_genome_reports/]([PROJECT_ROOT]/explain/per_genome_reports) | 5666 files | One JSON per test genome |
 
 ## Scripts Created
 
 | Script | Purpose |
 |--------|---------|
-| [shap_analysis.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/shap_analysis.py) | Gradient×input SHAP (reran successfully) |
-| [alignment_metrics.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/alignment_metrics.py) | BCS + Spearman ρ computation |
-| [generate_per_genome_reports.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/generate_per_genome_reports.py) | Per-genome JSON reports |
-| [build_dashboard.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/explain/build_dashboard.py) | Plotly HTML dashboard |
-| [generate_final_results.py](file:///Users/namangarg/Desktop/AMR%20NamanXSarika/kg-amr-v2/evaluate/generate_final_results.py) | Final results CSV/JSON |
+| [shap_analysis.py]([PROJECT_ROOT]/explain/shap_analysis.py) | Gradient×input SHAP (reran successfully) |
+| [alignment_metrics.py]([PROJECT_ROOT]/explain/alignment_metrics.py) | BCS + Spearman ρ computation |
+| [generate_per_genome_reports.py]([PROJECT_ROOT]/explain/generate_per_genome_reports.py) | Per-genome JSON reports |
+| [build_dashboard.py]([PROJECT_ROOT]/explain/build_dashboard.py) | Plotly HTML dashboard |
+| [generate_final_results.py]([PROJECT_ROOT]/evaluate/generate_final_results.py) | Final results CSV/JSON |

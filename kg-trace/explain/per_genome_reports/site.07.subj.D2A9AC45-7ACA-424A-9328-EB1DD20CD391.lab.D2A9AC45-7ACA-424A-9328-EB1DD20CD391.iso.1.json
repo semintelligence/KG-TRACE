@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.07.subj.D2A9AC45-7ACA-424A-9328-EB1DD20CD391.lab.D2A9AC45-7ACA-424A-9328-EB1DD20CD391.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9996,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.049498483538627625,
+      "present": true
+    },
+    {
+      "gene": "inhA",
+      "weight": 0.046050284057855606,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.046050284057855606,
+      "present": false
+    },
+    {
+      "gene": "rrl",
+      "weight": 0.046050284057855606,
+      "present": false
+    },
+    {
+      "gene": "rpsL",
+      "weight": 0.046050284057855606,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209468,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "katG:R463L",
+    "eis:G222R",
+    "gid:V110V",
+    "eis:T287A",
+    "gyrA:E21Q",
+    "gyrA:A384V",
+    "mmpL5:M912T",
+    "ethA:R38R",
+    "gyrA:L653L"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "eis",
+    "ethA",
+    "gid",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

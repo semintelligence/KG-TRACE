@@ -1,0 +1,59 @@
+{
+  "genome_id": "site.ENA.subj.SAMEA2534503.lab.1.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9951,
+  "top_genes_by_attention": [
+    {
+      "gene": "gid",
+      "weight": 0.04245823621749878,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04245823621749878,
+      "present": false
+    },
+    {
+      "gene": "Rv2983",
+      "weight": 0.04245823621749878,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04245823621749878,
+      "present": false
+    },
+    {
+      "gene": "ddn",
+      "weight": 0.04245823621749878,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209046,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "tlyA:P194P",
+    "embB:T11Z",
+    "gyrA:E21Q",
+    "embB:P12Z",
+    "mmpL5:I948V",
+    "embB:R14Z",
+    "embB:A15Z",
+    "gyrA:S95T",
+    "fabG1:c-60z"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fabG1",
+    "embB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

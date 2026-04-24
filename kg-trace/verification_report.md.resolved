@@ -1,0 +1,83 @@
+# KG-TRACE Paper Verification Report (Deep Audit)
+
+I have conducted a comprehensive end-to-end verification of all the empirical claims, performance metrics, dataset statistics, explanation trace values, and **mathematical equations** reported in your LaTeX manuscript against the output files and scripts in the `kg-trace` workspace. 
+
+The results are overwhelmingly consistent: your reported metrics match the underlying experiment outputs with extreme precision. I even verified the exact model parameter count manually!
+
+Below is the detailed breakdown of the verified components, along with three minor discrepancies (including one equation mismatch) identified for your review prior to submission.
+
+## 1. Verifiable Claims & Metrics (100% Match)
+
+### A. Dataset Sizes and Splits
+- **CRyPTIC M. tuberculosis Dataset**: The paper claims $37,761 \times 17,352$ dimensions. Checked against the codebase outputs, this exactly matches.
+- **Data Splits**: The paper claims a 70:15:15 split. 
+  - Train: 26,432 samples (Matches $37,761 \times 0.7$)
+  - Train + Val: 32,096 samples (Matches $37,761 \times 0.85$)
+  - INH Test partition: 5,665 isolates (Matches $37,761 \times 0.15$)
+- **Resistant Percentage**: The paper claims 37.0% resistant isolates in the INH test set. Verified: 2,095 resistant isolates out of 5,665 is exactly $36.98\%$, correctly rounded to 37.0%.
+
+### B. Predictive Performance (Table 2)
+- **KG-TRACE (Primary)**: AUROC 0.9757, F1-macro 0.9594, P/R 0.9647 / 0.9549, Epoch 3. *(Matches `final_results.json` and `test_results.json` perfectly)*
+- **LinearSVC (Tuned)**: AUROC 0.9794, F1-macro 0.9585, Recall-macro 0.9538. *(Matches `all_reviewer_experiments.json` and `baseline_results.json`)*
+- **XGBoost (Tuned)**: AUROC 0.9760, F1-macro 0.9595. *(Matches perfectly)*
+- **Random Forest (Tuned)**: AUROC 0.9806, F1-macro 0.9548. *(Matches perfectly)*
+
+### C. Architecture Ablations
+- **genomic_only**: AUROC 0.9773, F1 0.9575 (Epoch 12) *(Matches perfectly)*
+- **kg_only**: AUROC 0.9526, F1 0.8914 (Epoch 53) *(Matches perfectly)*
+- **avg_pool**: AUROC 0.9767, F1 0.9556 (Epoch 14) *(Matches perfectly)*
+- **scalar_fusion**: AUROC 0.9781, F1 0.9580 (Epoch 11) *(Matches perfectly)*
+- **no_aux_head**: AUROC 0.9754, F1 0.9570 *(Matches perfectly)*
+- **full_kg_trace**: AUROC 0.9771, F1 0.9598 (Epoch 11) *(Matches perfectly)*
+
+### D. Multi-Drug Extension (MTB)
+- **RIF**: AUROC 0.9850, F1 0.9647 *(Matches `mtb_extension_results.json`)*
+- **EMB**: AUROC 0.9561, F1 0.8610 *(Matches perfectly)*
+- **LEV**: AUROC 0.9473, F1 0.8938 *(Matches perfectly)*
+
+### E. Gram-Negative Extension (Mendeley)
+- **E. coli / Amp**: AUROC 0.5485, F1 0.5876 *(Matches `mendeley_results.csv`)*
+- **K. pneumoniae / Cipro**: AUROC 0.6705, F1 0.5283 *(Matches perfectly)*
+- **K. pneumoniae / Carb**: AUROC 0.5451, F1 0.5370 *(Matches perfectly)*
+- **A. baumannii / Carb**: AUROC 0.4917, F1 0.4848 *(Matches perfectly)*
+- **Features**: Verified `kmer_dim` is $100,000$ in `hparams.yaml`.
+
+### F. Explainability and Gate Value Statistics
+- **Gate Means**: Resistant mean 0.3259, Susceptible mean 0.2169. All samples are KG-dominated (max gate is $0.3768 < 0.5$). *(Verified directly)*
+- **SHAP saliency for Test Case SAMN07236525**: `katG:S315T`, saliency = 2.35e-4. *(Matches exactly with `shap_values.csv`)*
+- **Correlation Metrics**:
+  - Attention vs SHAP: $\rho=-0.438, p=0.025$ *(Matches `alignment_metrics.json`)*
+  - Attention vs CARD: $\rho=+0.029, p=0.888$ *(Matches perfectly)*
+  - SHAP vs CARD: $\rho=+0.443, p=0.023$ *(Matches perfectly)*
+- **Gene Specific Ranks (pncA, katG, tlyA)**:
+  - *pncA*: mean attention 0.230, SHAP rank 9 (0.004) *(Matches perfectly)*
+  - *katG*: mean attention 0.136, SHAP rank 2 (0.0313) *(Matches perfectly)*
+  - *tlyA*: SHAP rank 1 (0.0382) *(Matches perfectly)*
+
+### G. Model Parameter Count
+- The paper claims $9,142,493$ parameters. I manually calculated the exact parameter dimensions across all dense layers, cross-attention gating, and batch norms in `kg_trace.py` and reached **exactly** $9,142,493$. 
+
+### H. KG Pathway Coverage
+- **Coverage**: 94.8% of resistant predictions linked to WHO-catalogued paths. *(Matches `pathway_explanations.json`)*
+
+---
+
+## 2. Minor Discrepancies for Your Review
+
+I found exactly three inconsistencies during my deep-dive audit. Please fix these before submitting!
+
+**1. Equation 1 (Genomic Encoder Architecture mismatch)**
+- **Paper**: Equation 1 claims the genomic encoder ends with a second `BatchNorm` and `ReLU`:
+  $\mathbf{g} = \text{ReLU}\!\left(\text{BN}\!\left(\mathbf{W}_2 \,\text{Drop}_{0.3}\!\left(\text{ReLU}\!\left(\text{BN}\!\left( \mathbf{W}_1 \mathbf{x} + \mathbf{b}_1\right)\right)\right) + \mathbf{b}_2\right)\right)$
+- **Code**: `model/kg_trace.py` shows the `genomic_encoder` is simply: `nn.Linear(kmer_dim, 512) -> nn.BatchNorm1d -> nn.ReLU -> nn.Dropout(0.3) -> nn.Linear(512, 256)`. It does NOT have the final `BatchNorm` or `ReLU`.
+- *Recommendation*: Update Equation 1 to simply: $\mathbf{g} = \mathbf{W}_2 \,\text{Drop}_{0.3}\!\left(\text{ReLU}\!\left(\text{BN}\!\left( \mathbf{W}_1 \mathbf{x} + \mathbf{b}_1\right)\right)\right) + \mathbf{b}_2$
+
+**2. Test Case Gate Value (`SAMN07236525`)**
+- **Paper**: Mentions `Gate value $\alpha$: 0.36` in Table 1.
+- **Data**: In `site.ENA.subj.SAMN07236525.lab.1.iso.1.json`, the `gate_mean` for this specific isolate is actually **`0.335938`** (which rounds to `0.34`, not `0.36`). 
+- *Recommendation*: Update the value in Table 1 to `0.34`. 
+
+**3. MTB Knowledge Graph Relation Types count**
+- **Paper**: States in Section 3.1.1 and Fig 1 caption: "five relation types: `has_mutation`, `confers_resistance_to`, `confers_susceptibility_to`, `has_uncertain_effect_on`, and `belongs_to_mechanism`".
+- **Data**: `kg/kg_summary.json` reports `"n_relations": 6`. The 6th relation is `targets` (with a count of 20 edges). 
+- *Recommendation*: Change to "six relation types" or keep as 5 but add a footnote that the 6th relation type "targets" was merged/omitted.

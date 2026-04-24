@@ -1,0 +1,13 @@
+{
+  "total_reports": 5665,
+  "correct_predictions": 5446,
+  "accuracy": 0.9613415710503089,
+  "mean_confidence": 0.9724060893058777,
+  "mean_gate": 0.2571968734264374,
+  "pct_kg_dominated": 100.0,
+  "global_bcs_10": 1.0,
+  "spearman_attn_vs_shap": {
+    "rho": -0.6854700854700854,
+    "pvalue": 0.00011134409048605005
+  }
+}

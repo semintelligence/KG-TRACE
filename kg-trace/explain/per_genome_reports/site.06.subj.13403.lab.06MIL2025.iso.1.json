@@ -1,0 +1,63 @@
+{
+  "genome_id": "site.06.subj.13403.lab.06MIL2025.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 1.0,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04780764505267143,
+      "present": true
+    },
+    {
+      "gene": "inhA",
+      "weight": 0.04447723552584648,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04447723552584648,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.04447723552584648,
+      "present": false
+    },
+    {
+      "gene": "fgd1",
+      "weight": 0.04447723552584648,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.335938,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "rpoB:H445D",
+    "rrs:a514z",
+    "fbiC:L55L",
+    "fabG1:c-15t",
+    "embB:Q497R",
+    "gyrA:G247S",
+    "gyrA:A90V",
+    "tlyA:L180Z",
+    "gid:L16R"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "katG",
+    "gyrA",
+    "fabG1",
+    "gid",
+    "rpoB",
+    "embB",
+    "rrs"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

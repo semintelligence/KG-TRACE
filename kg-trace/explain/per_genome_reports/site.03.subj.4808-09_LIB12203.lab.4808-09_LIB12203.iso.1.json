@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.03.subj.4808-09_LIB12203.lab.4808-09_LIB12203.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.9995,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.046820156276226044,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04355853796005249,
+      "present": false
+    },
+    {
+      "gene": "gyrB",
+      "weight": 0.04355853796005249,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04355853796005249,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.04355853796005249,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.328638,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "rpoB:D435V",
+    "katG:W300G",
+    "katG:R463L",
+    "embB:R24Z",
+    "ethA:A185V",
+    "gyrA:E21Q",
+    "embB:M306V",
+    "pncA:del_0.94",
+    "gid:E92D",
+    "pncA:-40_del_gcaaactgcccgggcagtcgcccgaacgtatggtggacgtatgcgggcgttgatcatcgtcgacgtgcagaacgacttctgcgagggtggctcgctggcggtaaccggtggcgccgcgctggcccgcgccatcagcgactacctggccgaagcggcggactaccatcacgtcgtggcaaccaaggacttccacatcgacccgggtgaccacttctccggcacaccggactattcctcgtcgtggccaccgcattgcgtcagcggtactcccggcgcggacttccatcccagtctggacacgtcggcaatcgaggcggtgttctacaagggtgcctacaccggagcgtacagcggcttcgaaggagtcgacgagaacggcacgccactgctgaattggctgcggcaacgcggcgtcgatgaggtcgatgtggtcggtattgccaccgatcattgtgtgcgccagacggccgaggacgcggtacgcaatggcttggccaccagggtgctggtggacctgacagcgggtgtgtcggccgataccaccgtcgccgcgctggaggagatgcgcaccgccagcgtcgagttggtttgcagctcctg"
+  ],
+  "shap_card_mapped": [
+    "katG",
+    "ethA",
+    "gid",
+    "rpoB",
+    "pncA",
+    "embB",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

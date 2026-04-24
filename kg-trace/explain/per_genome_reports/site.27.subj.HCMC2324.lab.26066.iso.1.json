@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.27.subj.HCMC2324.lab.26066.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9949,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.048071667551994324,
+      "present": true
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.04472286254167557,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04472286254167557,
+      "present": false
+    },
+    {
+      "gene": "fbiC",
+      "weight": 0.04472286254167557,
+      "present": false
+    },
+    {
+      "gene": "embB",
+      "weight": 0.04472286254167557,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.209682,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "fbiB:A31T",
+    "tlyA:L11L",
+    "katG:R463L",
+    "inhA:G3G",
+    "mmpL5:T794Z",
+    "mmpL5:I948V",
+    "gid:E92D",
+    "gyrA:E21Q",
+    "gyrA:S95T",
+    "pepQ:R170W"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "gyrA",
+    "inhA",
+    "pepQ",
+    "fbiB",
+    "mmpL5",
+    "gid"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

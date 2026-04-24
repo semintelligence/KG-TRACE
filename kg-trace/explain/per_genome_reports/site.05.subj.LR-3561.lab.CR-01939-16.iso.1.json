@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.05.subj.LR-3561.lab.CR-01939-16.iso.1",
+  "true_label": "RESISTANT",
+  "prediction": "RESISTANT",
+  "correct": true,
+  "confidence": 0.9449,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.044741205871105194,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.04162440821528435,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04162440821528435,
+      "present": false
+    },
+    {
+      "gene": "embB",
+      "weight": 0.04162440821528435,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.04162440821528435,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.223504,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "katG:S315T",
+    "tlyA:L11L",
+    "rpoB:S450L",
+    "gid:D67G",
+    "gyrA:E21Q",
+    "mmpL5:I948V",
+    "gyrA:G668D",
+    "gid:A161A",
+    "gyrA:G247S",
+    "rpoB:A692T"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "katG",
+    "gid",
+    "rpoB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

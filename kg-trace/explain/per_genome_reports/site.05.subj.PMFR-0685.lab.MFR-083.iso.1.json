@@ -1,0 +1,60 @@
+{
+  "genome_id": "site.05.subj.PMFR-0685.lab.MFR-083.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9945,
+  "top_genes_by_attention": [
+    {
+      "gene": "gid",
+      "weight": 0.0414435900747776,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.0414435900747776,
+      "present": false
+    },
+    {
+      "gene": "eis",
+      "weight": 0.0414435900747776,
+      "present": false
+    },
+    {
+      "gene": "ethA",
+      "weight": 0.0414435900747776,
+      "present": false
+    },
+    {
+      "gene": "fabG1",
+      "weight": 0.0414435900747776,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.210287,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "Rv0678:R90C",
+    "gyrA:E21Q",
+    "mmpL5:I948V",
+    "embB:P965P",
+    "gyrA:S95T",
+    "gyrA:G668D",
+    "tlyA:g-7z",
+    "fbiC:P362P",
+    "fbiC:P335P"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "Rv0678",
+    "embB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

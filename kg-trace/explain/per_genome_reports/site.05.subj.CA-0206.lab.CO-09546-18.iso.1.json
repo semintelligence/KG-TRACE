@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.05.subj.CA-0206.lab.CO-09546-18.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9983,
+  "top_genes_by_attention": [
+    {
+      "gene": "Rv0678",
+      "weight": 0.043434374034404755,
+      "present": false
+    },
+    {
+      "gene": "inhA",
+      "weight": 0.043434374034404755,
+      "present": false
+    },
+    {
+      "gene": "fbiA",
+      "weight": 0.043434374034404755,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.043434374034404755,
+      "present": false
+    },
+    {
+      "gene": "embB",
+      "weight": 0.043434374034404755,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.208949,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "rrs:c492z",
+    "fgd1:K270Z",
+    "rpoB:D103Z",
+    "gyrA:S95T",
+    "gyrA:E21Q",
+    "gyrA:G668D",
+    "mmpL5:I948V",
+    "gid:L16Z",
+    "fbiC:A143Z"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "fgd1",
+    "rrs",
+    "gid",
+    "rpoB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

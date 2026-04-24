@@ -1,0 +1,61 @@
+{
+  "genome_id": "site.00.subj.PERU_03-R0768.lab.03-R0768.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9965,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04511355608701706,
+      "present": true
+    },
+    {
+      "gene": "gid",
+      "weight": 0.04197082296013832,
+      "present": false
+    },
+    {
+      "gene": "rrs",
+      "weight": 0.04197082296013832,
+      "present": false
+    },
+    {
+      "gene": "Rv2983",
+      "weight": 0.04197082296013832,
+      "present": false
+    },
+    {
+      "gene": "atpE",
+      "weight": 0.04197082296013832,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.208974,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "embB:R1055R",
+    "gyrB:G369G",
+    "gyrA:E21Q",
+    "mmpL5:I948V",
+    "embB:P965P",
+    "fbiC:K8K",
+    "gyrA:S95T",
+    "katG:A478A",
+    "gyrA:G668D"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "fbiC",
+    "katG",
+    "gyrB",
+    "embB",
+    "mmpL5",
+    "gyrA"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}

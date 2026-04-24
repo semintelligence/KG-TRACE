@@ -1,0 +1,62 @@
+{
+  "genome_id": "site.07.subj.A0163582-7155-41D5-AF98-B7C1A229B8F6.lab.A0163582-7155-41D5-AF98-B7C1A229B8F6.iso.1",
+  "true_label": "SUSCEPTIBLE",
+  "prediction": "SUSCEPTIBLE",
+  "correct": true,
+  "confidence": 0.9943,
+  "top_genes_by_attention": [
+    {
+      "gene": "katG",
+      "weight": 0.04935084655880928,
+      "present": true
+    },
+    {
+      "gene": "Rv0678",
+      "weight": 0.045912932604551315,
+      "present": false
+    },
+    {
+      "gene": "fbiB",
+      "weight": 0.045912932604551315,
+      "present": false
+    },
+    {
+      "gene": "rrl",
+      "weight": 0.045912932604551315,
+      "present": false
+    },
+    {
+      "gene": "rpsL",
+      "weight": 0.045912932604551315,
+      "present": false
+    }
+  ],
+  "gate_mean": 0.207386,
+  "fusion_mode": "KG-dominated",
+  "pathway_explanation": "Not computed",
+  "shap_top_features": [
+    "tlyA:L11L",
+    "eis:T70A",
+    "atpE:P43P",
+    "gyrA:E21Q",
+    "fbiC:a-32g",
+    "gyrA:I614I",
+    "gyrB:A403S",
+    "katG:P29P",
+    "Rv2983:I10T",
+    "eis:1205_del_tctga"
+  ],
+  "shap_card_mapped": [
+    "tlyA",
+    "Rv2983",
+    "fbiC",
+    "katG",
+    "eis",
+    "gyrB",
+    "gyrA",
+    "atpE"
+  ],
+  "unmapped_shap_count": 0,
+  "bcs": 1.0,
+  "spearman_rho": -0.6854700854700854
+}
