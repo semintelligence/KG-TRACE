@@ -1,4 +1,4 @@
 Dataset,Species,Drug,AUROC,F1-macro,N_samples,N_test,R_pct,Train_time_s
-MTB_RIF,M. tuberculosis,RIF,0.9850,0.9647,37831,5675,29.1,125.6
-MTB_EMB,M. tuberculosis,EMB,0.9561,0.8610,35487,5324,14.5,119.0
-MTB_LEV,M. tuberculosis,LEV,0.9473,0.8938,15113,2267,16.0,51.0
+MTB_RIF,M. tuberculosis,RIF,0.9853,0.9668,37831,5675,29.1,129.1
+MTB_EMB,M. tuberculosis,EMB,0.9574,0.8668,35487,5324,14.5,122.0
+MTB_LEV,M. tuberculosis,LEV,0.9411,0.9032,15113,2267,16.0,53.6

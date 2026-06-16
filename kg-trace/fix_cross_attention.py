@@ -16,7 +16,60 @@ What it does:
 
 import shutil, sys, json
 from pathlib import Path
+╔══════════════════════════════════════════════════════════════════════╗
+║                     CROSS-ATTENTION POOLING                          ║
+║                  "The Genome asks the KG a Question"                 ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║   KG Branch has 26 genes, each with a 64-dim RotatE vector:         ║
+║                                                                      ║
+║   gene_embeds [B, 26, 64]:                                           ║
+║   ┌──────────┐  ┌──────────┐  ┌──────────┐       ┌──────────┐      ║
+║   │ katG     │  │ rpoB     │  │ gyrA     │  ...  │ embB     │      ║
+║   │[64 nums] │  │[64 nums] │  │[64 nums] │       │[64 nums] │      ║
+║   └──────────┘  └──────────┘  └──────────┘       └──────────┘      ║
+║        gene1         gene2         gene3              gene26         ║
+║                                                                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║   Genomic Branch produces g [256-dim]                                ║
+║   → projected to query [64-dim] via gene_attn_q                      ║
+║                                                                      ║
+║   query = "I see INH-resistance k-mer patterns"                      ║
+║                                                                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║   DOT PRODUCT: query · each gene = relevance score                   ║
+║                                                                      ║
+║   query · katG  = 9.2  ████████████████████ ← VERY relevant         ║
+║   query · rpoB  = 1.1  ███                  ← not relevant          ║
+║   query · gyrA  = 0.3  █                    ← irrelevant            ║
+║   query · inhA  = 7.8  ████████████████     ← relevant              ║
+║            ...                                                        ║
+║   query · embB  = 0.1  ▏                    ← irrelevant            ║
+║                                                                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║   SOFTMAX → converts scores to weights that sum to 1.0               ║
+║                                                                      ║
+║   katG  → 0.52  ████████████████████                                 ║
+║   inhA  → 0.38  ██████████████                                       ║
+║   rpoB  → 0.06  ██                                                   ║
+║   ...   → 0.00  ▏                                                    ║
+║                                                                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║   WEIGHTED SUM → collapse 26 genes into ONE vector                   ║
+║                                                                      ║
+║   k = 0.52×katG + 0.38×inhA + 0.06×rpoB + ...                       ║
+║                                                                      ║
+║   k [64-dim] = "The KG's answer about THIS genome's                  ║
+║                 most relevant resistance mechanisms"                  ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
 
+  INPUT:  26 gene vectors  +  1 genomic query
+  OUTPUT: 1 vector k [64-dim]  ← the KG's focused response
 RED  = "\033[91m"; YEL = "\033[93m"; GRN = "\033[92m"
 BOLD = "\033[1m";  RST = "\033[0m"
 

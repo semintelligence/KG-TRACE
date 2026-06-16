@@ -3,16 +3,16 @@
     "dataset": "MTB_RIF",
     "species": "M. tuberculosis",
     "drug": "RIF",
-    "auroc": 0.9849610792432573,
-    "f1_macro": 0.9646762370235182,
+    "auroc": 0.9852942682750118,
+    "f1_macro": 0.9667689460924965,
     "confusion_matrix": [
       [
-        3931,
-        95
+        3939,
+        87
       ],
       [
-        71,
-        1578
+        69,
+        1580
       ]
     ],
     "n_samples": 37831,
@@ -20,22 +20,22 @@
     "n_R": 10993,
     "n_S": 26838,
     "R_pct": 29.1,
-    "train_time_s": 125.6
+    "train_time_s": 129.1
   },
   {
     "dataset": "MTB_EMB",
     "species": "M. tuberculosis",
     "drug": "EMB",
-    "auroc": 0.9560692488152811,
-    "f1_macro": 0.8610302564564483,
+    "auroc": 0.95738963018804,
+    "f1_macro": 0.8667752216726186,
     "confusion_matrix": [
       [
-        4310,
-        241
+        4302,
+        249
       ],
       [
-        145,
-        628
+        126,
+        647
       ]
     ],
     "n_samples": 35487,
@@ -43,22 +43,22 @@
     "n_R": 5151,
     "n_S": 30336,
     "R_pct": 14.5,
-    "train_time_s": 119.0
+    "train_time_s": 122.0
   },
   {
     "dataset": "MTB_LEV",
     "species": "M. tuberculosis",
     "drug": "LEV",
-    "auroc": 0.9473117404435039,
-    "f1_macro": 0.8938159092125689,
+    "auroc": 0.9411146605122183,
+    "f1_macro": 0.9032390848901544,
     "confusion_matrix": [
       [
-        1853,
-        53
+        1845,
+        61
       ],
       [
-        73,
-        288
+        57,
+        304
       ]
     ],
     "n_samples": 15113,
@@ -66,6 +66,6 @@
     "n_R": 2411,
     "n_S": 12702,
     "R_pct": 16.0,
-    "train_time_s": 51.0
+    "train_time_s": 53.6
   }
 ]

@@ -89,7 +89,7 @@ class AMRDataset(Dataset):
 # ── 3. Train each drug ──────────────────────────────────────────────────────
 print(f"\n[2/4] Training KG-Trace on {len(TARGET_DRUGS)} drugs ({MAX_EPOCHS} epochs each)...")
 
-from model.kg_trace import KGTrace
+from model.kg_amr import KGTrace
 
 all_results = []
 

@@ -19,7 +19,7 @@ BASE_DIR   = os.environ.get("KG_TRACE_BASE", os.path.dirname(_REPO_DIR))
 
 MENDELEY_DIR = os.path.join(BASE_DIR, "Mendeley Data")
 ZENODO_DIR   = os.path.join(BASE_DIR, "Zenodo")
-PROJECT_DIR  = _REPO_DIR  # KG-Trace/
+PROJECT_DIR  = _THIS_DIR  # kg-trace/
 
 # ── Model hyper-parameters (single source of truth) ────────────────────────
 KG_EMBED_DIM   = 64   # RotatE entity/relation embedding dimension
