@@ -34,7 +34,7 @@ MODEL_DIR = os.path.join(PROJECT_DIR, "model")
 CKPT_DIR = os.path.join(MODEL_DIR, "checkpoints")
 os.makedirs(CKPT_DIR, exist_ok=True)
 
-DRUG = "INH"  # isoniazid — best balanced
+DRUG = "RIF"  # rifampicin
 
 # ── 1. Load data ─────────────────────────────────────────────────────────────
 print("[1/6] Loading data...")
@@ -191,7 +191,7 @@ print(f"  Test batches: {len(test_loader)}")
 
 # ── 5. Model + Training ─────────────────────────────────────────────────────
 print("\n[5/6] Training KG-Trace...")
-from model.kg_trace import KGTrace
+from model.kg_amr import KGTrace
 
 KMER_DIM = X.shape[1]  # 17352
 model = KGTrace(kmer_dim=KMER_DIM, num_genes=NUM_GENES)

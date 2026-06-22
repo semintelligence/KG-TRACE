@@ -85,7 +85,7 @@ print(f"  Saved to fusion_gate_values.csv")
 # ── 2C. SHAP via Gradient×Input Approximation (fast) ────────────────────────
 print("\n[4/4] Computing SHAP via gradient×input approximation...")
 
-from model.kg_trace import KGTrace
+from model.kg_amr import KGTrace
 
 # Load features and model
 with open(os.path.join(FEATURES_DIR, "mutation_features.json")) as f:
@@ -97,9 +97,13 @@ KMER_DIM = len(all_features)
 NUM_GENES = len(gene_names)
 
 # Load model
-ckpt_path = os.path.join(MODEL_DIR, "checkpoints/best_model.ckpt")
+import glob
+ckpt_files = glob.glob(os.path.join(MODEL_DIR, "checkpoints/best_model*.ckpt"))
+ckpt_path = max(ckpt_files, key=os.path.getmtime)
+print(f"Loading checkpoint: {ckpt_path}")
 model = KGTrace.load_from_checkpoint(ckpt_path, kmer_dim=KMER_DIM, num_genes=NUM_GENES)
 model.eval()
+model.to('cpu')
 
 # Load X_test and gene_embeds_test
 X_sparse = sparse.load_npz(os.path.join(FEATURES_DIR, "mutation_matrix.npz"))
@@ -141,9 +145,8 @@ with torch.enable_grad():
         if i % 1000 == 0:
             print(f"    [{i}/{n_test}]...")
 
-        x_i = X_test_tensor[i:i+1]
+        x_i = X_test_tensor[i:i+1].clone().detach().requires_grad_(True)
         ge_i = ge_test_tensor[i:i+1]
-        x_i.requires_grad_(True)
 
         # Forward pass
         logits, _, _, _ = model(x_i, ge_i)

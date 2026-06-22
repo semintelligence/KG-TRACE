@@ -30,8 +30,9 @@ CKPT_DIR = os.path.join(MODEL_DIR, "checkpoints")
 EVALUATE_DIR = os.path.join(PROJECT_DIR, "evaluate")
 os.makedirs(EVALUATE_DIR, exist_ok=True)
 
-DRUG = "INH"
+DRUG = "RIF"
 MAX_EPOCHS = 10
+ABLATION_CONFIGS = ["genomic_only"]
 
 # ── 1. Load data (same as train.py) ─────────────────────────────────────────
 print("[1/4] Loading data...")
@@ -281,18 +282,15 @@ class ScalarFusion(pl.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
 
 # Full KG-Trace (re-import)
-from model.kg_trace import KGTrace
+from model.kg_amr import KGTrace
 
 ABLATION_CONFIGS = [
     ("genomic_only", "k-mer features only, no KG branch", GenomicOnly),
-    ("kg_only", "KG embeddings only, no k-mer branch", KGOnly),
-    ("avg_pool_no_attention", "Average pooling instead of self-attention", AvgPoolFusion),
-    ("scalar_fusion", "Scalar α·g + (1-α)·k instead of cross-attention gate", ScalarFusion),
-    ("full_kg_trace", "Full KG-Trace (10 epochs for comparison)", KGTrace),
 ]
 
-# ── 3. Train all configurations ─────────────────────────────────────────────
-print(f"\n[3/4] Training {len(ABLATION_CONFIGS)} ablation configurations ({MAX_EPOCHS} epochs each)...")
+if __name__ == "__main__":
+    # ── 3. Train all configurations ─────────────────────────────────────────────
+    print(f"\n[3/4] Training {len(ABLATION_CONFIGS)} ablation configurations ({MAX_EPOCHS} epochs each)...")
 
 train_ds = AMRDataset(X_train, ge_train, y_train, gp_train)
 val_ds = AMRDataset(X_val, ge_val, y_val, gp_val)

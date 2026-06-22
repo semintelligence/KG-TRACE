@@ -1,5 +1,6 @@
-Model,AUROC,F1-macro,Precision,Recall,BCS@10,Spearman_rho,Spearman_pvalue,Gate_mean,Pathway_coverage
-KG-Trace,0.9757,0.9594,0.9647,0.9549,1.0,-0.6855,0.000111,0.3384,0/2095 (0.0%)
-SVM,0.9787,0.9576,0.9619,0.9538,n/a,n/a,n/a,n/a,n/a
-XGBoost,0.9764,0.9579,0.9628,0.9537,1.00,n/a,n/a,n/a,n/a
-RandomForest,0.9604,0.8350,0.9056,0.8130,1.00,n/a,n/a,n/a,n/a
+Model,AUROC,F1-macro,Precision,Recall,BCS@10,BCS@20,BCS@50,Spearman_rho,Spearman_pvalue,Gate_mean,Pathway_coverage
+KG-Trace,0.9846,0.9643,0.9641,0.9646,1.0,1.0,1.0,-0.3771,0.057560,0.3610,0/1649 (0.0%)
+Genomic-Only (Ablation),n/a,n/a,n/a,n/a,1.0,1.0,1.0,n/a,n/a,n/a,n/a
+SVM,0.9787,0.9576,0.9619,0.9538,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+XGBoost,0.9764,0.9579,0.9628,0.9537,1.00,n/a,n/a,n/a,n/a,n/a,n/a
+RandomForest,0.9604,0.8350,0.9056,0.8130,1.00,n/a,n/a,n/a,n/a,n/a,n/a

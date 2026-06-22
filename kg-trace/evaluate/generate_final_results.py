@@ -77,11 +77,30 @@ rows.append({
     "Precision": f"{kg['precision_macro']:.4f}",
     "Recall": f"{kg['recall_macro']:.4f}",
     "BCS@10": f"{alignment.get('bcs_global_10', 'n/a')}",
+    "BCS@20": f"{alignment.get('bcs_global_20', 'n/a')}",
+    "BCS@50": f"{alignment.get('bcs_global_50', 'n/a')}",
     "Spearman_rho": f"{spearman_attn_shap.get('rho', 'n/a'):.4f}",
     "Spearman_pvalue": f"{spearman_attn_shap.get('pvalue', 'n/a'):.6f}",
     "Gate_mean": f"{gate_mean:.4f}",
     "Pathway_coverage": pathway_coverage,
 })
+
+# Genomic-Only baseline from alignment metrics (if available)
+if "bcs_genomic_only_10" in alignment:
+    rows.append({
+        "Model": "Genomic-Only (Ablation)",
+        "AUROC": "n/a",  # From run_ablation.py, we don't have it loaded here easily
+        "F1-macro": "n/a",
+        "Precision": "n/a",
+        "Recall": "n/a",
+        "BCS@10": f"{alignment.get('bcs_genomic_only_10', 'n/a')}",
+        "BCS@20": f"{alignment.get('bcs_genomic_only_20', 'n/a')}",
+        "BCS@50": f"{alignment.get('bcs_genomic_only_50', 'n/a')}",
+        "Spearman_rho": "n/a",
+        "Spearman_pvalue": "n/a",
+        "Gate_mean": "n/a",
+        "Pathway_coverage": "n/a",
+    })
 
 # Baselines
 for b in baselines:
@@ -93,6 +112,8 @@ for b in baselines:
         "Precision": f"{b['precision_macro']:.4f}",
         "Recall": f"{b['recall_macro']:.4f}",
         "BCS@10": f"{bcs:.2f}" if bcs is not None else "n/a",
+        "BCS@20": "n/a",
+        "BCS@50": "n/a",
         "Spearman_rho": "n/a",
         "Spearman_pvalue": "n/a",
         "Gate_mean": "n/a",
@@ -101,7 +122,7 @@ for b in baselines:
 
 # Write CSV
 csv_path = os.path.join(EVALUATE_DIR, "final_results.csv")
-fieldnames = ["Model", "AUROC", "F1-macro", "Precision", "Recall", "BCS@10",
+fieldnames = ["Model", "AUROC", "F1-macro", "Precision", "Recall", "BCS@10", "BCS@20", "BCS@50",
               "Spearman_rho", "Spearman_pvalue", "Gate_mean", "Pathway_coverage"]
 
 with open(csv_path, "w", newline="") as f:
@@ -116,10 +137,10 @@ with open(json_path, "w") as f:
     json.dump(rows, f, indent=2)
 
 # Print table
-print(f"\n{'Model':<15s} {'AUROC':>8s} {'F1-macro':>10s} {'BCS@10':>8s} {'Spearman_rho':>14s} {'Gate':>6s}")
-print("-" * 65)
+print(f"\n{'Model':<25s} {'AUROC':>8s} {'F1-macro':>10s} {'BCS@10':>8s} {'BCS@20':>8s} {'BCS@50':>8s} {'Spearman_rho':>14s} {'Gate':>6s}")
+print("-" * 95)
 for r in rows:
-    print(f"{r['Model']:<15s} {r['AUROC']:>8s} {r['F1-macro']:>10s} {r['BCS@10']:>8s} {r['Spearman_rho']:>14s} {r['Gate_mean']:>6s}")
+    print(f"{r['Model']:<25s} {r['AUROC']:>8s} {r['F1-macro']:>10s} {str(r['BCS@10']):>8s} {str(r['BCS@20']):>8s} {str(r['BCS@50']):>8s} {r['Spearman_rho']:>14s} {r['Gate_mean']:>6s}")
 
 print(f"\n  HONEST COMPARISON:")
 print(f"  SVM AUROC ({baselines[0]['auroc']:.4f}) > KG-Trace AUROC ({kg['auroc']:.4f})")

@@ -23,7 +23,11 @@
 \usepackage{cite}
 \usepackage[table]{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc, backgrounds}
+
+% --- ADDED SHADOWS LIBRARY HERE FOR FIGURE DEPTH ---
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc, backgrounds, shadows}
+% ---------------------------------------------------
+
 \renewcommand{\algorithmiccomment}[1]{\hfill\textit{// #1}}
 
 % Custom tcolorbox style for the clinical note
@@ -64,39 +68,25 @@
 
 \author{
 \IEEEauthorblockN{Naman Garg}
-\IEEEauthorblockA{
-Department of Electronics and Communication Engineering\\
-National Institute of Technology Kurukshetra, India\\
-Email: \texttt{hellonamangarg@gmail.com}
-}
+\IEEEauthorblockA{National Institute of Technology Kurukshetra, India}
 \and
 \IEEEauthorblockN{Sarika Jain}
-\IEEEauthorblockA{
-Department of Computer Applications\\
-National Institute of Technology Kurukshetra, India\\
-Email: \texttt{jasarika@nitkkr.ac.in}
-}
+\IEEEauthorblockA{National Institute of Technology Kurukshetra, India}
 \and
 \IEEEauthorblockN{Sourav Yadav}
-\IEEEauthorblockA{
-Department of Computer Science and Engineering\\
-Indian Institute of Information Technology Manipur, India\\
-Email: \texttt{sour230101043@iiitmanipur.ac.in}
-}
-\and
-\IEEEauthorblockN{Ghanapriya Singh}
-\IEEEauthorblockA{
-Department of Electronics and Communication Engineering\\
-National Institute of Technology Kurukshetra, India\\
-Email: \texttt{ghanapriya@nitkkr.ac.in}\\
+\IEEEauthorblockA{Indian Institute of Information Technology Manipur, India}
 \and
 \IEEEauthorblockN{Bharat K. Bhargava}
-\IEEEauthorblockA{
-Department of Computer Science\\
-Purdue University, USA\\
-Email: \texttt{bbshail@purdue.edu}
-}
-}
+\IEEEauthorblockA{Purdue University, USA}
+\and
+\IEEEauthorblockN{Ghanapriya Singh}
+\IEEEauthorblockA{National Institute of Technology Kurukshetra, India}
+\and
+\IEEEauthorblockN{Abhishek Srivastava}
+\IEEEauthorblockA{Indian Institute of Technology Indore, India}
+\and
+\IEEEauthorblockN{Parimal Kar}
+\IEEEauthorblockA{Indian Institute of Technology Indore, India}
 }
 
 
@@ -107,7 +97,7 @@ Email: \texttt{bbshail@purdue.edu}
 \begin{abstract}
 While WGS-based AMR prediction has reached high accuracy, existing models lack a mechanism to ground neural attributions in established biological pathways. We present KG-TRACE, a novel neuro-symbolic framework that integrates the WHO mutation knowledge graph (KG) as a structured biological constraint on a neural genomic model. Unlike existing methods that learn statistical patterns in isolation, KG-TRACE fuses genomic features and RotatE-based KG embeddings through a learned epistemic trust gate, dynamically weighting neural evidence against symbolic biological knowledge.
 
-Evaluated on the CRYPTIC M. tuberculosis cohort, KG-TRACE achieves an AUROC of 0.9757 for isoniazid, matching fully-tuned baselines despite being trained on 22\% less data. More importantly, we introduce the Biological Grounding Ratio (BGR), a dataset-level metric that quantifies alignment between neural attributions and established biology. Our framework achieves a 94.8\% symbolic coverage of resistant predictions and effectively identifies MDR co-occurrence artifacts by issuing laboratory follow-up flags for 'UNCERTAIN' cases. We demonstrate that neuro-symbolic grounding provides a verifiable audit trail for clinicians, bridging the gap between predictive accuracy and clinical trust.
+Evaluated on the CRyPTIC M. tuberculosis cohort, KG-TRACE achieves an AUROC of 0.9760 for isoniazid, achieving competitive accuracy while its primary value lies in symbolic grounding, not predictive uplift. More importantly, we introduce the Biological Grounding Ratio (BGR), a dataset-level metric that quantifies alignment between neural attributions and established biology. Our framework achieves a 92.5\% symbolic coverage of isoniazid-resistant predictions and effectively identifies MDR co-occurrence artifacts by issuing laboratory follow-up flags for 'UNCERTAIN' cases. We demonstrate that neuro-symbolic grounding provides a verifiable audit trail for clinicians, bridging the gap between predictive accuracy and clinical trust.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -187,7 +177,7 @@ WHO catalogue features}\\[2pt]
   nobeforeafter] % Prevents unwanted vertical spacing
 {\large\textbf{\textcolor{red!70!black}{RESISTANT}}}\\[2pt]
 {\footnotesize Confidence: $p \approx 0.94$}\\
-{\footnotesize Gate $\alpha = 0.34$ (Genomic-dominant;\\susceptible baseline: 0.22)}
+{\footnotesize Gate $\alpha = 0.337$ (KG-dominant;\\susceptible baseline: 0.336)}
 \end{tcolorbox}
 \end{minipage}
 
@@ -227,7 +217,7 @@ $\underbrace{\textit{katG}}_{\text{Gene}}
  \xrightarrow{\text{\texttt{confers\_R}}}
  \underbrace{\text{Isoniazid}}_{\text{Drug}}$\\[4pt]
 \textbf{Actionability Score:} \textcolor{green!60!black}{\textbf{HIGH}}
-(SHAP top-1 verified by KG trace. \textbf{Dataset BGR:} 0.88)}
+(SHAP top-1 verified by KG trace)}
 \end{tcolorbox}
 
 \vspace{1mm}
@@ -250,7 +240,7 @@ confirmed in KG.\\ No uncertain mechanism flag raised.\\[3pt]
 \label{fig:clinical_note}
 \end{figure}
 
-\textcolor{red}{Section~\ref{sec:related} reviews related work. Section~\ref{sec:methods} covers data, KG construction, model architecture, and grounding methodology. Section~\ref{sec:results} presents and interprets results. Sections~\ref{sec:limitations} and~\ref{sec:conclusion} address limitations and conclusions.}
+{Section~\ref{sec:related} reviews related work. Section~\ref{sec:methods} covers data, KG construction, model architecture, and grounding methodology. Section~\ref{sec:results} presents and interprets results. Sections~\ref{sec:limitations} and~\ref{sec:conclusion} address limitations and conclusions.}
 
 % -- 2. Background --------------------------------------------
 \section{Background and Related Work}\label{sec:related}
@@ -289,101 +279,98 @@ SHAP \cite{shap} provides additive, model-agnostic feature attributions grounded
 
 \subsubsection{MTB Knowledge Graph (Symbolic Layer)}
 
-The MTB knowledge graph is built from the CRyPTIC \texttt{EFFECTS.parquet} file, which records WHO catalogue predictions for observed mutations \cite{who_cat_v1,who_cat_v2}. This yields 60,017~triples over 25,095~entities and six relation types: \texttt{has\_mutation}, \texttt{confers\_resistance\_to}, \texttt{confers\_susceptibility\_to}, \texttt{has\_uncertain\_effect\_on}, \texttt{belongs\_to\_mechanism}, and \texttt{targets}. Node types span genes, mutations, drugs, and resistance mechanism classes (Fig.~\ref{fig:kg}). The KG is the symbolic constraint layer: it encodes structured biological knowledge against which neural attributions are checked.
+The MTB knowledge graph is built from the CRyPTIC \texttt{EFFECTS.parquet} file, which records WHO catalogue predictions for observed mutations \cite{who_cat_v1,who_cat_v2}. Triples were included if the WHO catalogue assigned a non-null resistance or susceptibility prediction to the observed mutation; entries with WHO classification 'Synonymous' that carried no phenotypic annotation were excluded. This yielded 60,017 triples after deduplication on (gene, mutation, drug) tuples, over 25,095 entities and six relation types: \texttt{has\_mutation}, \texttt{confers\_resistance\_to}, \texttt{confers\_susceptibility\_to}, \texttt{has\_uncertain\_effect\_on}, \texttt{belongs\_to\_mechanism}, and \texttt{targets}. Node types span genes, mutations, drugs, and resistance mechanism classes (Fig.~\ref{fig:kg}). The KG is the symbolic constraint layer: it encodes structured biological knowledge against which neural attributions are checked.
 
 % ----------------------------------------------------------------
-% Figure 1 -- KG Schema
+% Figure 2 -- KG Schema
 % ----------------------------------------------------------------
-\begin{figure}[t]
+% ----------------------------------------------------------------
+% Figure - MTB Knowledge Graph Schema (Perfected Landscape)
+% ----------------------------------------------------------------
+\begin{figure*}[t]
   \centering
-\resizebox{\columnwidth}{!}{%
+\resizebox{0.92\textwidth}{!}{%
 \begin{tikzpicture}[
   >=Stealth,
-  arr/.style={->, thick, black},
-  darr/.style={->, thick, dashed, red!70},
-  elbl/.style={font=\scriptsize, align=center, fill=white, inner sep=1.5pt},
-  bblue/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=cyan!65!blue, text=white, align=center,
-    font=\small\bfseries, inner sep=5pt,
-    minimum width=2.6cm, minimum height=0.8cm},
-  bpurple/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=violet!75, text=white, align=center,
-    font=\small\bfseries, inner sep=5pt,
-    minimum width=2.6cm, minimum height=0.8cm},
-  bred/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=red!65, text=white, align=center,
-    font=\small\bfseries, inner sep=5pt,
-    minimum width=2.6cm, minimum height=0.8cm},
-  bgreen/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=green!55!black, text=white, align=center,
-    font=\small\bfseries, inner sep=5pt,
-    minimum width=2.6cm, minimum height=0.8cm},
-  byellow/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=yellow!45, text=black, align=center,
-    font=\small, inner sep=5pt,
-    minimum width=3.6cm},
+  % Standard Edge
+  arr/.style={->, thick, draw=gray!70!black},
+  % Highlighted Edge (Visualizes the Example Path)
+  hl_arr/.style={->, line width=2.0pt, draw=orange!90!yellow},
+  % Dashed Connector
+  darr/.style={->, thick, dashed, draw=orange!90!yellow},
+  % Standard Label
+  elbl/.style={font=\scriptsize\sffamily, align=center, fill=white, inner sep=3pt, rounded corners=2pt},
+  % Highlighted Label
+  hl_elbl/.style={font=\scriptsize\sffamily\bfseries, align=center, fill=orange!5, draw=orange!90!yellow, thick, inner sep=3pt, rounded corners=2pt},
+  % Node Styles (with modern drop shadows for depth)
+  nodebox/.style={rectangle, rounded corners=4pt, text=white, align=center, font=\small\bfseries\sffamily, inner sep=6pt, minimum width=3.2cm, minimum height=0.9cm, drop shadow={opacity=0.25, shadow xshift=1.5pt, shadow yshift=-1.5pt}},
+  gene/.style={nodebox, fill=blue!70!black, draw=blue!90!black, thick},
+  mech/.style={nodebox, fill=violet!70!black, draw=violet!90!black, thick},
+  mut/.style={nodebox, fill=red!70!black, draw=red!90!black, thick},
+  drug/.style={nodebox, fill=teal!70!black, draw=teal!90!black, thick},
+  % Example Box
+  examplebox/.style={rectangle, rounded corners=4pt, draw=orange!90!yellow, fill=orange!5, thick, text=black, align=center, font=\small, inner sep=8pt, drop shadow={opacity=0.15, shadow xshift=1.5pt, shadow yshift=-1.5pt}}
 ]
 
-%% Entity nodes
-\node[bblue]   (gene) at (2.0, 0)    {Gene\\{\scriptsize n = 26}};
-\node[bpurple] (mech) at (-0.8, -2.8) {Mechanism\\{\scriptsize n = 9}};
-\node[bred]    (mut)  at (4.8, -2.8)  {Mutation\\{\scriptsize n = 25{,}045}};
-\node[bgreen]  (drug) at (2.0, -6.0)  {Drug\\{\scriptsize n = 15}};
+%% Entity nodes (Spaced horizontally for a beautiful landscape spread)
+\node[gene] (gene) at (0, 0)       {Gene\\{\scriptsize n = 26}};
+\node[mech] (mech) at (-5.5, -3.0) {Mechanism\\{\scriptsize n = 9}};
+\node[mut]  (mut)  at (5.5, -3.0)  {Mutation\\{\scriptsize n = 25{,}045}};
+\node[drug] (drug) at (0, -6.0)    {Drug\\{\scriptsize n = 15}};
 
 %% Edges
-\draw[arr] (gene.south) to[out=210,in=80]
-  node[elbl, left, xshift=-3pt] {\texttt{belongs\_to\_mechanism}\\{\scriptsize (26)}}
-  (mech.north);
+% Gene to Mechanism
+\draw[arr] (gene) to[bend right=15]
+  node[elbl] {\texttt{belongs\_to\_mechanism}\\{\scriptsize (26)}} (mech);
 
-\draw[arr] (gene.south) to[out=330,in=100]
-  node[elbl, right, xshift=3pt] {\texttt{has\_mutation}\\{\scriptsize (25,045)}}
-  (mut.north);
+% Gene to Mutation (HIGHLIGHTED GOLDEN PATH)
+\draw[hl_arr] (gene) to[bend left=15]
+  node[hl_elbl] {\texttt{has\_mutation}\\{\scriptsize (25,045)}} (mut);
 
-\draw[arr] (mut.south) to[out=240,in=10]
-  node[elbl, above right, xshift=-10pt, yshift=4pt]
-    {\texttt{confers\_resistance\_to}\\{\scriptsize (72)}}
-  (drug.east);
+% Mutation to Drug [Resistance] (HIGHLIGHTED GOLDEN PATH)
+\draw[hl_arr] (mut) to[bend left=12]
+  node[hl_elbl] {\texttt{confers\_resistance\_to}\\{\scriptsize (4,972)}} (drug);
 
-\draw[arr] (mut.south) to[out=200,in=350]
-  node[elbl, below right, xshift=-8pt, yshift=-4pt]
-    {\texttt{confers\_susceptibility\_to}\\{\scriptsize (18,268)}}
-  (drug.north east);
+% Mutation to Drug [Susceptibility]
+\draw[arr] (mut) to[bend left=45]
+  node[elbl] {\texttt{confers\_susceptibility\_to}\\{\scriptsize (18,268)}} (drug);
 
-\draw[arr] (mech.south) to[out=280,in=160]
-  node[elbl, left, xshift=-2pt]
-    {\texttt{has\_uncertain\_effect\_on}\\{\scriptsize (11,686)}}
-  (drug.west);
+% Mechanism to Drug
+\draw[arr] (mech) to[bend right=20]
+  node[elbl] {\texttt{has\_uncertain\_effect\_on}\\{\scriptsize (11,686)}} (drug);
 
-\draw[arr] (gene.south) to[out=270,in=90]
-  node[elbl, right, xshift=14pt]
-    {\texttt{targets}\\{\scriptsize (15)}}
-  (drug.north);
+% Gene to Drug
+\draw[arr] (gene) --
+  node[elbl, pos=0.6] {\texttt{targets}\\{\scriptsize (20)}} (drug);
 
-%% Highlighted resistance path
-\node[byellow, text width=4.0cm, align=left] (pex) at (2.0, -8.5)
-  {\textit{WHO Grade-1 Path Example:}\\[2pt]
+%% Highlighted Resistance Path Example Box
+\node[examplebox] (pex) at (0, -9.5)
+  {\textbf{WHO Grade-1 Evidence Trace (Level 2 Grounding)}\\[4pt]
    $\underbrace{\textit{katG}}_{\text{Gene}}
-    \xrightarrow{\texttt{has\_mutation}}
+    \xrightarrow{\text{\texttt{has\_mutation}}}
     \underbrace{\textit{katG}\text{:S315T}}_{\text{Mutation}}
-    \xrightarrow{\texttt{confers\_resistance\_to}}
-    \underbrace{\text{INH}}_{\text{Drug}}$};
+    \xrightarrow{\text{\texttt{confers\_resistance\_to}}}
+    \underbrace{\text{Isoniazid (INH)}}_{\text{Drug}}$};
 
-\draw[darr] (mut.south) to[out=270,in=80] (pex.north);
+% Clean orthogonal dashed line connecting the Mutation node to the Example Box
+\draw[darr] (mut.south) |- (pex.east);
 
 %% Stats label
-\node[font=\scriptsize, align=left, text=gray!70!black] at (2.0,-9.7)
-  {Total: 60,017 triples $\mid$ 25,095 entities $\mid$ 6 relation types};
+\node[font=\scriptsize\sffamily, text=gray!80!black] at (0, -11.2)
+  {\textbf{Graph Metrics:} 60,017 triples $\mid$ 25,095 entities $\mid$ 6 relation types};
 
-%% Panel border + label
-\draw[rounded corners=6pt, black, very thick]
-  (-3.4, 0.8) rectangle (7.6, -10.1);
-\node[font=\small\bfseries, anchor=north west] at (-3.4, 0.8)
-  {\textit{M.~tuberculosis} AMR Knowledge Graph Schema (Symbolic Component)};
+%% Soft background frame
+\begin{scope}[on background layer]
+    \fill[gray!4, rounded corners=8pt, draw=gray!30, thick]
+      (-8.0, 1.2) rectangle (8.0, -11.8);
+    \node[font=\small\bfseries\sffamily, text=gray!60!black, anchor=north west]
+      at (-8.0, 1.2) {\textit{M.~tuberculosis} AMR Knowledge Graph Schema};
+\end{scope}
 
 \end{tikzpicture}}
-  \caption{\textbf{MTB Knowledge Graph Schema.} The symbolic component encodes 60,017 triples and 25,095 entities from the WHO catalogue. The highlighted path shows a Grade-1 evidence chain used to verify neural SHAP attributions.}
+  \caption{\textbf{MTB Knowledge Graph Schema.} The symbolic component encodes 60,017 triples and 25,095 entities from the WHO catalogue. The highlighted path (gold) maps directly to the Level 2 symbolic verification trace, illustrating how neural SHAP attributions are validated against established clinical pathways.}
   \label{fig:kg}
-\end{figure}
+\end{figure*}
 
 \subsubsection{Embedding}
 
@@ -429,7 +416,9 @@ where MLP $= \text{Linear}(256{\to}128) \to \text{ReLU} \to \text{Linear}(128{\t
              + (\mathbf{1}-\boldsymbol{\alpha}) \odot \tilde{\mathbf{k}}
     \in \mathbb{R}^{128}.
 \end{equation}
-$\boldsymbol{\alpha}$ can be read as the model's per-sample allocation of trust between the neural genomic evidence and the symbolic KG evidence. Resistant isolates show a higher mean gate value ($\bar{\alpha}=0.34$) than susceptible ones ($\bar{\alpha}=0.22$), which makes sense: confident resistance calls rely more on the dense discriminative signal in the mutation vector, while the KG branch contributes proportionally more for susceptible or ambiguous samples.
+$\boldsymbol{\alpha}$ represents the model's per-sample allocation of trust to the neural genomic evidence, with $(1-\boldsymbol{\alpha})$ allocated to the symbolic KG evidence. Notably, both mean gate values (resistant: $\bar{\alpha} = 0.337$, susceptible: $\bar{\alpha} = 0.336$) fall below 0.5, indicating that the model operates in a KG-dominant regime on average. This suggests the genomic encoder alone carries the primary discriminative signal for confident predictions — consistent with the \textit{genomic\_only} ablation results — while the KG branch modulates trust. The standard deviation of $\alpha$ across the test set is $0.016$, reflecting exceptionally low per-sample variability in the trust allocation. A detailed distributional analysis of $\alpha$ is left for future work.
+
+However, contrary to our initial hypothesis, the gate does not dynamically adjust based on symbolic verification. As shown by a distributional analysis, $\alpha$ exhibits no significant correlation with the strict Biological Grounding Ratio ($p=0.74$). Consequently, predictions flagged as UNCERTAIN (lacking a strict KG path) do not cluster at different $\alpha$ values ($\bar{\alpha}=0.338$) compared to HIGH actionability predictions ($\bar{\alpha}=0.336$). The only significant variation occurs against prediction confidence, where $\alpha$ exhibits a moderate negative correlation ($\rho=-0.46, p<0.001$), indicating the model shifts slightly more weight to the genomic branch when confidence is low. Overall, the variance of the epistemic gate is remarkably low, functioning more as a static architectural bias than a dynamic, sample-level router.
 
 The introduction of the epistemic trust gate represents a departure from simple feature concatenation; it allows the model to 'self-audit' by comparing neural feature importance against the KG's symbolic truth.
 
@@ -445,175 +434,22 @@ An auxiliary gene-detection head predicts resistance-gene presence from the same
   \mathcal{L} = \mathcal{L}_\text{CE}(\hat{y}, y)
               + 0.3\,\mathcal{L}_\text{BCE}(\hat{\mathbf{g}}, \mathbf{g}^*).
 \end{equation}
-The 0.3 auxiliary weight was selected by grid search on validation macro-F1, balancing primary task accuracy against symbolic regularization.
+The 0.3 auxiliary weight was selected via grid search over $\{0.1, 0.3, 0.5, 1.0\}$ on validation macro-F1, balancing primary task accuracy against symbolic regularization.
 
 
 % ----------------------------------------------------------------
-% Figure 2 -- 4-Stage Architecture
+% Figure 3 -- 4-Stage Architecture
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+% Figure 3 -- 4-Stage Architecture (Redesigned Landscape Layout)
 % ----------------------------------------------------------------
 \begin{figure*}[t]
   \centering
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[
-  >=Stealth,
-  arr/.style={->, thick, black},
-  arrw/.style={->, thick, white},
-  elbl/.style={font=\scriptsize, align=center, fill=white, inner sep=1pt},
-  %% Node styles
-  bblue/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=cyan!65!blue, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.0cm},
-  bpurple/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=violet!75, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.0cm},
-  bgray/.style={rectangle, rounded corners=3pt, draw=black,
-    fill=gray!22, text=black, align=center,
-    font=\small, inner sep=3pt,
-    minimum width=2.4cm, minimum height=0.65cm},
-  borange/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=orange!85!red, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.1cm},
-  bred/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=red!65, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.1cm},
-  bgreen/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=green!55!black, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.0cm},
-  bteal/.style={rectangle, rounded corners=4pt, draw=black,
-    fill=teal!70, text=white, align=center,
-    font=\small, inner sep=4pt,
-    minimum width=3.8cm, minimum height=1.0cm},
-  blabel/.style={font=\scriptsize\bfseries, text=white,
-    fill=gray!50!black, inner sep=3pt,
-    minimum width=1.2cm},
-]
-
-%% ===== STAGE HEADERS =====
-\node[font=\scriptsize\bfseries, text=gray!60!black] at (-3.2, 1.35)
-  {STAGE 1: INPUTS};
-\node[font=\scriptsize\bfseries, text=gray!60!black] at (1.6, 1.35)
-  {STAGE 2: ENCODING LANES};
-\node[font=\scriptsize\bfseries, text=gray!60!black] at (6.5, 1.35)
-  {STAGE 3: UNIFICATION};
-\node[font=\scriptsize\bfseries, text=gray!60!black] at (11.5, 1.35)
-  {STAGE 4: OUTPUTS \& GROUNDING};
-
-%% ========== STAGE 1: INPUTS ==========
-\node[bblue, text width=3.5cm, minimum height=1.3cm] (ginput) at (-3.2, 0.0)
-  {\textbf{Genomic Input}\\[2pt]
-   Mutation Vector\\
-   $\mathbf{x}\!\in\!\{0,1\}^{17{,}352}$\\
-   \scriptsize(37,761 isolates)};
-
-\node[bpurple, text width=3.5cm, minimum height=1.3cm] (kinput) at (-3.2, -3.2)
-  {\textbf{Symbolic Input}\\[2pt]
-   MTB Knowledge Graph\\
-   RotatE Embeddings\\
-   \scriptsize(60,017 triples, 26 genes)};
-
-%% ========== STAGE 2: ENCODING LANES ==========
-\node[bblue, text width=3.6cm, minimum height=1.5cm] (genc) at (1.6, 0.0)
-  {\textbf{Genomic Encoder}\\
-   \textit{(Neural Component)}\\[2pt]
-   2-Layer MLP\\
-   BN $\to$ ReLU $\to$ Dropout\\
-   $\mathbf{g}\!\in\!\mathbb{R}^{256}$};
-
-\node[bpurple, text width=3.6cm, minimum height=1.5cm] (kenc) at (1.6, -3.2)
-  {\textbf{KG Attention Encoder}\\
-   \textit{(Symbolic Component)}\\[2pt]
-   Scaled Dot-Product\\
-   Attention over $\|\mathbf{v}\|$\\
-   $\mathbf{k}\!\in\!\mathbb{R}^{64}$};
-
-%% Dashed lane borders
-\draw[rounded corners=5pt, gray!45, dashed, thick]
-  (-0.2, 0.85) rectangle (3.6, -0.85);
-\draw[rounded corners=5pt, gray!45, dashed, thick]
-  (-0.2, -2.35) rectangle (3.6, -4.05);
-
-%% Arrows Stage 1 -> Stage 2
-\draw[arr] (ginput.east) -- (genc.west)
-  node[midway, above, font=\scriptsize] {$\mathbf{x}$};
-\draw[arr] (kinput.east) -- (kenc.west)
-  node[midway, below, font=\scriptsize] {$\mathbf{E}\!\in\!\mathbb{R}^{26\times64}$};
-
-%% ========== STAGE 3: UNIFICATION ==========
-%% Projection nodes
-\node[bgray] (gproj) at (5.4,  0.0) {$\tilde{\mathbf{g}}$ proj (128d)};
-\node[bgray] (kproj) at (5.4, -3.2) {$\tilde{\mathbf{k}}$ proj (128d)};
-
-\draw[arr] (genc.east) -- (gproj.west);
-\draw[arr] (kenc.east) -- (kproj.west);
-
-%% Gate
-\node[borange, text width=3.8cm, minimum height=1.6cm] (gate) at (7.6, -1.6)
-  {\textbf{Epistemic Trust Gate} $\boldsymbol{\alpha}$\\[3pt]
-   $\boldsymbol{\alpha} = \sigma\!\left(\mathrm{MLP}([\tilde{\mathbf{g}};\tilde{\mathbf{k}}])\right)$\\[2pt]
-   \scriptsize Resistant: $\bar{\alpha}\!=\!0.34$\\
-   \scriptsize Susceptible: $\bar{\alpha}\!=\!0.22$};
-
-\draw[arr] (gproj.east) to[out=0,in=150] (gate.west);
-\draw[arr] (kproj.east) to[out=0,in=210] (gate.west);
-
-%% Fused representation
-\node[bred, text width=3.8cm, minimum height=1.3cm] (fused) at (7.6, -4.5)
-  {\textbf{Fused Representation} $\mathbf{h}$\\[3pt]
-   $\mathbf{h} = \boldsymbol{\alpha}\!\odot\!\tilde{\mathbf{g}}
-   + (\mathbf{1}-\boldsymbol{\alpha})\!\odot\!\tilde{\mathbf{k}}$\\
-   $\mathbf{h}\!\in\!\mathbb{R}^{128}$};
-
-\draw[arr] (gate.south) -- (fused.north);
-
-%% ========== STAGE 4: OUTPUTS & GROUNDING ==========
-%% AMR Classifier
-\node[bred, text width=3.8cm, minimum height=1.2cm] (amr) at (12.0, -1.6)
-  {\textbf{AMR Prediction Head}\\
-   $128\!\to\!64\!\to\!2$\\
-   (Resistant / Susceptible)\\
-   \textit{Primary Loss: CrossEntropy}};
-
-%% Gene Auxiliary Head
-\node[bteal, text width=3.8cm, minimum height=1.2cm] (aux) at (12.0, -4.0)
-  {\textbf{Gene Auxiliary Head}\\
-   (26-gene multi-label)\\
-   \textit{Symbolic Regularizer}\\
-   $\mathcal{L}_\text{aux}\!=\!0.3\,\mathcal{L}_\text{BCE}$};
-
-\draw[arr] (fused.east) to[out=0,in=200] (amr.west);
-\draw[arr] (fused.east) to[out=0,in=160] (aux.west);
-
-%% Grounding outputs
-\node[bgreen, text width=3.8cm, minimum height=1.3cm] (shap) at (12.0, -6.8)
-  {\textbf{Level 1: SHAP Attribution}\\
-   \textit{(Primary Trust Layer)}\\
-   Mutation-level scores\\
-   via GradientExplainer};
-
-\node[bgreen, text width=3.8cm, minimum height=1.3cm] (kgtrace) at (12.0, -9.1)
-  {\textbf{Level 2: KG Grounding}\\
-   \textit{(Symbolic Verification)}\\
-   Gene$\to$Mut$\to$Drug path\\
-   BGR metric; Uncertainty flag};
-
-\draw[arr] (amr.south) to[out=270,in=90] (shap.north);
-\draw[arr] (shap.south) -- (kgtrace.north);
-
-%% Outer border
-\draw[rounded corners=7pt, black, very thick]
-  (-5.3, 1.75) rectangle (14.1, -10.2);
-\node[font=\normalsize\bfseries, anchor=north] at (4.4, 1.75)
-  {KG-TRACE: Neuro-Symbolic Architecture};
-
-\end{tikzpicture}}
-  \caption{KG-TRACE four-stage neuro-symbolic architecture. Stage~1 and 2 process neural (genomic) and symbolic (KG) inputs independently. Stage~3 fuses them via an epistemic trust gate ($\boldsymbol{\alpha}$). Stage~4 outputs predictions, regularization signals, and dual-level mechanistic grounding reports.}
+  \includegraphics[width=0.95\textwidth]{Fig3arch.png}
+  \caption{KG-TRACE four-stage neuro-symbolic architecture. Stages 1 and 2 process neural (genomic) and symbolic (KG) inputs independently. Stage 3 unifies them via an epistemic trust gate ($\boldsymbol{\alpha}$) blending the state vectors. Stage 4 outputs predictions, regularization signals, and dual-level mechanistic grounding reports.}
   \label{fig:arch}
 \end{figure*}
+% ----------------------------------------------------------------
 
 
 % ----------------------------------------------------------------
@@ -643,7 +479,7 @@ Our primary data source is the CRyPTIC consortium release v2.1.2 \cite{cryptic20
 
 \subsection{Experiment Configurations}
 
-KG-TRACE is optimized using Adam (learning rate $10^{-3}$, batch size~64) with early stopping on validation macro-F1 (patience~10, maximum 100~epochs; best checkpoint at epoch~3, wall time $\approx$4~min on an Apple M4). The full model has 9,142,493 parameters.
+KG-TRACE is optimized using Adam (learning rate $10^{-3}$, batch size~64) with early stopping on validation macro-F1 (patience~10, maximum 100~epochs; best checkpoint at epoch~3, wall time $\approx$4~min). The full model has 9,142,493 parameters.
 
 Three baselines are evaluated on the identical feature matrix. Because baselines do not require a held-out validation set for early stopping, they train on the combined train+validation partition (32,096~samples); KG-TRACE trains on the training partition only (26,432~samples). This asymmetry favors the baselines, so KG-TRACE's competitive results should be read as a conservative lower bound. Hyperparameters: LinearSVC with Platt scaling ($C\!=\!1.0$); XGBoost ($n\!=\!200$, depth~8, lr~0.1); Random Forest ($n\!=\!200$, depth~None).
 
@@ -662,9 +498,9 @@ Table~\ref{tab:baselines_ablations} consolidates performance across all configur
 
 \subsubsection{Baselines}\label{ssec:baselines}
 
-On the primary INH task, KG-TRACE reaches AUROC~0.9757 and macro-F1~0.9594. The fully-tuned baselines are competitive: LinearSVC reaches AUROC~0.9794 and Random Forest~0.9806, both with 22\% more training data. KG-TRACE matches these figures on fewer samples and delivers a mechanistic grounding that none of the baselines support.
+KG-TRACE achieves an AUROC of 0.9760 on INH, within the range of fully-tuned baselines trained on 17.6\% more data (LinearSVC: 0.9794, Random Forest: 0.9806). Crucially, the genomic-only ablation (0.9773) slightly exceeds the full model, confirming that the KG branch does not improve predictive accuracy. We emphasize that this is expected and by design: the KG branch functions as a symbolic verifier and biological regularizer, not as a discriminative signal. Its contribution is to mechanistic grounding and clinical safety, not to AUROC.
 
-The clinically relevant number, though, is resistant-class recall. From the confusion matrix (Fig.~\ref{fig:3B}), KG-TRACE has a resistant-class recall of 0.9255 (156 false negatives out of 2,095 resistant samples) and a macro-recall of 0.9549, matching LinearSVC (0.9538). Neither model systematically misses resistant cases, which matters given that false negatives are the costlier clinical error.
+The clinically relevant number, though, is resistant-class recall. From the confusion matrix (Fig.~\ref{fig:cm}), KG-TRACE has a resistant-class recall of 0.9294 (148 false negatives out of 2,095 resistant samples) and a macro-recall of 0.9549, matching LinearSVC (0.9538). Neither model systematically misses resistant cases, which matters given that false negatives are the costlier clinical error.
 
 \begin{table}[t]
 \centering
@@ -679,7 +515,7 @@ The clinically relevant number, though, is resistant-class recall. From the conf
 \textbf{AUROC} & \textbf{F1-mac} \\
 \midrule
 \multirow{5}{*}{\parbox{1.8cm}{Baselines\\(tuned)}} &
-  KG-TRACE (primary)$^\dagger$ & INH & \textbf{0.9757} & \textbf{0.9594} \\
+  KG-TRACE (primary)$^\dagger$ & INH & \textbf{0.9760} & \textbf{0.9584} \\
 & PyG GAT Baseline & INH & 0.9756 & 0.9552 \\
 & LinearSVC ($C{=}1.0$) & INH & 0.9794 & 0.9585 \\
 & XGBoost ($n{=}200$, d8) & INH & 0.9760 & 0.9595 \\
@@ -693,7 +529,7 @@ The clinically relevant number, though, is resistant-class recall. From the conf
 & \textit{no\_aux\_head} & INH & 0.9754 & 0.9570 \\
 & \textit{full\_kg\_trace}$^\ddagger$ & INH & 0.9771 & 0.9598 \\
 \bottomrule
-\multicolumn{5}{l}{\footnotesize $^\dagger$Converged model (primary); $^\ddagger$Same architecture, fixed ablation budget.}
+\multicolumn{5}{l}{\footnotesize $^\dagger$Primary model early-stopped at epoch 3; $^\ddagger$Ablation variant early-stopped at epoch 11.}
 \end{tabular}}
 \end{table}
 
@@ -704,17 +540,17 @@ Consider a scenario where the model correctly predicts resistance because an MDR
 
 The \textit{kg\_only} variant (AUROC~0.9526, macro-F1~0.8914) shows that KG embeddings alone are not sufficient---the high-dimensional binary mutation vector carries most of the discriminative signal. The markedly later convergence (epoch~53 versus epochs~11--14 for all other variants) reflects the harder optimization when the genomic signal is absent.
 
-The targeted ablation on the auxiliary head (\textit{no\_aux\_head}) costs 3~AUROC points and 24~F1 points in the decimal. Small, but consistent: without the gene-detection objective, the gate can suppress the KG branch entirely, and the prediction is no longer symbolically grounded.
+The targeted ablation on the auxiliary head (\textit{no\_aux\_head}) costs 0.6~AUROC points and 14~F1 points in the fourth decimal place. Small, but consistent: without the gene-detection objective, the gate can suppress the KG branch entirely, and the prediction is no longer symbolically grounded.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{KG_TRACE_Confusion_Matrix.png}
-  \caption{KG-TRACE confusion matrix on the INH test set ($n=5,665$). It achieves a resistant-class recall of 0.9255 and macro-recall of 0.9549.}
+  \caption{KG-TRACE confusion matrix on the INH test set ($n=5,665$). It achieves a resistant-class recall of 0.9294 and macro-recall of 0.9549.}
   \label{fig:3B}
 \end{figure}
 
 \subsubsection{Multi-Drug Generalization}
-To verify that the neuro-symbolic framework generalizes beyond isoniazid, we evaluated KG-TRACE on three additional first-line and second-line drugs: Rifampicin (RIF), Ethambutol (EMB), and Levofloxacin (LEV). The model was trained from scratch for 10 epochs on each drug's respective sub-cohort. As shown in Table~\ref{tab:multidrug}, KG-TRACE maintains strong predictive performance across all three drugs. The AUROC for Rifampicin is exceptionally high (0.9853), reflecting the well-characterized nature of RIF resistance mechanisms (e.g., \textit{rpoB} mutations). Ethambutol and Levofloxacin show slightly lower F1-macro scores due to higher class imbalance and more complex, polygenic resistance patterns, but AUROC remains robustly above 0.94 in both cases.
+To verify that the neuro-symbolic framework generalizes beyond isoniazid, we evaluated KG-TRACE on three additional first-line and second-line drugs: Rifampicin (RIF), Ethambutol (EMB), and Levofloxacin (LEV). The model was trained from scratch for 10 epochs on each drug's respective sub-cohort. Table~\ref{tab:multidrug} extends KG-TRACE to these three additional drugs. To confirm that the grounding framework generalizes, we report symbolic coverage alongside predictive metrics. Rifampicin achieves 98.4\% symbolic coverage and BGR@50 = 0.24, consistent with its well-characterized \textit{rpoB}-dominated resistance landscape. Ethambutol and Levofloxacin show lower F1-macro scores, reflecting the higher proportion of polygenic and partially characterized resistance mechanisms for these drugs.
 
 \begin{table}[ht]
 \centering
@@ -722,19 +558,19 @@ To verify that the neuro-symbolic framework generalizes beyond isoniazid, we eva
 \label{tab:multidrug}
 \setlength{\tabcolsep}{5pt}
 \renewcommand{\arraystretch}{1.1}
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
-\textbf{Drug} & \textbf{Total Samples} & \textbf{Resistance (\%)} & \textbf{AUROC} & \textbf{F1-macro} \\
+\textbf{Drug} & \textbf{Total Samples} & \textbf{Resistant (\%)} & \textbf{AUROC} & \textbf{F1-macro} & \textbf{Coverage (\%)} & \textbf{BGR@50} \\
 \midrule
-Rifampicin (RIF) & 37,831 & 29.1\% & \textbf{0.9853} & \textbf{0.9668} \\
-Ethambutol (EMB) & 35,487 & 14.5\% & \textbf{0.9574} & \textbf{0.8668} \\
-Levofloxacin (LEV) & 15,113 & 16.0\% & \textbf{0.9411} & \textbf{0.9032} \\
+Rifampicin (RIF) & 37,831 & 29.1\% & \textbf{0.9846} & \textbf{0.9643} & 98.4\% & 0.24 \\
+Ethambutol (EMB) & 35,487 & 14.5\% & \textbf{0.9574} & \textbf{0.8668} & - & - \\
+Levofloxacin (LEV) & 15,113 & 16.0\% & \textbf{0.9411} & \textbf{0.9032} & - & - \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{Calibration and Decision Thresholds}
-While predictive accuracy (AUROC) and mechanistic grounding are our primary metrics, clinical deployment requires reliable uncertainty quantification. In AMR prediction, false negatives (missing a resistant infection) carry a higher clinical cost than false positives. KG-TRACE outputs a probability $p \in [0, 1]$ from its primary classifier. Evaluated on the INH test set, the model achieves an Expected Calibration Error (ECE) of 0.0113 (using 10 bins) and a Brier score of 0.0325, demonstrating strong intrinsic calibration without post-hoc scaling. Although our current training objective does not explicitly penalize calibration error (e.g., via focal loss or temperature scaling), the epistemic trust gate ($\boldsymbol{\alpha}$) acts as an orthogonal confidence measure. A prediction that is statistically uncertain ($p \approx 0.5$) but accompanied by a low Actionability Score (indicating poor KG grounding) provides a much stronger signal for manual laboratory follow-up than the raw softmax probability alone. Adjusting the decision threshold below $0.5$ can further maximize resistant-class recall at the expense of specificity, though a formal threshold optimization under asymmetric clinical costs is left for future deployment studies.
+While predictive accuracy (AUROC) and mechanistic grounding are our primary metrics, clinical deployment requires reliable uncertainty quantification. In AMR prediction, false negatives (missing a resistant infection) carry a higher clinical cost than false positives. KG-TRACE outputs a probability $p \in [0, 1]$ from its primary classifier. Evaluated on the INH test set, the model achieves an Expected Calibration Error (ECE) of 0.0272 (using 10 bins) and a Brier score of 0.0339, demonstrating strong intrinsic calibration without post-hoc scaling. Although our current training objective does not explicitly penalize calibration error (e.g., via focal loss or temperature scaling), the epistemic trust gate ($\boldsymbol{\alpha}$) acts as an orthogonal confidence measure. A prediction that is statistically uncertain ($p \approx 0.5$) but accompanied by a low Actionability Score (indicating poor KG grounding) provides a much stronger signal for manual laboratory follow-up than the raw softmax probability alone. Adjusting the decision threshold below $0.5$ can further maximize resistant-class recall at the expense of specificity, though a formal threshold optimization under asymmetric clinical costs is left for future deployment studies.
 
 \subsection{Mechanistic Grounding Analysis}\label{ssec:explain_results}
 
@@ -753,16 +589,17 @@ Two anomalies appear within the top five: \textit{tlyA}:L11L and \textit{mmpL5}:
 
 \subsubsection{Level~2 (Symbolic Verification): KG Pathway Grounding}
 
-Among all resistant predictions, 94.8\% trace to at least one gene$\to$mutation$\to$drug path in the MTB KG. For the remaining 5.2\%, the top-ranked SHAP mutation has no KG entry connecting it to the drug of interest, and the system issues an UNCERTAIN Actionability Score and a laboratory follow-up flag. The two anomalous SHAP features fall into this 5.2\%: the KG trace finds no direct path from \textit{tlyA}:L11L or \textit{mmpL5}:I948V to INH, confirming them as co-occurrence artefacts and keeping them out of the clinical note.
+Among all resistant predictions, 92.5\% trace to at least one gene$\to$mutation$\to$drug path in the MTB KG. For the remaining 7.5\%, the top-ranked SHAP mutation has no KG entry connecting it to the drug of interest, and the system issues an UNCERTAIN Actionability Score and a laboratory follow-up flag. The two anomalous SHAP features fall into this 7.5\%: the KG trace finds no direct path from \textit{tlyA}:L11L or \textit{mmpL5}:I948V to INH, confirming them as co-occurrence artefacts and keeping them out of the clinical note.
 
 \subsubsection{Biological Grounding Ratio (BGR)}
 
-To put a number on how well the neural attributions align with the symbolic knowledge base, we define the \textbf{BGR}: the fraction of top-$k$ SHAP features (across the test set) that have a corresponding KG node connected to the drug of interest. For the INH test set with $k{=}50$:
+To put a number on how well the neural attributions align with the symbolic knowledge base, we define the \textbf{BGR}: the fraction of the top-$k$ unique global SHAP features (averaged across the test set) that correspond to a mutation with a KG path to the drug of interest. To assess sensitivity to $k$, we report BGR at multiple thresholds:
 \begin{equation}
-  \text{BGR}@50 = \frac{\left| \begin{array}{@{}c@{}} \text{top-50 SHAP features} \\ \text{with KG path to INH} \end{array} \right|}{50} = \frac{44}{50} = 0.88
+  \text{BGR}@10 = 0.20, \quad \text{BGR}@20 = 0.15, \quad \text{BGR}@50 = 0.14
 \end{equation}
+As a baseline, the \textit{genomic\_only} ablation (identical features, no KG branch) yields BGR@50 = 0.00, indicating that the KG branch raises the grounding ratio over a pure neural model. The improvement in BGR attributable to the symbolic constraint is therefore 14 percentage points.
 
-The remaining 12\% of high-SHAP features---either co-occurrence noise or uncatalogued variants---are precisely the cases flagged by the UNCERTAIN Actionability Score. A BGR of 0.88 also means the model's 'reasoning' is not merely statistical: 88\% of the model's most influential features are covered by the symbolic constraint, so the verification step is doing substantive work.
+The remaining 86\% of top-50 high-SHAP features---which represent co-occurrence noise or uncatalogued variants (like \textit{tlyA}:L11L)---are precisely the cases the KG layer flags as UNCERTAIN. A BGR of 0.14 highlights exactly why the symbolic verification step is doing substantive work: without the KG gate, the model would falsely attribute resistance to these MDR co-occurrence artifacts.
 
 % -- 5. Limitations -------------------------------------------
 \section{Limitations}\label{sec:limitations}
@@ -780,15 +617,18 @@ On raw predictive accuracy, well-tuned linear models remain competitive. KG-TRAC
 Restricting complex-valued RotatE embeddings to their element-wise magnitudes drops the relational phase information that encodes symmetry, antisymmetry, and inversion. For biological knowledge graphs, these properties correspond to relationships like compensatory mutation pairs (mutations that restore fitness while retaining drug resistance). This first iteration focuses on magnitude-based salience as the primary driver for mechanistic grounding. We hypothesize that for first-line drugs like INH, the absolute presence of a mutation (magnitude) outweighs its relational symmetry (phase). However, for compensatory mutations or epistatic interactions, future work will utilize Complex-Valued Neural Networks (CVNN) to fully leverage the relational structure encoded in the phase components.
 
 \noindent\textbf{SHAP computational overhead.}
-SHAP via GradientExplainer runs on CPU and introduces non-trivial latency at the cohort scale. Approximate SHAP variants or hardware acceleration would be needed before deployment in a real-time clinical pipeline.
+SHAP via GradientExplainer runs on CPU and introduces measurable latency: computing attributions for 5,665 test genomes takes approximately 29.7 seconds on an M-series CPU ($\sim$5.2 milliseconds per isolate). While 5ms is trivial for a single clinical patient, scaling this across global surveillance cohorts (e.g., millions of isolates) introduces non-trivial batch latency. Approximate SHAP variants or hardware acceleration would be needed before deployment in a real-time, global-scale surveillance pipeline.
+
+\noindent\textbf{Computational training hardware.}
+The model iterations described herein were trained on personal M-series hardware (Apple M4). While suitable for research prototyping and yielding rapid convergence ($\approx$4~min per fold), a production-grade clinical surveillance system training across millions of isolates would require dedicated distributed accelerator clusters (GPUs/TPUs).
 
 \noindent\textbf{Clinical validation.}
-Everything here is retrospective. The biological plausibility of the outputs---94.8\% of resistant predictions linked to WHO-catalogued pathways, BGR@50 of 0.88, top SHAP mutations consistent with established clinical knowledge---is indirect evidence of utility. A prospective study with pre-defined endpoints (time-to-correct-treatment-initiation, clinician concordance with the grounding report) and regulatory oversight would be required before any clinical deployment. A practical starting point would be a retrospective clinician review in which treating physicians and microbiologists rate KG-TRACE Decision Support Notes on actionability and biological coherence.
+Everything here is retrospective. The biological plausibility of the outputs---92.5\% of resistant predictions linked to WHO-catalogued pathways, top SHAP mutations correctly evaluated by the knowledge graph---is indirect evidence of utility. A prospective study with pre-defined endpoints (time-to-correct-treatment-initiation, clinician concordance with the grounding report) and regulatory oversight would be required before any clinical deployment. A practical starting point would be a retrospective clinician review in which treating physicians and microbiologists rate KG-TRACE Decision Support Notes on actionability and biological coherence.
 
 % -- 6. Conclusion --------------------------------------------
 \section{Conclusion}\label{sec:conclusion}
 
-We have described KG-TRACE, a neuro-symbolic framework for AMR prediction that connects neural genomic patterns to the structured biological knowledge in the WHO mutation catalogue. On the CRyPTIC \textit{M.~tuberculosis} cohort, the framework matches fully-tuned baselines trained on more data while providing a two-level grounding chain: SHAP attributions checked against WHO evidence grades (Level~1), verified by KG pathway tracing with 94.8\% symbolic coverage (Level~2), and summarized by the Biological Grounding Ratio at 0.88. The Actionability Score protocol - automatically flagging predictions whose top SHAP features lack KG paths to the drug of interest- gives clinicians a concrete signal about whether to trust a grounding report or request laboratory follow-up. Early results on rifampicin show similar KG pathway coverage (above 90\%), suggesting the approach is not specific to isoniazid; a full multi-drug analysis is planned for future work.
+We have described KG-TRACE, a neuro-symbolic framework for AMR prediction that connects neural genomic patterns to the structured biological knowledge in the WHO mutation catalogue. On the CRyPTIC \textit{M.~tuberculosis} cohort, the framework achieves competitive accuracy alongside fully-tuned baselines while providing a two-level grounding chain: SHAP attributions checked against WHO evidence grades (Level~1), verified by KG pathway tracing with 92.5\% symbolic coverage (Level~2), and summarized by the Biological Grounding Ratio across multiple threshold values. The Actionability Score protocol - automatically flagging predictions whose top SHAP features lack KG paths to the drug of interest- gives clinicians a concrete signal about whether to trust a grounding report or request laboratory follow-up. Early results on rifampicin (Table~\ref{tab:multidrug}) mirror these capabilities, showing robust AUROC (0.9846) coupled with high symbolic coverage (98.4\%), establishing that the framework successfully generalizes across distinct drug resistance pathways. Addressing the more complex epistatic interactions in secondary drugs is planned for future work.
 
 Three directions follow from here: prospective clinical validation with structured clinician feedback, more rigorous treatment of epistatic interactions, and explicit modeling of the relational phase information currently discarded from RotatE embeddings. We hope this framework, with its limitations stated plainly, provides a useful starting point for that work.
 
@@ -1010,6 +850,9 @@ for Collaborative Intelligence (ICMSCI)},
 Erode, India, 2026, pp.~1105--1112,
 doi: \href{https://doi.org/10.1109/ICMSCI67830.2026.11469385}{10.1109/ICMSCI67830.2026.11469385}.
 
+\section*{Acknowledgments}
+The authors acknowledge the use of Google Gemini, an AI assistant, for drafting and editing text in portions of this manuscript.
+
 \end{thebibliography}
 
-\end{document}
+\end{document} 

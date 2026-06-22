@@ -1,0 +1,14 @@
+{
+  "mean_gate_resistant": 0.3531631529331207,
+  "mean_gate_susceptible": 0.36420348286628723,
+  "mean_gate_uncertain": 0.3632645905017853,
+  "mean_gate_high": 0.360025018453598,
+  "corr_gate_confidence": {
+    "rho": -0.07793904365892974,
+    "pvalue": 4.127496565794858e-09
+  },
+  "corr_gate_strict_bgr": {
+    "rho": -0.35877955883658963,
+    "pvalue": 5.286827641784749e-172
+  }
+}

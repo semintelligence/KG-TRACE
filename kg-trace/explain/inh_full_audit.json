@@ -1,0 +1,55 @@
+{
+  "drug": "INH",
+  "checkpoint": "/Users/namangarg/Desktop/KG-Trace/kg-trace/model/checkpoints/best_model-v1.ckpt",
+  "n_test": 5665,
+  "shap_time_seconds": 29.7,
+  "shap_ms_per_sample": 5.2,
+  "bgr": {
+    "BGR@10": {
+      "grounded": 2,
+      "total": 10,
+      "ratio": 0.2
+    },
+    "BGR@20": {
+      "grounded": 3,
+      "total": 20,
+      "ratio": 0.15
+    },
+    "BGR@50": {
+      "grounded": 7,
+      "total": 50,
+      "ratio": 0.14
+    },
+    "BGR@100": {
+      "grounded": 10,
+      "total": 100,
+      "ratio": 0.1
+    }
+  },
+  "symbolic_coverage_pct": 92.5,
+  "symbolic_coverage_detail": "1865/2017",
+  "gate": {
+    "resistant_mean": 0.3373,
+    "resistant_std": 0.0131,
+    "susceptible_mean": 0.3362,
+    "susceptible_std": 0.0177,
+    "overall_mean": 0.3366,
+    "overall_std": 0.0161
+  },
+  "gate_correlations": {
+    "gate_vs_strict_bgr": {
+      "rho": -0.0044,
+      "p": 0.7408731433378959
+    },
+    "gate_vs_confidence": {
+      "rho": -0.4646,
+      "p": 1.8937625885722833e-301
+    }
+  },
+  "actionability": {
+    "n_high": 3955,
+    "n_uncertain": 1710,
+    "gate_mean_high": 0.3359,
+    "gate_mean_uncertain": 0.3382
+  }
+}

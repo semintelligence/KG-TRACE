@@ -44,9 +44,13 @@ print(f"  SHAP features: {shap_values.shape[1]}")
 # ── 2. BCS Computation ──────────────────────────────────────────────────────
 print("\n[2/3] Computing BCS (Biological Consistency Score)...")
 
-def compute_bcs(top_shap_features, card_gene_set, N=10):
-    """BCS = fraction of top-N SHAP features whose gene is in CARD catalogue."""
-    mapped = [f for f in top_shap_features[:N] if f.split(":")[0] in card_gene_set]
+def compute_bcs(top_shap_features, card_gene_set, N=10, drug="RIF"):
+    """BCS = fraction of top-N SHAP features that are biologically grounded in the catalogue."""
+    mapped = []
+    for f in top_shap_features[:N]:
+        gene = f.split(":")[0]
+        if gene in card_gene_set or f in card_gene_set:
+            mapped.append(f)
     return len(mapped) / N
 
 # Global BCS: top-N features by mean |SHAP| across test set
@@ -54,7 +58,7 @@ shap_mean_abs = np.abs(shap_values).mean(axis=0)
 global_top_idx = np.argsort(shap_mean_abs)[::-1]
 global_top_features = [feature_names[i] for i in global_top_idx]
 
-for N in [5, 10, 20]:
+for N in [5, 10, 20, 50]:
     bcs = compute_bcs(global_top_features, card_gene_set, N=N)
     top_genes = [feature_names[global_top_idx[i]].split(":")[0] for i in range(N)]
     mapped = [g for g in top_genes if g in card_gene_set]
@@ -62,8 +66,35 @@ for N in [5, 10, 20]:
     print(f"    Top-{N} genes: {top_genes}")
     print(f"    Mapped: {mapped}")
 
+# ── Baseline BCS (Genomic-Only) ─────────────────────────────────────────────
+print("\n[2.5/3] Computing BCS for Genomic-Only baseline...")
+genomic_shap_path = os.path.join(EXPLAIN_DIR, "shap_raw_genomic_only.npz")
+genomic_bcs_10 = 0.0
+genomic_bcs_20 = 0.0
+genomic_bcs_50 = 0.0
+
+if os.path.exists(genomic_shap_path):
+    g_shap_data = np.load(genomic_shap_path, allow_pickle=True)
+    g_shap_values = g_shap_data["shap_values"]
+    g_feature_names = list(g_shap_data["feature_names"])
+    
+    g_shap_mean_abs = np.abs(g_shap_values).mean(axis=0)
+    g_global_top_idx = np.argsort(g_shap_mean_abs)[::-1]
+    g_global_top_features = [g_feature_names[i] for i in g_global_top_idx]
+    
+    genomic_bcs_10 = float(compute_bcs(g_global_top_features, card_gene_set, N=10))
+    genomic_bcs_20 = float(compute_bcs(g_global_top_features, card_gene_set, N=20))
+    genomic_bcs_50 = float(compute_bcs(g_global_top_features, card_gene_set, N=50))
+    
+    print(f"  Genomic-Only BCS@10: {genomic_bcs_10:.2f}")
+    print(f"  Genomic-Only BCS@20: {genomic_bcs_20:.2f}")
+    print(f"  Genomic-Only BCS@50: {genomic_bcs_50:.2f}")
+else:
+    print("  WARNING: shap_raw_genomic_only.npz not found.")
+
 # Per-genome BCS
 per_genome_bcs = []
+n_test = shap_values.shape[0]
 for i in range(n_test):
     genome_shap = np.abs(shap_values[i])
     genome_top = np.argsort(genome_shap)[::-1][:10]
@@ -152,6 +183,10 @@ metrics = {
     "bcs_global_5": float(compute_bcs(global_top_features, card_gene_set, N=5)),
     "bcs_global_10": float(compute_bcs(global_top_features, card_gene_set, N=10)),
     "bcs_global_20": float(compute_bcs(global_top_features, card_gene_set, N=20)),
+    "bcs_global_50": float(compute_bcs(global_top_features, card_gene_set, N=50)),
+    "bcs_genomic_only_10": genomic_bcs_10,
+    "bcs_genomic_only_20": genomic_bcs_20,
+    "bcs_genomic_only_50": genomic_bcs_50,
     "bcs_per_genome_mean": float(per_genome_bcs.mean()),
     "bcs_per_genome_std": float(per_genome_bcs.std()),
     "spearman_attn_vs_shap": {"rho": float(rho), "pvalue": float(pvalue)},

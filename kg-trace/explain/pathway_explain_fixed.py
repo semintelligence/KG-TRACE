@@ -29,7 +29,7 @@ attn_weights = test_data["attn_weights"]
 labels = test_data["labels"]
 preds = test_data["preds"]
 
-DRUG = "INH"
+DRUG = "RIF"
 assert DRUG in G.nodes(), f"Drug node '{DRUG}' not in graph"
 
 # ── 2. Pre-compute gene→drug reachability ────────────────────────────────────
